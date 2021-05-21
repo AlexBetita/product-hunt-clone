@@ -32,9 +32,10 @@ module.exports = (sequelize, DataTypes) => {
     },
   },
   {
+    paranoid: true,
     defaultScope: {
       attributes: {
-        exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt'],
+        exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt', 'deletedAt'],
       },
     },
     scopes: {
@@ -49,6 +50,12 @@ module.exports = (sequelize, DataTypes) => {
 
   User.associate = function(models) {
     // associations can be defined here
+    User.hasMany(models.Comment,{
+      foreignKey: "user_id"
+    })
+    User.hasMany(models.Product,{
+      foreignKey: "user_id"
+    })
   };
 
   User.prototype.toSafeObject = function() { // remember, this cannot be an arrow function
