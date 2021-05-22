@@ -4,9 +4,14 @@ module.exports = (sequelize, DataTypes) => {
     imageUrl: DataTypes.STRING,
     productId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
-  }, {});
+  }, {paranoid:true});
+
   ProductImage.associate = function(models) {
-    // associations can be defined here
+
+    ProductImage.belongsTo(models.Product,{
+      foreignKey: 'productId'
+    })
+    
   };
   return ProductImage;
 };

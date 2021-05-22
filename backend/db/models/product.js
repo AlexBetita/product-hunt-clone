@@ -7,9 +7,37 @@ module.exports = (sequelize, DataTypes) => {
     views: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
-  }, {});
+  }, {paranoid:true});
+
   Product.associate = function(models) {
-    // associations can be defined here
+
+    Product.belongsTo(models.User, {
+      foreignKey: 'userId'
+    })
+
+    Product.hasMany(models.Upvote,{
+      foreignKey: 'upvoteableId',
+      constraints: false,
+      scope: {
+        upvoteableType: 'product'
+      },
+      onDelete: 'cascade'
+    })
+
+    Product.hasMany(models.Comment,{
+      foreignKey: 'commentableId',
+      constraints: false,
+      scope: {
+        commentableType: 'product',
+      },
+      onDelete: 'cascade'
+    })
+
+    Product.hasMany(models.ProductImage,{
+      foreignKey: "productId"
+    })
+
   };
+
   return Product;
 };

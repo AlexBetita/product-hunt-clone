@@ -12,7 +12,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       followableId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
       },
       followableType: {
         type: Sequelize.INTEGER

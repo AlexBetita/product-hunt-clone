@@ -18,7 +18,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       commentableId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
       },
       commentableType: {
         type: Sequelize.STRING

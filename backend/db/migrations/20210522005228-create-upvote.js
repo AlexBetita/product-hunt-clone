@@ -12,7 +12,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       upvoteableId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        onDelete: 'CASCADE',
       },
       upvoteableType: {
         type: Sequelize.STRING
