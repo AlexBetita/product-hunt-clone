@@ -2,23 +2,37 @@
 const faker = require('faker');
 const bcrypt = require('bcryptjs');
 
+console.log(faker.lorem.sentence(5, 40))
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Users', [
       {
+        fullName: 'demo',
         email: 'demo@user.io',
         username: 'Demo-lition',
         hashedPassword: bcrypt.hashSync('password'),
+        headline: faker.lorem.sentence(5, 40),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
       },
       {
+        fullName: faker.name.findName(),
         email: faker.internet.email(),
         username: 'FakeUser1',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
+        headline: faker.lorem.sentence(5, 40),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
       },
       {
+        fullName: faker.name.findName(),
         email: faker.internet.email(),
         username: 'FakeUser2',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
+        headline: faker.lorem.sentence(5, 40),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
       },
     ], {});
   },

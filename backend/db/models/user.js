@@ -4,11 +4,24 @@ const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
+    id: {
+      allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+      type: Sequelize.INTEGER
+    },
+    fullName:{
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        len: [4, 40]
+      }
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [3, 30],
+        len: [3, 20],
         isNotEmail(value) {
           if (Validator.isEmail(value)) {
             throw new Error('Cannot be an email.');
@@ -20,7 +33,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
-        len: [3, 256]
+        len: [3, 320],
+        isEmail(value) {
+          if (Validator.isNotEmail(value)) {
+            throw new Error('Must be a valid email format')
+          }
+        }
       },
     },
     hashedPassword: {
@@ -30,11 +48,40 @@ module.exports = (sequelize, DataTypes) => {
         len: [60, 60]
       },
     },
+    headline: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [0, 40]
+      }
+    },
+    website: {
+      type: DataTypes.STRING,
+      validate: {
+        len:[5, 256],
+        isUrl(value) {
+          if(Validator.isNotUrl(value)){
+            throw new Error('Must be a valid url format')
+          }
+        }
+      }
+    },
+    profileImage: {
+      type: DataTypes.STRING,
+    },
+    productsViewed: {
+      type: DataTypes.INTEGER
+    },
+    visits: {
+      type: DataTypes.INTEGER
+    },
+    deletedAt: DataTypes.DATE
   },
   {
+    paranoid: true,
     defaultScope: {
       attributes: {
-        exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt'],
+        exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt','headline','website','profileImage',
+                 'productsViewed', 'visits','deletedAt'],
       },
     },
     scopes: {
