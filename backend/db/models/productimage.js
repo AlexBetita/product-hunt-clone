@@ -1,4 +1,7 @@
 'use strict';
+
+const product = require("./product");
+
 module.exports = (sequelize, DataTypes) => {
   const ProductImage = sequelize.define('ProductImage', {
     imageUrl: DataTypes.STRING,
@@ -11,7 +14,19 @@ module.exports = (sequelize, DataTypes) => {
     ProductImage.belongsTo(models.Product,{
       foreignKey: 'productId'
     })
-    
+
   };
+
+  ProductImage.create = async function (productImages, productId){
+    await ProductImage.bulkCreate([
+      productImages
+    ]);
+    return await ProductImage.findAll({
+      where: {
+        productId: productId
+      }
+    });
+  };
+
   return ProductImage;
 };

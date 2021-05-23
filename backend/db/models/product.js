@@ -39,5 +39,15 @@ module.exports = (sequelize, DataTypes) => {
 
   };
 
+  Product.create = async function ({title, thumbnail, description, userId}) {
+    const product = await Product.create({
+      title,
+      thumbnail,
+      description,
+      userId,
+    });
+    return await Product.findByPk(product.id);
+  }
+
   return Product;
 };
