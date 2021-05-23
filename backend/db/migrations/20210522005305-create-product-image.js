@@ -9,10 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       imageUrl: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING(256),
+        allowNull: false,
       },
       productId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {mode: 'Products'}
       },
       deletedAt: {
         type: Sequelize.DATE

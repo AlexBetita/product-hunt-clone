@@ -9,10 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       discussion: {
-        type: Sequelize.TEXT
+        type: Sequelize.TEXT,
+        allowNull: false
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        referenes: {model: 'Users'}
       },
       deletedAt: {
         type: Sequelize.DATE
