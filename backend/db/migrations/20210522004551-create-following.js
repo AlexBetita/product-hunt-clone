@@ -9,14 +9,15 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       userId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {model: 'Users'}
       },
       followableId: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
       },
       followableType: {
-        type: Sequelize.INTEGER
+        type: Sequelize.STRING
       },
       deletedAt: {
         type: Sequelize.DATE

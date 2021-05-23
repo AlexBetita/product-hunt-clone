@@ -3,7 +3,7 @@ module.exports = (sequelize, DataTypes) => {
   const Following = sequelize.define('Following', {
     userId: DataTypes.INTEGER,
     followableId: DataTypes.INTEGER,
-    followableType: DataTypes.INTEGER,
+    followableType: DataTypes.STRING,
     deletedAt: DataTypes.DATE
   }, {paranoid:true});
 
