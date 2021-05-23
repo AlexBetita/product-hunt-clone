@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Product } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -44,5 +44,19 @@ router.post(
     });
   }),
 );
+
+// Get users product
+router.get(
+  '/products',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    if(user){
+      const userId = user.id
+      const products = await Product.getUsersProducts(userId)
+      return res.json(products)
+    }
+  })
+)
 
 module.exports = router;

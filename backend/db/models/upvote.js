@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Upvote = sequelize.define('Upvote', {
+    id: {
+      type: DataTypes.INTEGER,
+      isNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     userId: DataTypes.INTEGER,
     upvoteableId: DataTypes.INTEGER,
     upvoteableType: DataTypes.STRING,

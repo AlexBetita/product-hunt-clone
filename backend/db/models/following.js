@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Following = sequelize.define('Following', {
+    id: {
+      type: DataTypes.INTEGER,
+      isNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     userId: DataTypes.INTEGER,
     followableId: DataTypes.INTEGER,
     followableType: DataTypes.STRING,

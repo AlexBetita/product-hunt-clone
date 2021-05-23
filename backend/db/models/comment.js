@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
+    id: {
+      type: DataTypes.INTEGER,
+      isNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     comment: DataTypes.TEXT,
     edited: DataTypes.BOOLEAN,
     userId: DataTypes.INTEGER,

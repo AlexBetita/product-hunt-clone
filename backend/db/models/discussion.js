@@ -1,6 +1,12 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const Discussion = sequelize.define('Discussion', {
+    id: {
+      type: DataTypes.INTEGER,
+      isNull: false,
+      primaryKey: true,
+      autoIncrement: true,
+    },
     discussion: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE

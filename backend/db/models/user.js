@@ -151,5 +151,8 @@ module.exports = (sequelize, DataTypes) => {
     return await User.scope('currentUser').findByPk(user.id);
   };
 
+
+  ///Product related
+
   return User;
 };
