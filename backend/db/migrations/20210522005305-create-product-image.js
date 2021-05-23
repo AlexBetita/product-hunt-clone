@@ -15,7 +15,7 @@ module.exports = {
       productId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {mode: 'Products'}
+        references: {model: 'Products'}
       },
       deletedAt: {
         type: Sequelize.DATE
