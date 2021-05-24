@@ -2,11 +2,10 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
+const { requireAuth } = require('../../utils/auth');
 const { Product, ProductImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const e = require('express');
 
 const router = express.Router();
 
