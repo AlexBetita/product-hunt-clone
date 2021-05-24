@@ -47,7 +47,7 @@ router.post(
     const {user} = req;
     const userId = user.id;
 
-    let {discussion} = req.body;
+    let {discussion, message} = req.body;
     let discussionIndex = discussion.replace(/[^\w\s]/gi, ' ');
     discussionIndex = discussionIndex.replace(/^\s+|\s+$/g, "");
     discussion = discussion.replace(/ +(?= )/g, "");
@@ -60,6 +60,7 @@ router.post(
 
         discussion = await Discussion.create({
           discussion: discussion,
+          message: message,
           userId: userId
         })
 
@@ -151,14 +152,14 @@ router.put(
     const {user} = req;
     const userId = user.id;
     const {id} = req.params;
-    const {discussion} = req.body;
+    const {discussion, message} = req.body;
 
     if(user){
       if(Discussion.exists(id)){
         if(Discussion.userOwnsDiscussion(id, userId)){
           const discussionIndex = await DiscussionIndex.findByDiscussionId(id)
           await DiscussionIndex.edit(discussion, discussionIndex.id)
-          const editedDiscussion = await Discussion.edit(discussion, id)
+          const editedDiscussion = await Discussion.edit(discussion, message, id)
           return res.json({discussion: editedDiscussion})
         } return res.json({Error: 'User does not own this discussion'})
       } return res.json({Error: 'This discussion does not exists'})

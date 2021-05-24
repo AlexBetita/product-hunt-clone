@@ -47,7 +47,7 @@ module.exports = (sequelize, DataTypes) => {
     }) ? true : false
   }
 
-  Discussion.edit = async function(discussion, discussionId){
+  Discussion.edit = async function(discussion, message, discussionId){
     const editedDiscussion = await Discussion.findOne({
       where: {
         id: discussionId
@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     });
 
     editedDiscussion.discussion = discussion;
+    editedDiscussion.message = message
     await editedDiscussion.save();
     return editedDiscussion
   }
