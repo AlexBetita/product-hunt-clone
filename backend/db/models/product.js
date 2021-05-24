@@ -13,7 +13,16 @@ module.exports = (sequelize, DataTypes) => {
     views: DataTypes.INTEGER,
     userId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
-  }, {paranoid:true});
+  }, {
+    paranoid:true,
+    scopes: {
+      products: {
+        attributes: {
+          exclude: ['views', 'userId', 'deletedAt', 'createdAt', 'updatedAt']
+        }
+      }
+    }
+  });
 
   Product.associate = function(models) {
 

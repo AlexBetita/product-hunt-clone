@@ -13,7 +13,21 @@ module.exports = (sequelize, DataTypes) => {
     commentableId: DataTypes.INTEGER,
     commentableType: DataTypes.STRING,
     deletedAt: DataTypes.DATE
-  }, {paranoid:true});
+  }, {
+    paranoid:true,
+    scopes: {
+      comments: {
+        attributes: {
+          exclude: ['commentableId', 'deletedAt', 'id']
+        }
+      },
+      commentsNoDates:{
+        attributes: {
+          exclude: ['commentableId', 'deletedAt', 'id', 'createdAt', 'updatedAt']
+        }
+      }
+    }
+  });
 
   Comment.prototype.getCommentable = function(options){
     if (!this.commentableType) return Promise.resolve(null);
@@ -71,19 +85,19 @@ module.exports = (sequelize, DataTypes) => {
   Comment.addHook("afterFind", findResult =>{
     if (!Array.isArray(findResult)) findResult = [findResult];
     for (const instance of findResult) {
-      if (instance.commentableType === "discussion" && instance.discussion !== undefined) {
-        instance.commentable = instance.product;
-      } else if (instance.commentableType === "comment" && instance.comment !== undefined) {
-        instance.commentable = instance.comment;
-      } else if (instance.commentableType === "product" && instance.product !== undefined) {
-        instance.commentable = instance.comment;
+      if (instance.commentableType === "discussion" && instance.Discussion !== undefined) {
+        instance.commentable = instance.Discussion;
+      } else if (instance.commentableType === "comment" && instance.Comment !== undefined) {
+        instance.commentable = instance.Comment;
+      } else if (instance.commentableType === "product" && instance.Product !== undefined) {
+        instance.commentable = instance.Product;
       }
-      delete instance.discussion;
-      delete instance.dataValues.discussion;
-      delete instance.comment;
-      delete instance.dataValues.comment;
-      delete instance.product;
-      delete instance.dataValues.product;
+      delete instance.Discussion;
+      delete instance.dataValues.Discussion;
+      delete instance.Comment;
+      delete instance.dataValues.Comment;
+      delete instance.Product;
+      delete instance.dataValues.Product;
     }
   });
 
