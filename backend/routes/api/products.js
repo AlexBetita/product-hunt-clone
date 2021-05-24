@@ -55,20 +55,22 @@ router.get(
       ]
     })
     const products = []
-    const productObj = {}
+    let productsObj = {}
 
     results.forEach((product, i)=>{
+      console.log('i', i)
       for(const key in results[i].dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
-          productObj[key] = moment(results[i].dataValues[key]).format('MMMM Do YYYY, h:mm:ss a');
+          productsObj[key] = moment(results[i].dataValues[key]).format('MMMM Do YYYY, h:mm:ss a');
         } else {
-          productObj[key] = results[i].dataValues[key]
+          productsObj[key] = results[i].dataValues[key]
         }
       }
-      products.push(productObj)
-    })
+      products.push(productsObj)
+      productsObj = {}
+    });
 
-    return res.json(products)
+    return res.json({products});
   })
 );
 

@@ -28,5 +28,31 @@ module.exports = (sequelize, DataTypes) => {
     })
 
   };
+
+  Discussion.exists = async function(id){
+    return await Discussion.findByPk(id) ? true : false
+  }
+
+  Discussion.userOwnsDiscussion = async function(discussionId, userId){
+    return await Discussion.findOne({
+      where: {
+        id: discussionId,
+        userId: userId
+      }
+    }) ? true : false
+  }
+
+  Discussion.edit = async function(discussion, discussionId){
+    const editedDiscussion = await Discussion.findOne({
+      where: {
+        id: discussionId
+      }
+    });
+
+    editedDiscussion.discussion = discussion;
+    await editedDiscussion.save();
+    return editedDiscussion
+  }
+
   return Discussion;
 };
