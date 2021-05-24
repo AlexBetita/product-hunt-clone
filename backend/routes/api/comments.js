@@ -6,7 +6,6 @@ const { requireAuth } = require('../../utils/auth');
 const { Comment, Product, Discussion } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const comment = require('../../db/models/comment');
 const e = require('express');
 
 const router = express.Router();
@@ -16,7 +15,11 @@ router.get(
   '/',
   asyncHandler(async (req, res)=>{
     const results = await Comment.scope('comments').findAll({
-      include: [Product, Discussion],
+      include: [
+        Product, Discussion,
+      {
+        model: Comment, as: 'Reply'
+      }],
       order: [
         ['createdAt',  'DESC']
       ]
@@ -117,6 +120,115 @@ router.post(
   })
 );
 
+// Update a comment
+router.put(
+  '/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    const {comment} = req.body;
+
+    const exists = await Comment.exists(id);
+
+    if(user){
+      if(exists){
+        if(Comment.userOwnsComment(id, userId)){
+          const editedComment = await Comment.edit(id, comment);
+          return res.json({editedComment})
+        } else res.json({Error: 'Not users comment'})
+      } else res.json({Error: 'Comment does not exists'})
+    }
+  })
+);
+
+// Delete a comment
+router.delete(
+  '/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    const exists = await Comment.exists(id);
+
+    if(user){
+      if(exists){
+        if(Comment.userOwnsComment(id, userId)){
+          await Comment.destroy({
+            where: {
+              id: id
+            }
+          })
+
+          const comments = await Comment.getCommentsByUserId(id);
+          return res.json({comments})
+
+        } else res.json({Error: 'Not users comment'})
+      } else res.json({Error: 'Comment does not exists'})
+    }
+  })
+);
+
+// Restore a comment
+router.put(
+  '/:id/restore',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    const exists = await Comment.getSoftDeletedCommentById(id);
+
+    if(user){
+      if(exists){
+        if(Comment.userOwnsComment(id, userId)){
+          await Comment.restore({
+            where: {
+              id: id
+            }
+          })
+          const comments = await Comment.getCommentsByUserId(userId);
+          return res.json({comments})
+        } else res.json({Error: 'Not users comment'})
+      } else res.json({Error: 'Comment does not exists'})
+    }
+  })
+);
+
+// Reply to comment buggy
+// router.post(
+//   '/reply/:id',
+//   requireAuth,
+//   asyncHandler(async (req, res)=>{
+//     const {user} = req;
+//     const userId = user.id;
+//     const {id} = req.params;
+//     const {comment} = req.body;
+
+//     const exists = await Comment.exists(id);
+
+//     if(user){
+//       if(exists){
+//         const replyTo = await Comment.findByPk(id);
+//         const reply = await replyTo.createComment({
+//           comment: comment,
+//           userId: userId,
+//           commentableType: 'comment',
+//           commentableId: id
+//         });
+//         return res.json({
+//           reply
+//         })
+//       } else res.json({Error: "This comment does no exists"})
+//     }
+
+//   })
+// );
 
 
 module.exports = router;

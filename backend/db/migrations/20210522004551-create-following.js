@@ -12,6 +12,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         references: {model: 'Users'},
         allowNull: false,
+        onDelete: 'CASCADE'
       },
       followableId: {
         type: Sequelize.INTEGER,

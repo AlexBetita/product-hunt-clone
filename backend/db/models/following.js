@@ -35,11 +35,15 @@ module.exports = (sequelize, DataTypes) => {
     Following.addHook("afterFind", findResult =>{
       if (!Array.isArray(findResult)) findResult = [findResult];
       for (const instance of findResult) {
-        if (instance.followableType === "user" && instance.User !== undefined) {
-          instance.followable = instance.User;
+        try{
+          if (instance.followableType === "user" && instance.User !== undefined) {
+            instance.followable = instance.User;
+          }
+          delete instance.User;
+          delete instance.dataValues.User;
+        } catch {
+          continue
         }
-        delete instance.User;
-        delete instance.dataValues.User;
       }
     });
   };

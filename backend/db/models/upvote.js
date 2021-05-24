@@ -37,15 +37,19 @@ module.exports = (sequelize, DataTypes) => {
   Upvote.addHook("afterFind", findResult =>{
     if (!Array.isArray(findResult)) findResult = [findResult];
     for (const instance of findResult) {
-      if (instance.upvoteableType === "product" && instance.Product !== undefined) {
-        instance.upvoteable = instance.Product;
-      } else if (instance.upvoteableType === "comment" && instance.Comment !== undefined) {
-        instance.upvoteable = instance.Comment;
+      try{
+        if (instance.upvoteableType === "product" && instance.Product !== undefined) {
+          instance.upvoteable = instance.Product;
+        } else if (instance.upvoteableType === "comment" && instance.Comment !== undefined) {
+          instance.upvoteable = instance.Comment;
+        }
+        delete instance.Product;
+        delete instance.dataValues.Product;
+        delete instance.Comment;
+        delete instance.dataValues.Comment;
+      } catch {
+        continue
       }
-      delete instance.Product;
-      delete instance.dataValues.Product;
-      delete instance.Comment;
-      delete instance.dataValues.Comment;
     }
   });
 

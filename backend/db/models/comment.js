@@ -1,4 +1,7 @@
 'use strict';
+
+const e = require("express");
+
 module.exports = (sequelize, DataTypes) => {
   const Comment = sequelize.define('Comment', {
     id: {
@@ -85,19 +88,23 @@ module.exports = (sequelize, DataTypes) => {
   Comment.addHook("afterFind", findResult =>{
     if (!Array.isArray(findResult)) findResult = [findResult];
     for (const instance of findResult) {
-      if (instance.commentableType === "discussion" && instance.Discussion !== undefined) {
-        instance.commentable = instance.Discussion;
-      } else if (instance.commentableType === "comment" && instance.Comment !== undefined) {
-        instance.commentable = instance.Comment;
-      } else if (instance.commentableType === "product" && instance.Product !== undefined) {
-        instance.commentable = instance.Product;
+      try{
+        if (instance.commentableType === "discussion" && instance.Discussion !== undefined) {
+          instance.commentable = instance.Discussion;
+        } else if (instance.commentableType === "comment" && instance.Reply !== undefined) {
+          instance.commentable = instance.Reply;
+        } else if (instance.commentableType === "product" && instance.Product !== undefined) {
+          instance.commentable = instance.Product;
+        }
+        delete instance.Discussion;
+        delete instance.dataValues.Discussion;
+        delete instance.Reply;
+        delete instance.dataValues.Reply;
+        delete instance.Product;
+        delete instance.dataValues.Product;
+      } catch {
+        continue
       }
-      delete instance.Discussion;
-      delete instance.dataValues.Discussion;
-      delete instance.Comment;
-      delete instance.dataValues.Comment;
-      delete instance.Product;
-      delete instance.dataValues.Product;
     }
   });
 
@@ -116,6 +123,45 @@ module.exports = (sequelize, DataTypes) => {
       await Comment.findByPk(id)
       return true
     } catch (e){
+      return false
+    }
+  };
+
+  Comment.userOwnsComment = async function(id, userId){
+    const comment = await Comment.findOne({
+      where: {
+        id: id,
+        userId: userId
+      }
+    })
+    return comment ? true : false
+  };
+
+  Comment.edit = async function(id, comment){
+    const editedComment = await Comment.findByPk(id)
+    editedComment.comment = comment
+    await editedComment.save();
+    return editedComment
+  };
+
+  Comment.getCommentsByUserId = async function(userId){
+    try{
+      const comments = await Comment.findAll({
+        where: {
+          userId: userId
+        }
+      })
+      return comments
+    } catch {
+      return []
+    }
+  };
+
+  Comment.getSoftDeletedCommentById = async function(id){
+    try{
+      await Comment.findByPk(id, {paranoid: false})
+      return true
+    } catch {
       return false
     }
   };
