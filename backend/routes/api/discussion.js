@@ -182,7 +182,12 @@ router.delete(
             where: {
               id: id
             }
-          })
+          });
+          await DiscussionIndex.destory({
+            where:{
+              discussionId: id
+            }
+          });
           const discussions = await Discussion.getDiscussionsByUserId(userId)
           return res.json({discussions})
         } return res.json({Error: 'User does not own this discussion'})
@@ -206,6 +211,11 @@ router.put(
           await Discussion.restore({
             where: {
               id: id
+            }
+          });
+          await DiscussionIndex.restore({
+            where:{
+              discussionId: id
             }
           });
           const discussions = await Discussion.getDiscussionsByUserId(userId);
