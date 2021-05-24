@@ -6,7 +6,6 @@ const { requireAuth } = require('../../utils/auth');
 const { Discussion } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const discussion = require('../../db/models/discussion');
 
 const router = express.Router();
 

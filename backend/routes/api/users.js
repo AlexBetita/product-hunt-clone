@@ -108,7 +108,7 @@ router.put(
   })
 );
 
-// Get users product
+// Get users products
 router.get(
   '/products',
   requireAuth,

@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true,
     },
-    discussion: DataTypes.TEXT,
+    discussion: DataTypes.STRING,
     userId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {paranoid:true});
@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
         commentableType: 'discussion'
       },
       onDelete: 'cascade'
+    })
+
+    Discussion.hasOne(models.DiscussionIndex, {
+      foreignKey: 'discussionId'
     })
 
   };

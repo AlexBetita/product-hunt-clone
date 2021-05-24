@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Discussions', {
+    return queryInterface.createTable('DiscussionIndices', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,16 +10,13 @@ module.exports = {
       },
       discussion: {
         type: Sequelize.STRING(100),
-        allowNull: false
+        allowNull: false,
+        unique: true
       },
-      views: {
-        type: Sequelize.INTEGER,
-        defaultValue: 0
-      },
-      userId: {
+      discussionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        referenes: {model: 'Users'}
+        references: {model: 'Discussions'}
       },
       deletedAt: {
         type: Sequelize.DATE
@@ -27,16 +24,16 @@ module.exports = {
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
+        defaultValue: Sequelize.fn('now')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.fn('now'),
+        defaultValue: Sequelize.fn('now')
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Discussions');
+    return queryInterface.dropTable('DiscussionIndices');
   }
 };
