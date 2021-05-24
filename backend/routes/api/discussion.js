@@ -78,9 +78,60 @@ router.put(
         if(Discussion.userOwnsDiscussion(id, userId)){
           const editedDiscussion = await Discussion.edit(discussion, id)
           return res.json({discussion: editedDiscussion})
-        }
-      }
+        } return res.json({Error: 'User does not own this discussion'})
+      } return res.json({Error: 'This discussion does not exists'})
     }
+  })
+);
+
+// Delete discussion
+router.delete(
+  '/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    if(user){
+      if(Discussion.exists(id)){
+        if(Discussion.userOwnsDiscussion(id, userId)){
+          await Discussion.destroy({
+            where: {
+              id: id
+            }
+          })
+          const discussions = await Discussion.getDiscussionsByUserId(userId)
+          return res.json({discussions})
+        } return res.json({Error: 'User does not own this discussion'})
+      } return res.json({Error: 'This discussion does not exists'})
+    }
+  })
+);
+
+// Restore discussion
+router.put(
+  '/:id/restore',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    if(user){
+      if(Discussion.getSoftDeletedDiscussionById(id)){
+        if(Discussion.userOwnsDiscussion(id, userId)){
+          await Discussion.restore({
+            where: {
+              id: id
+            }
+          });
+          const discussions = await Discussion.getDiscussionsByUserId(userId);
+          return res.json({discussions})
+        } return res.json({Error: 'User does not own this discussion'})
+      } return res.json({Error: 'This discussion does not exists'})
+    }
+
   })
 );
 

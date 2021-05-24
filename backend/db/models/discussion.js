@@ -54,5 +54,19 @@ module.exports = (sequelize, DataTypes) => {
     return editedDiscussion
   }
 
+  Discussion.getSoftDeletedDiscussionById = async function(discussionId){
+    const discussion = await Discussion.findByPk(discussionId, {paranoid: false})
+    return discussion ? true : false
+  }
+
+  Discussion.getDiscussionsByUserId = async function(userId){
+    const discussions = await Discussion.findAll({
+      where: {
+        userId : userId
+      }
+    })
+    return discussions
+  }
+
   return Discussion;
 };

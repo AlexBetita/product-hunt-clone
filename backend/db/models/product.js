@@ -78,7 +78,7 @@ module.exports = (sequelize, DataTypes) => {
     return product ? true : false
   }
 
-  Product.getUsersProducts = async function(userId){
+  Product.getProductsByUserId = async function(userId){
     const products = await Product.findAll({
       where: {
         userId: userId
@@ -111,6 +111,6 @@ module.exports = (sequelize, DataTypes) => {
     const product = await Product.findByPk(productId, {paranoid: false})
     return product ? true : false
   }
-  
+
   return Product;
 };

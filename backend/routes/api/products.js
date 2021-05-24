@@ -142,8 +142,8 @@ router.delete(
               id: id
             }
           })
-          const result = await Product.getUsersProducts(userId)
-          return res.json(result)
+          const products = await Product.getProductsByUserId(userId)
+          return res.json({products})
         } else {
           res.json({Error: "User does not own this product"})
         }
@@ -173,8 +173,8 @@ router.put(
               id: id
             }
           });
-          const result = await Product.getUsersProducts(userId);
-          return res.json(result);
+          const products = await Product.getProductsByUserId(userId);
+          return res.json({products});
         } else {
           res.json({Error: "User does not own this product"})
         }
