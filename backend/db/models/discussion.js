@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     discussion: DataTypes.STRING,
+    message: DataTypes.TEXT,
     userId: DataTypes.INTEGER,
     deletedAt: DataTypes.DATE
   }, {paranoid:true});

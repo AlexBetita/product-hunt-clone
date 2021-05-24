@@ -12,6 +12,9 @@ module.exports = {
         type: Sequelize.STRING(100),
         allowNull: false
       },
+      message:{
+        type: Sequelize.TEXT
+      },
       views: {
         type: Sequelize.INTEGER,
         defaultValue: 0
