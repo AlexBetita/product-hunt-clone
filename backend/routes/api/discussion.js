@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Discussion } = require('../../db/models');
+const { Discussion, DiscussionIndex } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -46,19 +46,60 @@ router.post(
   asyncHandler(async (req, res)=>{
     const {user} = req;
     const userId = user.id;
+
     let {discussion} = req.body;
+    let discussionIndex = discussion.replace(/[^\w\s]/gi, ' ');
+    discussionIndex = discussionIndex.replace(/^\s+|\s+$/g, "");
 
-    if(user){
-      discussion = await Discussion.create({
-        discussion: discussion,
-        userId: userId
-      })
+    if(!DiscussionIndex.exists){
 
-      return res.json({
-        discussion
-      })
-    }
+      if(user){
 
+        discussion = await Discussion.create({
+          discussion: discussion,
+          userId: userId
+        })
+
+        discussionIndex = await DiscussionIndex.create({
+          discussion: discussionIndex,
+          discussionId: discussion.id
+        })
+
+        return res.json({
+          discussion
+        })
+      }
+    } else return res.json({Error: 'Discussion has already been made'})
+  })
+);
+
+// Get all discussions
+router.get(
+  '/:discussion',
+  asyncHandler(async (req, res)=>{
+    const results = await Discussion.findAll({
+      order: [
+        ['createdAt', 'DESC']
+      ]
+    })
+    const discussions = []
+    let discussionsObj = {}
+
+    results.forEach((discussion, i)=>{
+      for(const key in results[i].dataValues){
+        if(key === 'createdAt' || key === 'updatedAt'){
+          discussionsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
+        } else {
+          discussionsObj[key] = results[i].dataValues[key]
+        }
+      }
+      discussions.push(discussionsObj)
+      discussionsObj = {}
+    });
+
+    return res.json({
+      discussions
+    });
   })
 );
 

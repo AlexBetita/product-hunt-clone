@@ -105,19 +105,23 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = function(models) {
 
     User.hasMany(models.Comment,{
-      foreignKey: "userId"
+      foreignKey: "userId",
+      onDelete: 'cascade'
     })
 
     User.hasMany(models.Product,{
-      foreignKey: "userId"
+      foreignKey: "userId",
+      onDelete: 'cascade'
     })
 
     User.hasMany(models.Upvote,{
-      foreignKey: "userId"
+      foreignKey: "userId",
+      onDelete: 'cascade'
     })
 
     User.hasMany(models.Discussion,{
-      foreignKey: "userId"
+      foreignKey: "userId",
+      onDelete: 'cascade'
     })
   };
 

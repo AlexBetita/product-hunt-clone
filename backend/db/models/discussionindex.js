@@ -1,3 +1,4 @@
+
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   const DiscussionIndex = sequelize.define('DiscussionIndex', {
@@ -18,5 +19,15 @@ module.exports = (sequelize, DataTypes) => {
     })
 
   };
+
+  DiscussionIndex.exists = async function(discussion){
+    const discussionIndex = await DiscussionIndex.findOne({
+      where: {
+        discussion: {[sequelize.Op.like]: `%${discussion}%`}
+      }
+    })
+    return discussionIndex ? true : false
+  }
+
   return DiscussionIndex;
 };
