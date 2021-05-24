@@ -51,7 +51,9 @@ router.post(
     let discussionIndex = discussion.replace(/[^\w\s]/gi, ' ');
     discussionIndex = discussionIndex.replace(/^\s+|\s+$/g, "");
 
-    if(!DiscussionIndex.exists){
+    const exists = await DiscussionIndex.exists(discussionIndex)
+
+    if(!exists){
 
       if(user){
 
@@ -73,33 +75,38 @@ router.post(
   })
 );
 
-// Get all discussions
+// Get one discussion
 router.get(
   '/:discussion',
   asyncHandler(async (req, res)=>{
-    const results = await Discussion.findAll({
-      order: [
-        ['createdAt', 'DESC']
-      ]
-    })
-    const discussions = []
-    let discussionsObj = {}
+    let {discussion} = req.params;
+    discussion = discussion.replace(/[^\w\s]/gi, ' ');
+    discussion = discussion.replace(/^\s+|\s+$/g, "");
 
-    results.forEach((discussion, i)=>{
-      for(const key in results[i].dataValues){
+    const discussionIndex = await DiscussionIndex.findByDiscussion(discussion);
+
+    discussion = await Discussion.findByPk(discussionIndex.discussionId);
+
+    let discussionObj = {}
+
+    if(discussionIndex){
+      for(const key in discussion.dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
-          discussionsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
+          discussionObj[key] = moment(discussion.dataValues[key]).startOf('second').fromNow();
         } else {
-          discussionsObj[key] = results[i].dataValues[key]
+          discussionObj[key] = discussion.dataValues[key];
         }
       }
-      discussions.push(discussionsObj)
-      discussionsObj = {}
-    });
 
-    return res.json({
-      discussions
-    });
+      discussion = discussionObj;
+
+      return res.json({
+        discussion
+      })
+    } else {
+      res.json({Error: 'This discussion does not exist'})
+    }
+
   })
 );
 
@@ -116,6 +123,8 @@ router.put(
     if(user){
       if(Discussion.exists(id)){
         if(Discussion.userOwnsDiscussion(id, userId)){
+          const discussionIndex = await DiscussionIndex.findByDiscussionId(id)
+          await DiscussionIndex.edit(discussion, discussionIndex.id)
           const editedDiscussion = await Discussion.edit(discussion, id)
           return res.json({discussion: editedDiscussion})
         } return res.json({Error: 'User does not own this discussion'})
