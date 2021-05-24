@@ -57,9 +57,9 @@ module.exports = (sequelize, DataTypes) => {
     website: {
       type: DataTypes.STRING,
       validate: {
-        len:[5, 256],
+        len:[0, 256],
         isUrl(value) {
-          if(Validator.isNotUrl(value)){
+          if(!Validator.isUrl(value) && value.length){
             throw new Error('Must be a valid url format')
           }
         }
@@ -141,18 +141,42 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  User.signup = async function ({ username, email, password }) {
+  User.signup = async function ({ fullName, username, email, password, headline, website, profileImage }) {
     const hashedPassword = bcrypt.hashSync(password);
     const user = await User.create({
+      fullName,
       username,
       email,
       hashedPassword,
+      headline,
+      website,
+      profileImage
     });
     return await User.scope('currentUser').findByPk(user.id);
   };
 
+  User.edit = async function ({ fullName, headline, website, profileImage, userId }){
+    const user = await User.findByPk(userId)
 
-  ///Product related
+    user.fullName = fullName
+    user.headline = headline
+    user.website = website
+    user.profileImage = profileImage
+    await user.save()
+    return user
+  };
+
+  User.changePassword = async function ({ password, changePassword, userId}){
+    const user = await User.findByPk(userId);
+    if(user && user.validatePassword(password)){
+      const newHashedPassword = bcrypt.hashSync(changePassword);
+      user.password = newHashedPassword
+      await user.save()
+      return user
+    } else {
+      return false
+    }
+  };
 
   return User;
 };

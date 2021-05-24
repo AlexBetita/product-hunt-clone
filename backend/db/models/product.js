@@ -111,5 +111,6 @@ module.exports = (sequelize, DataTypes) => {
     const product = await Product.findByPk(productId, {paranoid: false})
     return product ? true : false
   }
+  
   return Product;
 };
