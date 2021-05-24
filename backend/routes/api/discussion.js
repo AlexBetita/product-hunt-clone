@@ -50,6 +50,7 @@ router.post(
     let {discussion} = req.body;
     let discussionIndex = discussion.replace(/[^\w\s]/gi, ' ');
     discussionIndex = discussionIndex.replace(/^\s+|\s+$/g, "");
+    discussion = discussion.replace(/ +(?= )/g, "");
 
     const exists = await DiscussionIndex.exists(discussionIndex)
 
@@ -82,7 +83,8 @@ router.get(
     let {discussion} = req.params;
     discussion = discussion.replace(/[^\w\s]/gi, ' ');
     discussion = discussion.replace(/^\s+|\s+$/g, "");
-
+    discussion = discussion.replace(/ +(?= )/g, "");
+    
     const discussionIndex = await DiscussionIndex.findByDiscussion(discussion);
 
     discussion = await Discussion.findByPk(discussionIndex.discussionId);

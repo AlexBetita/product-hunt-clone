@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   DiscussionIndex.findByDiscussion = async function(discussion){
-    
+
     const discussionIndex = await DiscussionIndex.findOne({
       where: {
         discussion: {[Op.iLike]: `%${discussion}%`}
@@ -55,6 +55,7 @@ module.exports = (sequelize, DataTypes) => {
     const discussionIndex = await DiscussionIndex.findByPk(id)
     discussion = discussion.replace(/[^\w\s]/gi, ' ');
     discussion = discussion.replace(/^\s+|\s+$/g, "");
+    discussion = discussion.replace(/ +(?= )/g, "");
     discussionIndex.discussion = discussion
     await discussionIndex.save()
     return discussionIndex
