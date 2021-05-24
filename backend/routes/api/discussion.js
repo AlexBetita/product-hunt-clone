@@ -76,7 +76,7 @@ router.post(
   })
 );
 
-// Get one discussion
+// Get discussion by title
 router.get(
   '/:discussion',
   asyncHandler(async (req, res)=>{
@@ -84,7 +84,7 @@ router.get(
     discussion = discussion.replace(/[^\w\s]/gi, ' ');
     discussion = discussion.replace(/^\s+|\s+$/g, "");
     discussion = discussion.replace(/ +(?= )/g, "");
-    
+
     const discussionIndex = await DiscussionIndex.findByDiscussion(discussion);
 
     discussion = await Discussion.findByPk(discussionIndex.discussionId);
@@ -92,6 +92,37 @@ router.get(
     let discussionObj = {}
 
     if(discussionIndex){
+      for(const key in discussion.dataValues){
+        if(key === 'createdAt' || key === 'updatedAt'){
+          discussionObj[key] = moment(discussion.dataValues[key]).startOf('second').fromNow();
+        } else {
+          discussionObj[key] = discussion.dataValues[key];
+        }
+      }
+
+      discussion = discussionObj;
+
+      return res.json({
+        discussion
+      })
+    } else {
+      res.json({Error: 'This discussion does not exist'})
+    }
+
+  })
+);
+
+// Get discussion by id
+router.get(
+  '/id/:id',
+  asyncHandler(async (req, res)=>{
+    let {id} = req.params;
+
+    let discussion = await Discussion.findByPk(id);
+
+    let discussionObj = {}
+
+    if(discussion){
       for(const key in discussion.dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
           discussionObj[key] = moment(discussion.dataValues[key]).startOf('second').fromNow();
