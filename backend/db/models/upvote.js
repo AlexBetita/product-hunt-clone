@@ -53,5 +53,15 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
+  Upvote.isUpvoted = async function(userId, upvoteableType, upvoteableId){
+    const vote = await Upvote.findOne({
+      where: {
+        userId: userId,
+        upvoteableId: upvoteableId,
+        upvoteableType: upvoteableType
+      }
+    })
+  }
+
   return Upvote;
 };
