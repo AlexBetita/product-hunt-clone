@@ -53,7 +53,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
 
-  Upvote.isUpvoted = async function(userId, upvoteableType, upvoteableId){
+  Upvote.changeVote = async function(userId, upvoteableType, upvoteableId){
     const vote = await Upvote.findOne({
       where: {
         userId: userId,
@@ -61,7 +61,19 @@ module.exports = (sequelize, DataTypes) => {
         upvoteableType: upvoteableType
       }
     })
-  }
+
+    const wasVoted = await Upvote.findOne({
+      paranoid: false,
+      where: {
+        userId: userId,
+        upvoteableId: upvoteableId,
+        upvoteableType: upvoteableType,
+      }
+    })
+    if(vote) return {voted: 'true', result: vote}
+    else if (wasVoted) return {voted: 'wasVoted', result: wasVoted}
+    else return {voted: 'false', result: vote}
+  };
 
   return Upvote;
 };

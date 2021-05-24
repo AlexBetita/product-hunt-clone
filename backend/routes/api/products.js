@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Product, ProductImage } = require('../../db/models');
+const { Product, ProductImage, Upvote } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -70,6 +70,37 @@ router.get(
     });
 
     return res.json({products});
+  })
+);
+
+// Get one product
+router.get(
+  '/:id',
+  asyncHandler(async (req, res)=>{
+    const {id} = req.params;
+    const results = await Product.findByPk(id);
+
+    let productObj = {}
+
+    // const upvotes = await results.getUpvotes();
+    // const comments = await results.getComments();
+
+    if(results){
+      for(const key in results.dataValues){
+        if(key === 'createdAt' || key === 'updatedAt'){
+          productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
+        } else {
+          productObj[key] = results.dataValues[key];
+        }
+      }
+
+      const product = productObj;
+
+      return res.json({
+        product
+      })
+
+    } else res.json({Error: 'This product does not exist'})
   })
 );
 

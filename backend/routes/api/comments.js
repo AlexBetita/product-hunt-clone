@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Comment, Product, Discussion } = require('../../db/models');
+const { Comment, Product, Discussion, Upvote } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const e = require('express');
@@ -16,10 +16,21 @@ router.get(
   asyncHandler(async (req, res)=>{
     const results = await Comment.scope('comments').findAll({
       include: [
-        Product, Discussion,
-      {
-        model: Comment, as: 'Reply'
-      }],
+        {
+          model:Product.scope('products'),
+          include: [
+            Upvote
+          ]
+        }, {
+          model: Discussion,
+          include: [
+            Upvote
+          ]
+        },
+        Upvote],
+      // {
+      //   model: Comment, as: 'Reply'
+      // }],
       order: [
         ['createdAt',  'DESC']
       ]
@@ -27,16 +38,31 @@ router.get(
 
     const comments = []
     let commentsObj = {}
+    let commentedOnObj = {}
 
     results.forEach((comment, i)=>{
-      commentsObj['commentedOn'] = {[comment.commentableType]: comment.commentable}
+      commentedOnObj['commentedOn'] = comment.commentableType
+      commentedOnObj['upvotes'] = comment.commentable.dataValues.Upvotes.length
+      for(const key in comment.commentable.dataValues){
+        if(key === 'createdAt' || key === 'updatedAt'){
+          commentedOnObj[key] = moment(comment.commentable.dataValues[key]).startOf('second').fromNow();
+        } else if(key === 'Upvotes'){
+          continue
+        } else {
+          commentedOnObj[key] = comment.commentable.dataValues[key]
+        }
+      }
+      commentsObj['upvotes'] = results[i].dataValues.Upvotes.length
       for(const key in results[i].dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
           commentsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
+        } else if(key === 'commentableType' || key === 'Upvotes'){
+          continue
         } else {
           commentsObj[key] = results[i].dataValues[key]
         }
       }
+      comments.push(commentedOnObj);
       comments.push(commentsObj);
       commentsObj = {};
     })
