@@ -32,6 +32,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'upvoteableId',
       constraints: false
     })
+    Upvote.belongsTo(models.Discussion,{
+      foreignKey: 'upvoteableId',
+      constraints: false
+    })
   };
 
   Upvote.addHook("afterFind", findResult =>{
@@ -42,11 +46,15 @@ module.exports = (sequelize, DataTypes) => {
           instance.upvoteable = instance.Product;
         } else if (instance.upvoteableType === "comment" && instance.Comment !== undefined) {
           instance.upvoteable = instance.Comment;
+        } else if (instance.upvoteableType === "discussion" && instance.Discussion !== undefined) {
+          instance.upvoteable = instance.Discussion;
         }
         delete instance.Product;
         delete instance.dataValues.Product;
         delete instance.Comment;
         delete instance.dataValues.Comment;
+        delete instance.Discussion;
+        delete instance.dataValues.Discussion;
       } catch {
         continue
       }

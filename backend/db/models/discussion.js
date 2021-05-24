@@ -28,6 +28,15 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'cascade'
     })
 
+    Discussion.hasMany(models.Upvote,{
+      foreignKey: 'upvoteableId',
+      constraints: false,
+      scope: {
+        upvoteableType: 'discussion'
+      },
+      onDelete: 'cascade'
+    })
+
     Discussion.hasOne(models.DiscussionIndex, {
       foreignKey: 'discussionId'
     })
