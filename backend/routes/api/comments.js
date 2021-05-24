@@ -48,11 +48,16 @@ router.get(
   asyncHandler(async (req, res)=>{
     const {id} = req.params;
 
-    const comment = await Comment.scope('commentsNoDates').findByPk(id,{
-      include: [Product.scope('products'), Discussion]
-    });
+    const exists = await Comment.exists(id)
+    if(exists){
+      const comment = await Comment.scope('commentsNoDates').findByPk(id,{
+        include: [Product.scope('products'), Discussion]
+      });
 
-    return res.json({comment, commentedOn: comment.commentable})
+      return res.json({comment, commentedOn: comment.commentable})
+    } else {
+      res.json({Error: 'Comment does not exists'})
+    }
   })
 );
 
@@ -83,5 +88,35 @@ router.post(
 
   })
 );
+
+// Post comment on discussion
+router.post(
+  '/discussion/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+    const {comment} = req.body;
+
+    const exists = await Discussion.exists(id);
+
+    if(user){
+      if(exists){
+        const discussion = await Discussion.findByPk(id);
+        const commentRes = await discussion.createComment({
+          comment: comment,
+          userId: userId
+        });
+        return res.json({
+          commentRes
+        })
+      } else res.json({Error: "This discussion does not exists"})
+    }
+
+  })
+);
+
+
 
 module.exports = router;

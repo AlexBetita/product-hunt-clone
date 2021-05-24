@@ -109,7 +109,16 @@ module.exports = (sequelize, DataTypes) => {
       }
     })
     return comments
-  }
+  };
+
+  Comment.exists = async function(id){
+    try{
+      await Comment.findByPk(id)
+      return true
+    } catch (e){
+      return false
+    }
+  };
 
   return Comment;
 };
