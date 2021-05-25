@@ -142,6 +142,8 @@ router.get(
 
     let productObj = {}
 
+    console.log(testSpread)
+
     if(results){
       for(const key in results.dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){

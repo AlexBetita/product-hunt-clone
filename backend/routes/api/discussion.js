@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Discussion, DiscussionIndex } = require('../../db/models');
+const { Discussion, DiscussionIndex, Comment, Upvote } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -16,6 +16,10 @@ router.get(
     const results = await Discussion.findAll({
       order: [
         ['createdAt', 'DESC']
+      ],
+      include: [
+        Comment,
+        Upvote
       ]
     })
     const discussions = []
@@ -88,7 +92,12 @@ router.get(
 
     const discussionIndex = await DiscussionIndex.findByDiscussion(discussion);
 
-    discussion = await Discussion.findByPk(discussionIndex.discussionId);
+    discussion = await Discussion.findByPk(discussionIndex.discussionId,{
+      include: [
+        Comment,
+        Upvote
+      ]
+    });
 
     let discussionObj = {}
 
@@ -119,7 +128,12 @@ router.get(
   asyncHandler(async (req, res)=>{
     let {id} = req.params;
 
-    let discussion = await Discussion.findByPk(id);
+    let discussion = await Discussion.findByPk(id,{
+      include: [
+        Comment,
+        Upvote
+      ]
+    });
 
     let discussionObj = {}
 

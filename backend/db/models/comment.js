@@ -139,6 +139,7 @@ module.exports = (sequelize, DataTypes) => {
   Comment.edit = async function(id, comment){
     const editedComment = await Comment.findByPk(id)
     editedComment.comment = comment
+    editedComment.edited = true
     await editedComment.save();
     return editedComment
   };

@@ -60,7 +60,7 @@ router.put(
     const {id} = req.params;
 
     const exists = await Comment.exists(id);
-    console.log('exists', exists)
+
     if(user){
       if(exists){
         const {voted, result} = await Upvote.changeVote(userId, 'comment', id);
@@ -94,7 +94,7 @@ router.put(
 
 // Upvote/Downvote a discussion
 router.put(
-  '/comment/:id',
+  '/discussion/:id',
   requireAuth,
   asyncHandler(async (req, res)=>{
     const {user} = req;
@@ -102,10 +102,10 @@ router.put(
     const {id} = req.params;
 
     const exists = await Discussion.exists(id);
-    console.log('exists', exists)
+
     if(user){
       if(exists){
-        const {voted, result} = await Upvote.changeVote(userId, 'comment', id);
+        const {voted, result} = await Upvote.changeVote(userId, 'discussion', id);
 
         if(voted === 'wasVoted'){
           const upvote = await Upvote.restore({
