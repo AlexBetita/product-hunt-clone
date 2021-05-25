@@ -11,7 +11,10 @@ module.exports = (sequelize, DataTypes) => {
     upvoteableId: DataTypes.INTEGER,
     upvoteableType: DataTypes.STRING,
     deletedAt: DataTypes.DATE
-  }, {paranoid: true});
+  }, {
+    paranoid: true,
+    
+  });
 
   Upvote.prototype.getUpvoteable = function(options){
     if (!this.upvoteableType) return Promise.resolve(null);

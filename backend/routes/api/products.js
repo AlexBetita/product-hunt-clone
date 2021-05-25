@@ -3,10 +3,9 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Product, ProductImage, Upvote, Comment } = require('../../db/models');
+const { Product, ProductImage, Upvote, Comment, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-const e = require('express');
 
 const router = express.Router();
 
@@ -51,19 +50,67 @@ router.get(
   '/',
   asyncHandler(async (req, res)=>{
     const results = await Product.findAll({
+      include: [
+        {
+          model: Comment,
+          include: [Upvote]
+        },
+        Upvote,
+        ProductImage.scope('imageUrls')
+      ],
       order: [
         ['createdAt', 'DESC']
       ]
     })
+
+    // const results = await Product.findAll({
+    //   attributes: [
+    //     'User.*', 'Comment.*', 'ProductImage.*', 'Upvote.*',
+    //     [Sequelize.fn('COUNT', Sequelize.col('Upvote.id')), 'PostCount']
+    //   ],
+    //   include: [
+    //     {
+    //       model: Comment,
+    //       include: [Upvote]
+    //     },
+    //     Upvote,
+    //     ProductImage.scope('imageUrls')
+    //   ],
+    //   order: [
+    //     ['createdAt', 'DESC']
+    //   ]
+    // })
+
     const products = []
     let productsObj = {}
 
     results.forEach((product, i)=>{
+      // for(const key in results[i].dataValues){
+      //   if(key === 'createdAt' || key === 'updatedAt'){
+      //     productsObj[key] = moment(results[i].dataValues[key]).format('MMMM Do YYYY, h:mm:ss a');
+      //   } else {
+      //     productsObj[key] = results[i].dataValues[key]
+      //   }
+      // }
       for(const key in results[i].dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
-          productsObj[key] = moment(results[i].dataValues[key]).format('MMMM Do YYYY, h:mm:ss a');
+          productsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
+        } else if(key === 'Upvotes') {
+          productsObj['upvotes'] = results[i].dataValues[key].length
+        } else if(key === 'Comments'){
+          productsObj['Comments'] = {}
+          results[i].dataValues[key].forEach((comment, i)=>{
+            productsObj['Comments'][i+1] = {}
+            for(const key2 in comment.dataValues){
+              if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                productsObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+              } else if (key2 === 'Upvotes'){
+                productsObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+              } else productsObj['Comments'][i+1][key2] = comment.dataValues[key2]
+            }
+          })
         } else {
-          productsObj[key] = results[i].dataValues[key]
+          productsObj[key] = results[i].dataValues[key];
         }
       }
       products.push(productsObj);
