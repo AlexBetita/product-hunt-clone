@@ -3,9 +3,10 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Product, ProductImage, Upvote } = require('../../db/models');
+const { Product, ProductImage, Upvote, Comment } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const e = require('express');
 
 const router = express.Router();
 
@@ -78,17 +79,38 @@ router.get(
   '/:id',
   asyncHandler(async (req, res)=>{
     const {id} = req.params;
-    const results = await Product.findByPk(id);
+    const results = await Product.findByPk(id,
+      {
+        include: [
+          {
+            model: Comment,
+            include: [Upvote]
+          },
+          Upvote,
+          ProductImage.scope('imageUrls')
+        ]
+      });
 
     let productObj = {}
-
-    // const upvotes = await results.getUpvotes();
-    // const comments = await results.getComments();
 
     if(results){
       for(const key in results.dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
           productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
+        } else if(key === 'Upvotes') {
+          productObj['upvotes'] = results.dataValues[key].length
+        } else if(key === 'Comments'){
+          productObj['Comments'] = {}
+          results.dataValues[key].forEach((comment, i)=>{
+            productObj['Comments'][i+1] = {}
+            for(const key2 in comment.dataValues){
+              if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+              } else if (key2 === 'Upvotes'){
+                productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+              } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+            }
+          })
         } else {
           productObj[key] = results.dataValues[key];
         }

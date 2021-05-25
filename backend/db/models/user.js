@@ -107,25 +107,21 @@ module.exports = (sequelize, DataTypes) => {
     User.hasMany(models.Comment,{
       foreignKey: "userId",
       onDelete: 'cascade',
-      hooks: true
     })
 
     User.hasMany(models.Product,{
       foreignKey: "userId",
       onDelete: 'cascade',
-      hooks: true
     })
 
     User.hasMany(models.Upvote,{
       foreignKey: "userId",
       onDelete: 'cascade',
-      hooks: true
     })
 
     User.hasMany(models.Discussion,{
       foreignKey: "userId",
       onDelete: 'cascade',
-      hooks: true
     })
   };
 

@@ -32,6 +32,33 @@ module.exports = {
         website: faker.internet.url(),
         profileImage: faker.image.imageUrl(),
       },
+      {
+        fullName: faker.name.findName(),
+        email: faker.internet.email(),
+        username: 'FakeUser3',
+        hashedPassword: bcrypt.hashSync('fake3'),
+        headline: faker.lorem.sentence(4, 10),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
+      },
+      {
+        fullName: faker.name.findName(),
+        email: faker.internet.email(),
+        username: 'FakeUser4',
+        hashedPassword: bcrypt.hashSync('fake4'),
+        headline: faker.lorem.sentence(4, 10),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
+      },
+      {
+        fullName: faker.name.findName(),
+        email: faker.internet.email(),
+        username: 'FakeUser5',
+        hashedPassword: bcrypt.hashSync('fake5'),
+        headline: faker.lorem.sentence(4, 10),
+        website: faker.internet.url(),
+        profileImage: faker.image.imageUrl(),
+      },
     ], {});
   },
 
