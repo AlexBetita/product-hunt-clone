@@ -8,7 +8,7 @@ module.exports = {
       {
         fullName: 'demo',
         email: 'demo@user.io',
-        username: 'Demo-lition',
+        username: 'demo-lition',
         hashedPassword: bcrypt.hashSync('password'),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),
@@ -17,7 +17,7 @@ module.exports = {
       {
         fullName: faker.name.findName(),
         email: faker.internet.email(),
-        username: 'FakeUser1',
+        username: 'fakeuser1',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),
@@ -26,7 +26,7 @@ module.exports = {
       {
         fullName: faker.name.findName(),
         email: faker.internet.email(),
-        username: 'FakeUser2',
+        username: 'fakeuser2',
         hashedPassword: bcrypt.hashSync(faker.internet.password()),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),
@@ -35,7 +35,7 @@ module.exports = {
       {
         fullName: faker.name.findName(),
         email: faker.internet.email(),
-        username: 'FakeUser3',
+        username: 'fakeuser3',
         hashedPassword: bcrypt.hashSync('fake3'),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),
@@ -44,7 +44,7 @@ module.exports = {
       {
         fullName: faker.name.findName(),
         email: faker.internet.email(),
-        username: 'FakeUser4',
+        username: 'fakeuser4',
         hashedPassword: bcrypt.hashSync('fake4'),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),
@@ -53,7 +53,7 @@ module.exports = {
       {
         fullName: faker.name.findName(),
         email: faker.internet.email(),
-        username: 'FakeUser5',
+        username: 'fakeuser5',
         hashedPassword: bcrypt.hashSync('fake5'),
         headline: faker.lorem.sentence(4, 10),
         website: faker.internet.url(),

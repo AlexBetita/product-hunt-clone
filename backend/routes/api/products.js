@@ -3,7 +3,7 @@ const asyncHandler = require('express-async-handler');
 const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
-const { Product, ProductImage, Upvote, Comment, Sequelize } = require('../../db/models');
+const { Product, ProductImage, Upvote, Comment, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -53,9 +53,10 @@ router.get(
       include: [
         {
           model: Comment,
-          include: [Upvote]
+          include: [Upvote, User.scope('userIcons')]
         },
         Upvote,
+        User.scope('userIcons'),
         ProductImage.scope('imageUrls')
       ],
       order: [
@@ -131,8 +132,9 @@ router.get(
         include: [
           {
             model: Comment,
-            include: [Upvote]
+            include: [Upvote, User.scope('userIcons')]
           },
+          User.scope('userIcons'),
           Upvote,
           ProductImage.scope('imageUrls')
         ]

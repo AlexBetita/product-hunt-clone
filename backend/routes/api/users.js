@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Product } = require('../../db/models');
+const { User, Product, Comment, Discussion, Upvote } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -146,6 +146,15 @@ router.put(
       if(user) return user
       else res.json({Error: "Passwords don't match"})
     }
+  })
+);
+
+// Get user
+router.get(
+  '/:username',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    
   })
 );
 

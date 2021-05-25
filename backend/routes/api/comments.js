@@ -35,13 +35,15 @@ router.get(
       ]
     });
 
-    const commentsArr = []
+
     const comments = {}
+
+    let commentsArr = []
     let commentsObj = {}
     let commentedOnObj = {}
 
     results.forEach((comment, i)=>{
-      commentedOnObj['commentedOn'] = comment.commentableType
+      commentedOnObj['type'] = comment.commentableType
       commentedOnObj['upvotes'] = comment.commentable.dataValues.Upvotes.length
       for(const key in comment.commentable.dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
@@ -62,11 +64,12 @@ router.get(
           commentsObj[key] = results[i].dataValues[key]
         }
       }
-      commentsArr.push(commentedOnObj);
-      commentsArr.push(commentsObj);
+      commentsArr.push({commentedOn: commentedOnObj});
+      commentsArr.push({comment: commentsObj});
       commentsObj = {};
       commentedOnObj = {};
       comments[i+1] = commentsArr
+      commentsArr = []
     })
 
     return res.json({comments})

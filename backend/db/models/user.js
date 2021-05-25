@@ -34,8 +34,8 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: [3, 320],
-        isEmail(value) {
-          if (Validator.isNotEmail(value)) {
+        isNotEmail(value) {
+          if (!Validator.isEmail(value)) {
             throw new Error('Must be a valid email format')
           }
         }
@@ -99,6 +99,10 @@ module.exports = (sequelize, DataTypes) => {
       loginUser: {
         attributes: {},
       },
+      userIcons: {
+        attributes: { exclude: ['hashedPassword', 'email', 'createdAt', 'updatedAt', 'website', 'productsViewed',
+                              'deletedAt', 'visits']}
+      }
     },
   });
 
@@ -155,6 +159,7 @@ module.exports = (sequelize, DataTypes) => {
 
   User.signup = async function ({ fullName, username, email, password, headline, website, profileImage }) {
     const hashedPassword = bcrypt.hashSync(password);
+    username = username.toLowerCase()
     const user = await User.create({
       fullName,
       username,
@@ -188,6 +193,15 @@ module.exports = (sequelize, DataTypes) => {
     } else {
       return false
     }
+  };
+
+  User.getByUsername = async function ({username}){
+    const user = await User.findOne({
+      where: {
+        username: {[Op.iLike]: `%${username}%`}
+      }
+    })
+
   };
 
   return User;
