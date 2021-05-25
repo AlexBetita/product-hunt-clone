@@ -120,8 +120,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Comment.exists = async function(id){
     try{
-      await Comment.findByPk(id)
-      return true
+      return await Comment.findByPk(id) ? true : false
     } catch (e){
       return false
     }
@@ -165,6 +164,14 @@ module.exports = (sequelize, DataTypes) => {
       return false
     }
   };
+
+  Comment.getCommentById = async function(id){
+    try{
+      return await Comment.findByPk(id);
+    } catch {
+      return null
+    }
+  }
 
   return Comment;
 };

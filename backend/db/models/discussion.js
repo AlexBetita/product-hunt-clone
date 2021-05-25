@@ -45,7 +45,7 @@ module.exports = (sequelize, DataTypes) => {
 
   Discussion.exists = async function(id){
     return await Discussion.findByPk(id) ? true : false
-  }
+  };
 
   Discussion.userOwnsDiscussion = async function(discussionId, userId){
     return await Discussion.findOne({
@@ -54,7 +54,7 @@ module.exports = (sequelize, DataTypes) => {
         userId: userId
       }
     }) ? true : false
-  }
+  };
 
   Discussion.edit = async function(discussion, message, discussionId){
     const editedDiscussion = await Discussion.findOne({
@@ -67,21 +67,26 @@ module.exports = (sequelize, DataTypes) => {
     editedDiscussion.message = message
     await editedDiscussion.save();
     return editedDiscussion
-  }
+  };
 
   Discussion.getSoftDeletedDiscussionById = async function(discussionId){
     const discussion = await Discussion.findByPk(discussionId, {paranoid: false})
     return discussion ? true : false
-  }
+  };
 
   Discussion.getDiscussionsByUserId = async function(userId){
-    const discussions = await Discussion.findAll({
+    const discussion = await Discussion.findAll({
       where: {
         userId : userId
       }
     })
-    return discussions
-  }
+    return discussion
+  };
+
+  Discussion.getDiscussionById = async function(discussionId){
+    const discussion = await Discussion.findByPk(discussionId)
+    return discussion
+  };
 
   return Discussion;
 };

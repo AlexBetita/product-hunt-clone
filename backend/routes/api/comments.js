@@ -36,7 +36,8 @@ router.get(
       ]
     });
 
-    const comments = []
+    const commentsArr = []
+    const comments = {}
     let commentsObj = {}
     let commentedOnObj = {}
 
@@ -62,9 +63,11 @@ router.get(
           commentsObj[key] = results[i].dataValues[key]
         }
       }
-      comments.push(commentedOnObj);
-      comments.push(commentsObj);
+      commentsArr.push(commentedOnObj);
+      commentsArr.push(commentsObj);
       commentsObj = {};
+      commentedOnObj = {};
+      comments[i+1] = commentsArr
     })
 
     return res.json({comments})

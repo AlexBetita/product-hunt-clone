@@ -1,6 +1,5 @@
 const express = require('express');
 const asyncHandler = require('express-async-handler');
-const moment = require('moment');
 
 const { requireAuth } = require('../../utils/auth');
 const { Upvote, Product, Discussion, Comment } = require('../../db/models');
@@ -50,5 +49,90 @@ router.put(
     }
   })
 );
+
+// Upvote/Downvote a comment
+router.put(
+  '/comment/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    const exists = await Comment.exists(id);
+    console.log('exists', exists)
+    if(user){
+      if(exists){
+        const {voted, result} = await Upvote.changeVote(userId, 'comment', id);
+
+        if(voted === 'wasVoted'){
+          const upvote = await Upvote.restore({
+            where: {
+              id: result.dataValues.id
+            }
+          });
+          return res.json({upvote})
+        } else if(voted === 'true'){
+          const downvote = await Upvote.destroy({
+            where: {
+              id: result.dataValues.id
+            }
+          })
+          return res.json({downvote})
+        } else {
+          const comment = await Comment.getCommentById(id);
+          const upvote = await comment.createUpvote({
+            userId: userId
+          })
+          return res.json({upvote})
+        }
+
+      } else res.json({Error: 'Comment does not exist'})
+    }
+  })
+);
+
+// Upvote/Downvote a discussion
+router.put(
+  '/comment/:id',
+  requireAuth,
+  asyncHandler(async (req, res)=>{
+    const {user} = req;
+    const userId = user.id;
+    const {id} = req.params;
+
+    const exists = await Discussion.exists(id);
+    console.log('exists', exists)
+    if(user){
+      if(exists){
+        const {voted, result} = await Upvote.changeVote(userId, 'comment', id);
+
+        if(voted === 'wasVoted'){
+          const upvote = await Upvote.restore({
+            where: {
+              id: result.dataValues.id
+            }
+          });
+          return res.json({upvote})
+        } else if(voted === 'true'){
+          const downvote = await Upvote.destroy({
+            where: {
+              id: result.dataValues.id
+            }
+          })
+          return res.json({downvote})
+        } else {
+          const discussion = await Discussion.getDiscussionById(id);
+          const upvote = await discussion.createUpvote({
+            userId: userId
+          })
+          return res.json({upvote})
+        }
+
+      } else res.json({Error: 'Discussion does not exist'})
+    }
+  })
+);
+
 
 module.exports = router;
