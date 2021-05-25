@@ -1,0 +1,17 @@
+.div__navigation{
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  align-items: center;
+  display: flex;
+  height: 66px;
+  padding-bottom: 13px;
+  padding-top: 13px;
+}

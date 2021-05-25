@@ -33,7 +33,6 @@ const addOneProduct = (product) => ({
 
 export const getProducts = () => async dispatch => {
   const response = await fetch(`/api/products`);
-
   if (response.ok) {
     const products = await response.json();
     dispatch(load(products));
@@ -50,7 +49,7 @@ export const getOneProduct = id => async dispatch => {
 };
 
 export const postProduct = payload => async dispatch => {
-  const { title, thumbnail, description } = product;
+  const { title, thumbnail, description } = payload;
   const formData = new FormData();
 
   formData.append("title", title);
@@ -72,3 +71,53 @@ export const postProduct = payload => async dispatch => {
     return data;
   }
 }
+
+export const updateProduct = payload => async dispatch => {
+  const { title, thumbnail, description } = payload;
+  const formData = new FormData();
+
+  formData.append("title", title);
+  formData.append("description", description);
+
+  if(thumbnail) formData.append("image", thumbnail);
+
+  const response = await csrfFetch(`/api/products/${payload.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  })
+
+  if (response.ok){
+    const data = await response.json();
+    dispatch(addOneProduct(data))
+    return data;
+  }
+}
+
+const initialState = {
+  list: [],
+  comments: [],
+  upvotes: 0,
+}
+
+const productReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case LOAD_PRODUCTS: {
+      const allProducts = {};
+      action.products.forEach(product=>{
+        allProducts[product.id] = product;
+      });
+      return {
+        ...allProducts,
+        ...state,
+        list: allProducts,
+      }
+    }
+    default:
+      return state;
+  }
+}
+
+export default productReducer;
