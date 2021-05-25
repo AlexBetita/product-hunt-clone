@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Product, Comment, Discussion, Upvote } = require('../../db/models');
+const { User, Product } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
@@ -152,9 +152,18 @@ router.put(
 // Get user
 router.get(
   '/:username',
-  requireAuth,
   asyncHandler(async (req, res)=>{
-    
+    const {username} = req.params;
+    const user = await User.getByUsername(username);
+
+
+    const upvotes = await user.getUpvotes()
+    const products = await user.getProducts()
+    const comments = await user.getComments()
+    const discussions = await user.getDiscussions()
+
+    console.log(discussions)
+    return res.json({user})
   })
 );
 

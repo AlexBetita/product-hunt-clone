@@ -1,7 +1,8 @@
 
 'use strict';
+const { Op } = require("sequelize");
+
 module.exports = (sequelize, DataTypes) => {
-  const { Op } = require("sequelize");
   const DiscussionIndex = sequelize.define('DiscussionIndex', {
     id: {
       type: DataTypes.INTEGER,

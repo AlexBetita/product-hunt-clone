@@ -1,5 +1,5 @@
 'use strict';
-const { Validator } = require('sequelize');
+const { Validator, Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
 
 module.exports = (sequelize, DataTypes) => {
@@ -195,13 +195,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   };
 
-  User.getByUsername = async function ({username}){
+  User.getByUsername = async function (username){
     const user = await User.findOne({
       where: {
         username: {[Op.iLike]: `%${username}%`}
       }
     })
-
+    return user
   };
 
   return User;
