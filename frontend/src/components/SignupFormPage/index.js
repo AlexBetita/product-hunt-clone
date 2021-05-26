@@ -25,7 +25,17 @@ function SignupFormPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     let newErrors = [];
-    if (password === confirmPassword) {
+
+
+    if(password !== confirmPassword){
+      newErrors.push('Confirm Password field must be the same as the Password field')
+    }
+
+    if(username !== username.toLowerCase()){
+      newErrors.push('Username must be lower case')
+    }
+
+    if (!newErrors.length) {
       setErrors([]);
       return dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
         .then(() => {
@@ -46,7 +56,10 @@ function SignupFormPage() {
           }
         });
     }
-    return setErrors(['Confirm Password field must be the same as the Password field']);
+
+    setErrors(newErrors)
+
+    return setErrors
   };
 
   const updateFile = (e) => {
@@ -54,7 +67,6 @@ function SignupFormPage() {
     if (file) setProfileImage(file);
   };
 
-  console.log(sessionUser)
   return (
     <div>
       <h1>Sign up on Product Hunt Clone</h1>

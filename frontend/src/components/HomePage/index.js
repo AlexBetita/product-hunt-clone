@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSelector, useDispatch} from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 
-import {getProducts} from '../../store/products';
+import {getProducts, resetState} from '../../store/products';
 
 import Products from '../Products'
 
@@ -19,6 +19,9 @@ const Home = () => {
 
   useEffect(()=>{
     dispatch(getProducts())
+    return () => {
+      dispatch(resetState())
+    }
   }, [dispatch])
 
 

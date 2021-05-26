@@ -33,9 +33,124 @@
 
 
 .div__login__modal__container{
-  background-color: lightgrey;
-  width: 520px;
-  height: 404px;
-  border: 15px solid green;
-  padding: 20px;
+
+  width: 560px;
+  height: 444px;
+  padding: 30px;
+
+
+  background: #FFFFFF;
+  border-radius: 3px;
+  box-shadow: 1px 0 6px 0 rgb(0 0 0 / 30%);
+  box-sizing: border-box;
+  max-width: 1150px;
+  min-width: 0;
+
+  background-clip: content-box;
+  box-shadow: inset 0 0 0 20px #F3F3F3;
+
+}
+
+
+.div__styles__login__modal{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.div__login__image__modal{
+  display: flex;
+  margin-right: auto;
+  margin-left: auto;
+  align-items: flex-end;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+.h1__login__modal__sign{
+  line-height: 32px;
+  font-weight: 600;
+  font-size: 20px;
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  display: block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+.p__login__modal__sign{
+  line-height: 24px;
+  margin: 0 auto;
+  max-width: 500px;
+  font-weight: 300;
+  font-size: 16px;
+  color: #6f6f6f;
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  display: block;
+  text-align: center;
+}
+
+.div__form__login__modal__styles{
+  display: flex;
+  max-width: 100%;
+  margin: 14px 0 -1px;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+}
+
+.image__login__modal{
+
+}
+
+.label__login__modal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label__password__login__modal{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.button__form__login__modal{
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  cursor: pointer;
+  background: #fff;
+  border-color: #e8e8e8;
+  color: #000;
+  fill: #000;
+  vertical-align: top;
+  /* border-radius: 3px; */
+  box-sizing: 1px border-box;
+  outline: 0;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none!important;
+  margin: 7px;
+}
+
+.p__login__modal__sign__2{
+  line-height: 16px;
+  padding-top: 10px;
+  font-weight: 300;
+  font-size: 11px;
+  color: #6f6f6f;
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  text-align: center;
 }
