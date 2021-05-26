@@ -14,11 +14,9 @@ const Products = ({id}) => {
 
   return (
     <div className='div__product'>
-
       <div className='div__product__thumbnail'>
         <img className='img__product__thumbnail' src={products[id].thumbnail}></img>
       </div>
-
       <div className='div__styles__content'>
         <div className='div__product__content'>
           <a className='a__product__title'>
