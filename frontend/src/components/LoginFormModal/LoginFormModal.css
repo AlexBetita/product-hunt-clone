@@ -1,0 +1,41 @@
+.button__login__form__modal{
+
+  margin: 0 0 0 5px;
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+
+  cursor: pointer;
+  background: #fff;
+  border-color: #e8e8e8;
+  color: #000;
+  fill: #000;
+
+  vertical-align: top;
+  border-radius: 3px;
+  box-sizing: 1px border-box;
+  outline: 0;
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none!important;
+  margin-left: 5px;
+}
+
+.button__login__form__modal:hover {
+  background-color: #E8E8E8;
+}
+
+
+.div__login__modal__container{
+  background-color: lightgrey;
+  width: 520px;
+  height: 404px;
+  border: 15px solid green;
+  padding: 20px;
+}

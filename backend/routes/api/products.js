@@ -118,7 +118,7 @@ router.get(
       productsObj = {};
     });
 
-    return res.json({products});
+    return res.json(products);
   })
 );
 

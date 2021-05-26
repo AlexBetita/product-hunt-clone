@@ -16,6 +16,40 @@ const removeUser = () => {
   };
 };
 
+export const createUser = (user) => async (dispatch) => {
+  const { profileImages, profileImage, fullName, username, email, password, headline, website } = user;
+  const formData = new FormData();
+
+  formData.append("fullName", fullName);
+  formData.append("headline", headline);
+  formData.append("website", website);
+  formData.append("username", username);
+  formData.append("email", email);
+  formData.append("password", password);
+
+  // for multiple files
+  if (profileImages && profileImages.length !== 0) {
+    for (var i = 0; i < profileImages.length; i++) {
+      formData.append("images", profileImages[i]);
+    }
+  }
+
+  // for single file
+  if (profileImage) formData.append("image", profileImage);
+
+  const res = await csrfFetch(`/api/users/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  });
+
+  const data = await res.json();
+  dispatch(setUser(data.user));
+};
+
+
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch('/api/session', {
@@ -38,13 +72,17 @@ export const restoreUser = () => async dispatch => {
 };
 
 export const signup = (user) => async (dispatch) => {
-  const { username, email, password } = user;
+  const { fullName, username, email, password, headline, website, profileImage } = user;
   const response = await csrfFetch("/api/users", {
     method: "POST",
     body: JSON.stringify({
+      fullName,
       username,
       email,
       password,
+      headline,
+      website,
+      profileImage
     }),
   });
   const data = await response.json();
@@ -65,6 +103,8 @@ const initialState = { user: null };
 const sessionReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
+    case SET_USER:
+      return { ...state, user: action.payload };
     case SET_USER:
       newState = Object.assign({}, state);
       newState.user = action.payload;

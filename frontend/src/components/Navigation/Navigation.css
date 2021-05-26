@@ -1,0 +1,137 @@
+.div{
+  display: block;
+}
+
+.div__navigation__styles{
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  height: auto;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
+  display: flex;
+}
+
+.div__navigation{
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+
+  padding-left: 10px;
+  padding-right: 10px;
+
+  align-items: center;
+  display: flex;
+  height: 66px;
+  padding-bottom: 13px;
+  padding-top: 13px;
+  width: -webkit-fill-available;
+}
+
+.img__producthunt__icon{
+  max-width: 30px;
+  max-height: 30px;
+  position: relative;
+  cursor: pointer;
+}
+
+.input__navigation__search{
+  float: left;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 17px;
+  background: #F5F8FF;
+}
+
+.img__navigation__search{
+  height: 20px;
+  width: 20px;
+  background: #F5F8FF;
+  position: relative;
+  top: 6px;
+  right: 2px;
+}
+
+
+.form__input__navigation__search{
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 13px;
+  background: #F5F8FF;
+  color: #999A9C;
+}
+
+.form__label__navigation__search {
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 16px;
+  font-size: 13px;
+  background: #F5F8FF;
+  color: #999A9C;
+}
+
+.div__navigation__search__style{
+  display: flex;
+  position: relative;
+  bottom: 5px;
+  left: 13px;
+}
+
+.div__navigation__styles__login{
+  margin-left: auto;
+}
+
+.div__navigation__styles__links{
+  display: flex;
+  color: inherit;
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.div__navigation__discussions{
+  padding-left: 5px;
+  padding-right: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.div__navigation__deals{
+  padding-left: 5px;
+  padding-right: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.div__navigation__jobs{
+  padding-left: 5px;
+  padding-right: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.div__navigation__ship{
+  padding-left: 5px;
+  padding-right: 5px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.label__navigation__dropdown{
+  padding-left: 5px;
+  padding-right: 5px;
+  font-size: 17px;
+  font-weight: bold;
+  position: relative;
+  bottom: 3px;
+  color: #999A9C;
+}
