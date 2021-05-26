@@ -87,7 +87,7 @@ export const signup = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
+  await dispatch(setUser(data.user));
   return response;
 };
 
@@ -99,7 +99,9 @@ export const logout = () => async (dispatch) => {
   return response;
 };
 
-const initialState = { user: null };
+const initialState = {
+  user: null
+};
 
 const sessionReducer = (state = initialState, action) => {
   let newState;

@@ -23,9 +23,11 @@ function App() {
           {/* <Route path="/signup">
             <SignupFormPage />
           </Route> */}
+          <Route exact path="/">
+            <Home />
+          </Route>
         </Switch>
       )}
-      <Home />
     </>
   );
 }
