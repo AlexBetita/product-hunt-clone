@@ -42,12 +42,10 @@ function Navigation({ isLoaded }){
         <div className='div__navigation__search__style'>
           <form className='form__navigation__search'>
             <label className='form__label__navigation__search'>
-              <img class='img__navigation__search'
-                src='https://cdn1.iconfinder.com/data/icons/hawcons/32/698956-icon-111-search-512.png'>
-              </img>
+                <i className="fa fa-search"></i>
               <input className='form__input__navigation__search' placeholder='Search Product Hunt'>
               </input>
-              <button type='reset' hidden='true'>
+              <button type='reset' hidden={true}>
               </button>
             </label>
           </form>

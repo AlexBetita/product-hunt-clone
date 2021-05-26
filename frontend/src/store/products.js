@@ -5,6 +5,7 @@ const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
 const UPDATE_PRODUCT = "products/UPDATE_PRODUCT";
 const ADD_PRODUCT = "products/ADD_PRODUCT";
 const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
+const INITIAL_STATE = "products/INITIAL_STATE";
 
 const load = (products) => ({
   type: LOAD_PRODUCTS,
@@ -29,6 +30,10 @@ const remove = (productId) => ({
 const addOneProduct = (product) => ({
   type: ADD_ONE_PRODUCT,
   product
+});
+
+export const resetState = () => ({
+  type: INITIAL_STATE,
 });
 
 export const getProducts = () => async dispatch => {
@@ -96,6 +101,7 @@ export const updateProduct = payload => async dispatch => {
   }
 }
 
+
 const initialState = {
   list: [],
   comments: [],
@@ -115,6 +121,8 @@ const productReducer = (state = initialState, action) => {
         list: allProducts,
       }
     }
+    case INITIAL_STATE:
+      return {...initialState};
     default:
       return state;
   }

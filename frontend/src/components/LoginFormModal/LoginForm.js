@@ -22,26 +22,26 @@ function LoginForm() {
 
   return (
     <div className='div__login__modal__container'>
-      <div className='div__styles__login'>
-        <div className='div__login__image'>
-          <img className='image__login'
+      <div className='div__styles__login__modal'>
+        <div className='div__login__image__modal'>
+          <img className='image__login__modal'
             src='https://ph-static.imgix.net/category-tech/kitty.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=100&h=92&fit=max&dpr=1'>
           </img>
         </div>
-        <h1 className='h1__login__sign'>
+        <h1 className='h1__login__modal__sign'>
           Log in Product Hunt Clone
         </h1>
-        <p className='p__login__sign'>
+        <p className='p__login__modal__sign'>
         Join our community of friendly folks discovering and sharing the latest products in the world.
         </p>
-        <div className='div__form__styles'>
+        <div className='div__form__login__modal__styles'>
           <form onSubmit={handleSubmit}>
             <ul>
               {errors.map((error, idx) => (
                 <li key={idx}>{error}</li>
               ))}
             </ul>
-            <label className='label__login'>
+            <label className='label__login__modal'>
               Username or Email
               <input
                 type="text"
@@ -50,7 +50,7 @@ function LoginForm() {
                 required
               />
             </label>
-            <label className='label__password'>
+            <label className='label__password__login__modal'>
               Password
               <input
                 type="password"
@@ -59,10 +59,10 @@ function LoginForm() {
                 required
               />
             </label>
-            <button className='button__form__login' type="submit">Log In</button>
+            <button className='button__form__login__modal' type="submit">Log In</button>
           </form>
         </div>
-        <p className='p__login__sign__2'>
+        <p className='p__login__modal__sign__2'>
          Meow'll never post to any of your accounts without your permission.
         </p>
       </div>

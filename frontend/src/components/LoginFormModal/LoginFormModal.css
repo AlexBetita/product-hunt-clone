@@ -46,19 +46,19 @@
   max-width: 1150px;
   min-width: 0;
 
-  background-clip: content-box; /* <---- */
-  box-shadow: inset 0 0 0 20px #F3F3F3; /* <-- 10px spread radius */
+  background-clip: content-box;
+  box-shadow: inset 0 0 0 20px #F3F3F3;
 
 }
 
 
-.div__styles__login{
+.div__styles__login__modal{
   display:flex;
   flex-direction: column;
   align-items: center;
 }
 
-.div__login__image{
+.div__login__image__modal{
   display: flex;
   margin-right: auto;
   margin-left: auto;
@@ -67,7 +67,7 @@
   margin-bottom: 20px;
 }
 
-.h1__login__sign{
+.h1__login__modal__sign{
   line-height: 32px;
   font-weight: 600;
   font-size: 20px;
@@ -78,7 +78,7 @@
   margin: 0 auto;
 }
 
-.p__login__sign{
+.p__login__modal__sign{
   line-height: 24px;
   margin: 0 auto;
   max-width: 500px;
@@ -91,7 +91,8 @@
   text-align: center;
 }
 
-.div__form__styles{
+.div__form__login__modal__styles{
+  display: flex;
   max-width: 100%;
   margin: 14px 0 -1px;
   justify-content: center;
@@ -102,23 +103,23 @@
   text-align: center;
 }
 
-.image__login{
+.image__login__modal{
 
 }
 
-.label__login{
+.label__login__modal{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.label__password{
+.label__password__login__modal{
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.button__form__login{
+.button__form__login__modal{
   line-height: 24px;
   font-weight: 400;
   font-size: 16px;
@@ -143,7 +144,7 @@
   margin: 7px;
 }
 
-.p__login__sign__2{
+.p__login__modal__sign__2{
   line-height: 16px;
   padding-top: 10px;
   font-weight: 300;

@@ -135,3 +135,25 @@
   bottom: 3px;
   color: #999A9C;
 }
+
+.button__navigation__profile__image{
+
+  width: 40px;
+  height: 40px;
+  overflow:hidden;
+  padding: 0;
+  vertical-align: bottom;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+  line-height: 24px;
+}
+
+.image__navigation__profile__image{
+  max-width: 100%;
+  float:right;
+  height:auto;
+  margin: 0 auto;
+  padding: 0;
+}
