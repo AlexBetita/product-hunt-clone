@@ -27,6 +27,10 @@ function Navigation({ isLoaded }){
     }
   }
 
+  const closePopOver = () => {
+    setPopOver(false)
+  }
+
   handler = openPopOver
 
   if (sessionUser) {
@@ -56,7 +60,7 @@ function Navigation({ isLoaded }){
       <div className='div__navigation__styles'>
         <div className='div__navigation'>
 
-        <NavLink exact to="/">
+        <NavLink exact to="/" onClick={closePopOver}>
           <img className='img__producthunt__icon'
               src='https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Product_Hunt-512.png'>
             </img>
@@ -74,7 +78,7 @@ function Navigation({ isLoaded }){
             </form>
           </div>
 
-          <div className='div__navigation__styles__links'>
+          <div className='div__navigation__styles__links' onClick={closePopOver}>
 
             <NavLink to="/discussions" style={{ textDecoration: 'none', color: '#999A9C' }}>
               <div className='div__navigation__discussions'>
@@ -82,14 +86,14 @@ function Navigation({ isLoaded }){
                 </div>
             </NavLink>
 
-            <div className='div__navigation__deals'>
+            <div className='div__navigation__deals' onClick={closePopOver}>
               <NavLink to="/deals" style={{ textDecoration: 'none', color: '#999A9C' }}>Deals</NavLink>
               </div>
 
-              <div className='div__navigation__jobs'>
+              <div className='div__navigation__jobs' onClick={closePopOver}>
                 <NavLink to="/jobs" style={{ textDecoration: 'none', color: '#999A9C' }}>Jobs</NavLink>
               </div>
-              <div className='div__navigation__ship'>
+              <div className='div__navigation__ship' onClick={closePopOver}>
                 <NavLink to="/ship" style={{ textDecoration: 'none', color: '#999A9C' }}>Ship</NavLink>
               </div>
               <label className='label__navigation__dropdown'>
@@ -103,31 +107,32 @@ function Navigation({ isLoaded }){
         <>
           <div className='div__navigation__popover'>
             <ul className='ul__navigation__styles'>
-              <li className='li__navigation__style'>
-                <NavLink className='navlink__popover__styles' to={`@${sessionUser.username}`}>My profile</NavLink>
+              <li className='li__navigation__style' onClick={closePopOver}>
+                <NavLink
+                className='navlink__popover__styles' to={`@${sessionUser.username}`}>My profile</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/collections`}>My Collections</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <hr className='hr__popover__class__separator'></hr>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/settings/edit`}>Settings</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/subscriptions`}>Subscriptions</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/founder-club`}>Founder Club</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/oauth/applications`}>API Dashboard</NavLink>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <hr className='hr__popover__class__separator'></hr>
               </li>
-              <li className='li__navigation__style'>
+              <li className='li__navigation__style' onClick={closePopOver}>
                 <a onClick={logoutPopover}>Logout</a>
               </li>
             </ul>

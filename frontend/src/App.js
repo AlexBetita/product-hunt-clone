@@ -7,6 +7,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
+import Profile from "./components/Profile";
 
 function App() {
   const dispatch = useDispatch();
@@ -25,6 +26,9 @@ function App() {
           </Route> */}
           <Route exact path="/">
             <Home />
+          </Route>
+          <Route path='/@:username'>
+            <Profile />
           </Route>
         </Switch>
       )}

@@ -46,7 +46,7 @@ export const createUser = (user) => async (dispatch) => {
   });
 
   const data = await res.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
 };
 
 
@@ -61,14 +61,14 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
 };
 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
 };
 
@@ -87,7 +87,7 @@ export const signup = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  await dispatch(setUser(data.user));
+  await dispatch(setUser(data));
   return response;
 };
 
@@ -100,7 +100,11 @@ export const logout = () => async (dispatch) => {
 };
 
 const initialState = {
-  user: null
+  user: null,
+  upvotes: null,
+  products: null,
+  comments: null,
+  discussions: null
 };
 
 const sessionReducer = (state = initialState, action) => {
@@ -110,11 +114,16 @@ const sessionReducer = (state = initialState, action) => {
     //   return { ...state, user: action.payload };
     case SET_USER:
       newState = Object.assign({}, state);
-      newState.user = action.payload;
+      newState.user = action.payload.user;
+      newState.upvotes = action.payload.upvotes;
       return newState;
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
+      newState.upvotes = null;
+      newState.products = null;
+      newState.comments = null;
+      newState.discussions = null;
       return newState;
     default:
       return state;

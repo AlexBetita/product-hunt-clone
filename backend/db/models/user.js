@@ -1,6 +1,7 @@
 'use strict';
 const { Validator, Op } = require('sequelize');
 const bcrypt = require('bcryptjs');
+const moment = require('moment');
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -130,8 +131,11 @@ module.exports = (sequelize, DataTypes) => {
   };
 
   User.prototype.toSafeObject = function() { // remember, this cannot be an arrow function
-    const { id, username, email, headline, website, profileImage } = this; // context will be the User instance
-    return { id, username, email, headline, website, profileImage };
+    const { id, username, email, headline, website, profileImage, fullName} = this;
+     // context will be the User instance
+    let {createdAt} = this;
+    createdAt = moment(createdAt).format('MMMM Do');
+    return { id, username, email, headline, website, profileImage, fullName, createdAt };
   };
 
   User.prototype.validatePassword = function (password) {

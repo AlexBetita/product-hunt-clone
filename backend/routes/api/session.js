@@ -40,7 +40,7 @@ router.post(
         await setTokenCookie(res, user);
 
         return res.json({
-        user,
+            user: user.toSafeObject(),
         });
     }),
 );
@@ -49,14 +49,32 @@ router.post(
 router.get(
     '/',
     restoreUser,
-    (req, res) => {
+    asyncHandler(async (req, res) => {
         const { user } = req;
         if (user) {
+            console.log(user)
+            const upvotes = await user.getUpvotes({
+                attributes: {
+                    exclude: ['deletedAt']
+                  }
+            })
+            const products = await user.getProducts()
+            const comments = await user.getComments({
+                attributes: {
+                  exclude: ['deletedAt']
+                }
+            })
+            const discussions = await user.getDiscussions()
+
         return res.json({
-            user: user.toSafeObject()
+            user: user.toSafeObject(),
+            upvotes,
+            products,
+            comments,
+            discussions
         });
         } else return res.json({});
-    }
+    })
 );
 
 // Log out
