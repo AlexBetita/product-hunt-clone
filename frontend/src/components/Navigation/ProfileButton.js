@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
-function ProfileButton({ user }) {
+function ProfileButton({ user, handler }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -31,7 +31,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button className='button__navigation__profile__image' onClick={openMenu}>
+      <button className='button__navigation__profile__image' onClick={handler}>
         <img className='image__navigation__profile__image' src={user.profileImage}>
         </img>
       </button>
