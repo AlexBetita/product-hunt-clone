@@ -4,13 +4,7 @@ import { NavLink, Route, useParams } from 'react-router-dom';
 
 import './Products.css';
 
-const Products = ({id}) => {
-
-  const dispatch = useDispatch();
-  const products = useSelector((state)=>{
-    return state.products.list
-  })
-
+const Products = ({id, products}) => {
 
   return (
     <div className='div__product'>

@@ -11,10 +11,9 @@ import './Home.css';
 const Home = () => {
 
   const dispatch = useDispatch();
-  // const { productId } = useParams();
 
   const products = useSelector((state)=>{
-    return state.products.list
+    return state.products.list.map((productId) => state.products[productId])
   })
 
   useEffect(()=>{
@@ -35,7 +34,7 @@ const Home = () => {
         Today
       </div>
       {Object.keys(products).map((key) =>{
-        return <Products key={key} id={key}/>
+        return <Products key={key} id={key} products = {products}/>
       })}
 
     </div>

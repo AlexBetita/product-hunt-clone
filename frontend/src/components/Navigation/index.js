@@ -47,6 +47,7 @@ function Navigation({ isLoaded }){
 
   const logoutPopover = (e) => {
     e.preventDefault();
+    openPopOver();
     dispatch(logout());
   };
 

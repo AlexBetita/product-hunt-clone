@@ -105,7 +105,10 @@ export const updateProduct = payload => async dispatch => {
 const initialState = {
   list: [],
   comments: [],
-  upvotes: 0,
+}
+
+const listProducts = (list) =>{
+  return list.map((product)=> product.id)
 }
 
 const productReducer = (state = initialState, action) => {
@@ -118,7 +121,7 @@ const productReducer = (state = initialState, action) => {
       return {
         ...allProducts,
         ...state,
-        list: allProducts,
+        list: listProducts(action.products)
       }
     }
     case INITIAL_STATE:

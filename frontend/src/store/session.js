@@ -50,6 +50,7 @@ export const createUser = (user) => async (dispatch) => {
 };
 
 
+
 export const login = (user) => async (dispatch) => {
   const { credential, password } = user;
   const response = await csrfFetch('/api/session', {
@@ -103,6 +104,8 @@ const initialState = { user: null };
 const sessionReducer = (state = initialState, action) => {
   let newState;
   switch (action.type) {
+    // case SET_USER:
+    //   return { ...state, user: action.payload };
     case SET_USER:
       newState = Object.assign({}, state);
       newState.user = action.payload;
