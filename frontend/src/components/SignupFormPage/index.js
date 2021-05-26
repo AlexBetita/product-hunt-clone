@@ -20,9 +20,7 @@ function SignupFormPage() {
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState([]);
 
-  // if (sessionUser) return <Redirect to="/" />;
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = [];
 
@@ -37,7 +35,7 @@ function SignupFormPage() {
 
     if (!newErrors.length) {
       setErrors([]);
-      return dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
+      return await dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
         .then(() => {
           setFullName("");
           setEmail("");
