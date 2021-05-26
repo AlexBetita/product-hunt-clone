@@ -1,6 +1,6 @@
 // frontend/src/components/Navigation/index.js
 import React, {useState, useEffect} from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -13,6 +13,7 @@ import { set } from 'js-cookie';
 
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
 
@@ -53,6 +54,7 @@ function Navigation({ isLoaded }){
     e.preventDefault();
     openPopOver();
     dispatch(logout());
+    history.push('/')
   };
 
   return (
@@ -107,10 +109,14 @@ function Navigation({ isLoaded }){
         <>
           <div className='div__navigation__popover'>
             <ul className='ul__navigation__styles'>
-              <li className='li__navigation__style' onClick={closePopOver}>
-                <NavLink
-                className='navlink__popover__styles' to={`@${sessionUser.username}`}>My profile</NavLink>
-              </li>
+
+              <NavLink
+                className='navlink__popover__styles' onClick={closePopOver} to={`/@${sessionUser.username}`}>
+                  <li className='li__navigation__style'>
+                    My profile
+                  </li>
+                </NavLink>
+
               <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/collections`}>My Collections</NavLink>
               </li>
@@ -132,9 +138,11 @@ function Navigation({ isLoaded }){
               <li className='li__navigation__style' onClick={closePopOver}>
                 <hr className='hr__popover__class__separator'></hr>
               </li>
+
               <li className='li__navigation__style' onClick={closePopOver}>
                 <a onClick={logoutPopover}>Logout</a>
               </li>
+
             </ul>
             <div className='div__popover__triangle__grey'>
             </div>

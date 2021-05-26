@@ -116,6 +116,9 @@ const sessionReducer = (state = initialState, action) => {
       newState = Object.assign({}, state);
       newState.user = action.payload.user;
       newState.upvotes = action.payload.upvotes;
+      newState.products = action.payload.products;
+      newState.comments = action.payload.comments;
+      newState.discussions = action.payload.discussions;
       return newState;
     case REMOVE_USER:
       newState = Object.assign({}, state);

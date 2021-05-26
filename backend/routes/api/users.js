@@ -64,6 +64,60 @@ const validateEdit = [
   handleValidationErrors,
 ];
 
+const userObject = async (user) => {
+  const userObj = {}
+
+  const upvotes = await user.getUpvotes({
+    attributes: {
+        exclude: ['deletedAt']
+      }
+    })
+    const products = await user.getProducts({
+      attributes: {
+        exclude: ['deletedAt']
+      }
+  })
+    const comments = await user.getComments({
+        attributes: {
+          exclude: ['deletedAt']
+        }
+    })
+    const discussions = await user.getDiscussions({
+      attributes: {
+        exclude: ['deletedAt']
+      }
+  })
+
+  const upvotesObj = {}
+  const productsObj = {}
+  const commentsObj = {}
+  const discussionsObj = {}
+
+  upvotes.forEach((upvotes)=>{
+    upvotesObj[upvotes.id] = upvotes
+  });
+
+  products.forEach((products)=>{
+    productsObj[products.id] = products
+  });
+
+  comments.forEach((comments)=>{
+    commentsObj[comments.id] = comments
+  });
+
+  discussions.forEach((discussions)=>{
+    discussionsObj[discussions.id] = discussions
+  });
+
+  userObj['user'] = user.toSafeObject(),
+  userObj['upvotes']= upvotesObj
+  userObj['products'] = productsObj
+  userObj['comments'] = commentsObj
+  userObj['discussions'] = discussionsObj
+
+  return userObj
+}
+
 // Sign up
 router.post(
   '/',
@@ -84,9 +138,7 @@ router.post(
 
     await setTokenCookie(res, user);
 
-    return res.json({
-      user: user.toSafeObject(),
-    });
+    return res.json(await userObject(user));
   }),
 );
 
@@ -98,15 +150,34 @@ router.put(
   asyncHandler(async (req, res) => {
     let {user} = req;
     const userId = user.id;
-    const {fullName, headline, website, profileImage} = req.body;
+    const {fullName, headline, website} = req.body;
 
     if(user){
-      user = await User.edit({fullName,  headline, website, profileImage, userId})
+      user = await User.editNoProfileImage({fullName,  headline, website, userId})
       res.clearCookie('token');
       await setTokenCookie(res, user);
-      return res.json({
-        user,
-      });
+      return res.json(await userObject(user));
+    }
+  })
+);
+
+// Edit user profileImage
+router.put(
+  '/edit/profileImage',
+  singleMulterUpload("image"),
+  validateEdit,
+  requireAuth,
+  asyncHandler(async (req, res) => {
+    let {user} = req;
+
+    const userId = user.id;
+    const profileImage = await singlePublicFileUpload(req.file);
+
+    if(user){
+      user = await User.editProfileImage({profileImage, userId})
+      res.clearCookie('token');
+      await setTokenCookie(res, user);
+      return res.json(await userObject(user));
     }
   })
 );
@@ -146,7 +217,7 @@ router.put(
     const userId = user.id;
     if(user){
       user = await User.changePassword({password, changePassword, userId});
-      if(user) return user
+      if(user) return res.json(await userObject(user));
       else res.json({Error: "Passwords don't match"})
     }
   })
@@ -159,14 +230,7 @@ router.get(
     const {username} = req.params;
     const user = await User.getByUsername(username);
 
-
-    const upvotes = await user.getUpvotes()
-    const products = await user.getProducts()
-    const comments = await user.getComments()
-    const discussions = await user.getDiscussions()
-
-    console.log(discussions)
-    return res.json({user})
+    return res.json(await userObject(user));
   })
 );
 

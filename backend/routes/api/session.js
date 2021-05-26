@@ -20,6 +20,60 @@ const validateLogin = [
     handleValidationErrors,
 ];
 
+const userObject = async (user) => {
+    const userObj = {}
+
+    const upvotes = await user.getUpvotes({
+      attributes: {
+          exclude: ['deletedAt']
+        }
+      })
+      const products = await user.getProducts({
+        attributes: {
+          exclude: ['deletedAt']
+        }
+    })
+      const comments = await user.getComments({
+          attributes: {
+            exclude: ['deletedAt']
+          }
+      })
+      const discussions = await user.getDiscussions({
+        attributes: {
+          exclude: ['deletedAt']
+        }
+    })
+
+    const upvotesObj = {}
+    const productsObj = {}
+    const commentsObj = {}
+    const discussionsObj = {}
+
+    upvotes.forEach((upvotes)=>{
+      upvotesObj[upvotes.id] = upvotes
+    });
+
+    products.forEach((products)=>{
+      productsObj[products.id] = products
+    });
+
+    comments.forEach((comments)=>{
+      commentsObj[comments.id] = comments
+    });
+
+    discussions.forEach((discussions)=>{
+      discussionsObj[discussions.id] = discussions
+    });
+
+    userObj['user'] = user.toSafeObject(),
+    userObj['upvotes']= upvotesObj
+    userObj['products'] = productsObj
+    userObj['comments'] = commentsObj
+    userObj['discussions'] = discussionsObj
+
+    return userObj
+}
+
 // Log in
 router.post(
     '/',
@@ -39,9 +93,7 @@ router.post(
 
         await setTokenCookie(res, user);
 
-        return res.json({
-            user: user.toSafeObject(),
-        });
+        return res.json(await userObject(user));
     }),
 );
 
@@ -52,27 +104,8 @@ router.get(
     asyncHandler(async (req, res) => {
         const { user } = req;
         if (user) {
-            console.log(user)
-            const upvotes = await user.getUpvotes({
-                attributes: {
-                    exclude: ['deletedAt']
-                  }
-            })
-            const products = await user.getProducts()
-            const comments = await user.getComments({
-                attributes: {
-                  exclude: ['deletedAt']
-                }
-            })
-            const discussions = await user.getDiscussions()
 
-        return res.json({
-            user: user.toSafeObject(),
-            upvotes,
-            products,
-            comments,
-            discussions
-        });
+        return res.json(await userObject(user));
         } else return res.json({});
     })
 );

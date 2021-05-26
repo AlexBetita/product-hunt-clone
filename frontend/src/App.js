@@ -8,6 +8,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import Profile from "./components/Profile";
+import ProfileEdit from './components/ProfileEdit';
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,15 @@ function App() {
           </Route>
           <Route path='/@:username'>
             <Profile />
+          </Route>
+          <Route path='/my/settings/edit'>
+            <ProfileEdit />
+          </Route>
+          <Route path='/my/subscriptions/founder-club'>
+            <ProfileEdit />
+          </Route>
+          <Route path='/founder-club'>
+            <ProfileEdit />
           </Route>
         </Switch>
       )}

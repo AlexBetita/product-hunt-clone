@@ -176,12 +176,19 @@ module.exports = (sequelize, DataTypes) => {
     return await User.scope('currentUser').findByPk(user.id);
   };
 
-  User.edit = async function ({ fullName, headline, website, profileImage, userId }){
+  User.editNoProfileImage = async function ({ fullName, headline, website, userId }){
     const user = await User.findByPk(userId)
 
     user.fullName = fullName
     user.headline = headline
     user.website = website
+    await user.save()
+    return user
+  };
+
+  User.editProfileImage = async function ({profileImage, userId}){
+    const user = await User.findByPk(userId)
+
     user.profileImage = profileImage
     await user.save()
     return user
