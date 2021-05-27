@@ -7,9 +7,9 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormModal';
 
 import {logout} from '../../store/session';
+import {getProducts} from '../../store/products';
 
 import './Navigation.css';
-import { set } from 'js-cookie';
 
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
@@ -19,6 +19,10 @@ function Navigation({ isLoaded }){
 
   let sessionLinks;
   let handler;
+
+  useEffect(()=>{
+    dispatch(getProducts())
+  }, [dispatch])
 
   const openPopOver = () => {
     if(showPopOver) {

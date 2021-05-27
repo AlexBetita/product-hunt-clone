@@ -1,17 +1,27 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch, useStore} from 'react-redux';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
+import Products from '../Products'
 
 import './Profile.css'
 
 const Profile = () => {
   const { username } = useParams();
   let user;
+  let products = {}
+
+  const [made, setMade] = useState(false);
 
   user = useSelector((state)=> {
     if(state.session.user){
       return state.session.user.username === username  ? state.session.user : false
     } else return false
+  })
+
+  useSelector((state)=>{
+    Object.keys(state.session.products).map((key)=>{
+      products[key] = state.products[key]
+    })
   })
 
   if (!user){
@@ -76,22 +86,21 @@ const Profile = () => {
               <NavLink className='navlink__profile__nav__username'
                        activeClassName="navlink__profile__nav__username active"
                        exact={true}
-              to={{
-                pathname: `/@${user.username}`
-              }}>
+                       to={{pathname: `/@${user.username}`}}
+              >
                 ACTIVITY
               </NavLink>
 
               {
-              user.products &&
+              products &&
               <NavLink className='navlink__profile__nav__made'
                        activeClassName="navlink__profile__nav__made active"
                        exact={true}
-                to= {`/@${user.username}/made`}>
-                {user.products.length} MADE
+                       to= {`/@${user.username}/made`}
+              >
+                {Object.keys(products).length} MADE
               </NavLink>
               }
-
               <NavLink className='navlink__profile__nav__following'
                        activeClassName = 'navlink__profile__nav__following active'
                        exact={true}
@@ -101,7 +110,8 @@ const Profile = () => {
 
               <NavLink className='navlink__profile__nav__followers'
                        exact={true}
-                to= {`/@${user.username}/followers`}>
+                       to= {`/@${user.username}/followers`}
+              >
                 FOLLOWERS
               </NavLink>
 
@@ -109,6 +119,13 @@ const Profile = () => {
           </div>
         </div>
       </div>
+      <Route path={`/@${user.username}/made`}>
+        <div>
+            {Object.keys(products).map((key)=>{
+              return <Products key={key} id={key} products = {products}/>
+            })}
+          </div>
+      </Route>
     </>
   )
 };

@@ -2,7 +2,6 @@ import { csrfFetch } from './csrf';
 
 const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
 const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
-const UPDATE_PRODUCT = "products/UPDATE_PRODUCT";
 const ADD_PRODUCT = "products/ADD_PRODUCT";
 const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
 const INITIAL_STATE = "products/INITIAL_STATE";
@@ -10,11 +9,6 @@ const INITIAL_STATE = "products/INITIAL_STATE";
 const load = (products) => ({
   type: LOAD_PRODUCTS,
   products
-});
-
-const update = (product) => ({
-  type: UPDATE_PRODUCT,
-  product
 });
 
 const add = (product) => ({
@@ -25,11 +19,6 @@ const add = (product) => ({
 const remove = (productId) => ({
   type: REMOVE_PRODUCT,
   productId
-});
-
-const addOneProduct = (product) => ({
-  type: ADD_ONE_PRODUCT,
-  product
 });
 
 export const resetState = () => ({
@@ -49,7 +38,7 @@ export const getOneProduct = id => async dispatch => {
 
   if (response.ok) {
     const product = await response.json();
-    dispatch(addOneProduct(product));
+    dispatch(add(product));
   }
 };
 
@@ -72,7 +61,7 @@ export const postProduct = payload => async dispatch => {
 
   if (response.ok){
     const data = await response.json();
-    dispatch(addOneProduct(data))
+    dispatch(add(data))
     return data;
   }
 }
@@ -96,7 +85,7 @@ export const updateProduct = payload => async dispatch => {
 
   if (response.ok){
     const data = await response.json();
-    dispatch(addOneProduct(data))
+    dispatch(add(data))
     return data;
   }
 }
@@ -124,6 +113,12 @@ const productReducer = (state = initialState, action) => {
         ...state,
         list: listProducts(action.products)
       }
+    }
+    case ADD_PRODUCT: {
+      return {
+        ...state,
+        [action.product.id]: action.product
+      };
     }
     case INITIAL_STATE:
       return {...initialState};

@@ -1,13 +1,20 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
-import { NavLink, Route, useParams } from 'react-router-dom';
+import { useSelector} from 'react-redux';
+import { NavLink, useParams } from 'react-router-dom';
 
 import './ProductDetails.css';
 
 const ProductDetails = () =>{
   const {id} = useParams();
+  let maker = false;
 
   const product = useSelector((state)=>{
+    try{
+      if(state.products[id].id === state.session.products[id].id){
+        maker = true
+      }
+    } catch(e) {
+      //
+    }
     return state.products[id]
   })
 
@@ -42,7 +49,24 @@ const ProductDetails = () =>{
       </div>
       <ul>
         COMMENTS
+        {
+          Object.keys(product.Comments).map((key)=>{
+            return (
+              <li>
+                  {product.Comments[key].comment}
+                <div>
+                  {`Commented by: ${product.Comments[key].User.username}`}
+                </div>
+              </li>
+              )
+          })
+        }
       </ul>
+      {
+        maker
+          &&
+        <NavLink to={`/product/${product.id}/edit`}>Edit</NavLink>
+      }
     </>
   )
 };

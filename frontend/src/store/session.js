@@ -163,7 +163,10 @@ const sessionReducer = (state = initialState, action) => {
       newState.products = action.payload.products;
       newState.comments = action.payload.comments;
       newState.discussions = action.payload.discussions;
-      return newState;
+      return {
+        ...state,
+        ...newState
+      };
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
@@ -171,7 +174,10 @@ const sessionReducer = (state = initialState, action) => {
       newState.products = null;
       newState.comments = null;
       newState.discussions = null;
-      return newState;
+      return {
+        ...state,
+        ...newState
+      }
     default:
       return state;
   }

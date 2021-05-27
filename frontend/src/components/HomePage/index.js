@@ -1,8 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
-import { NavLink, Route, useParams } from 'react-router-dom';
-
-import {getProducts, resetState} from '../../store/products';
+import { useSelector } from 'react-redux';
 
 import Products from '../Products'
 
@@ -10,16 +6,9 @@ import './Home.css';
 
 const Home = () => {
 
-  const dispatch = useDispatch();
-
   const products = useSelector((state)=>{
     return state.products.list.map((productId) => state.products[productId])
   })
-
-  useEffect(()=>{
-    dispatch(getProducts())
-  }, [dispatch])
-
 
   if (!products) {
     return null;
