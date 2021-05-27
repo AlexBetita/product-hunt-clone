@@ -1,6 +1,4 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch} from 'react-redux';
-import { NavLink, Route, useParams } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import './Products.css';
 
@@ -12,22 +10,26 @@ const Products = ({id, products}) => {
         <div className='div__product__thumbnail'>
           <img className='img__product__thumbnail' src={products[id].thumbnail}></img>
         </div>
-        <div className='div__styles__content'>
-          <div className='div__product__content'>
-            <NavLink
-              className='a__product__title'
-              activeClassName='a__product__title products--active'
+
+        <NavLink
+              className='div__styles__content'
+              activeClassName='div__styles__content'
               to={`/posts/${products[id].id}`}
+              >
+        <div className=''>
+          <div className='div__product__content'>
+
+            <div
+              className='a__product__title'
               >
                 {products[id].title}
-            </NavLink>
-            <NavLink
+            </div>
+
+            <div
               className='a__product__description'
-              activeClassName='a__product__description products--active'
-              to={`/posts/${products[id].id}`}
               >
                 {products[id].description}
-            </NavLink>
+            </div>
           </div>
 
           <div className='div__product__content__meta'>
@@ -36,14 +38,12 @@ const Products = ({id, products}) => {
                   src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
                 </img>
 
-                <NavLink
+                <div
                   className='a__product__comments'
-                  activeClassName='a__product__comments products--active'
-                  to={`/posts/${products[id].id}`}
                   >
                     {Object.keys(products[id].Comments).length}
-                </NavLink>
-                
+                </div>
+
               </div>
               <span className='span__product__availability'>
                 Free
@@ -52,6 +52,9 @@ const Products = ({id, products}) => {
               </span>
           </div>
         </div>
+
+        </NavLink>
+
         <div className='div__product__vote'>
           <button className='button__product__vote'>
             <img className='img__upvote__icon'

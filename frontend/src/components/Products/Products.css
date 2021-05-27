@@ -25,6 +25,9 @@
   bottom: 98px;
   position: relative;
   top: 9px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .div__product__content{

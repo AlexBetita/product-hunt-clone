@@ -1,7 +1,7 @@
 // frontend/src/components/SignupFormPage/index.js
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
 import './SignupFormModal.css';
@@ -90,7 +90,7 @@ function SignupForm() {
           Join our community of friendly folks discovering and sharing the latest products in the world.
         </p>
         <div className='div__form__signup__modal__styles'>
-          
+
           <form onSubmit={handleSubmit}>
               <label className='label__fullname__signup__modal'>
                 Full Name
