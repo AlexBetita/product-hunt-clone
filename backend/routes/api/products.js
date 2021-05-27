@@ -6,6 +6,7 @@ const { requireAuth } = require('../../utils/auth');
 const { Product, ProductImage, Upvote, Comment, User, Sequelize } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
+const {singlePublicFileUpload, singleMulterUpload} = require('../../awsS3.js')
 
 const router = express.Router();
 
@@ -178,17 +179,65 @@ router.get(
 // Create product
 router.post(
   '/',
+  singleMulterUpload("image"),
   validateCreateProduct,
   requireAuth,
   asyncHandler(async (req, res)=>{
-    const {title, thumbnail, description} = req.body;
+    const {title, description} = req.body;
     const {user} = req;
     const userId = user.id
 
+    const thumbnail = await singlePublicFileUpload(req.file);
+    let product;
+
     if(user){
-      const product = await Product.create({
+      const result = await Product.create({
         title, thumbnail, description, userId
       });
+
+      if (result){
+          const results = await Product.findByPk(result.id,
+            {
+              include: [
+                {
+                  model: Comment,
+                  include: [Upvote, User.scope('userIcons')]
+                },
+                User.scope('userIcons'),
+                Upvote,
+                ProductImage.scope('imageUrls')
+              ]
+            });
+
+            let productObj = {}
+
+            if(results){
+              for(const key in results.dataValues){
+                if(key === 'createdAt' || key === 'updatedAt'){
+                  productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
+                } else if(key === 'Upvotes') {
+                  productObj['upvotes'] = results.dataValues[key].length
+                } else if(key === 'Comments'){
+                  productObj['Comments'] = {}
+                  results.dataValues[key].forEach((comment, i)=>{
+                    productObj['Comments'][i+1] = {}
+                    for(const key2 in comment.dataValues){
+                      if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                        productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+                      } else if (key2 === 'Upvotes'){
+                        productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+                      } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+                    }
+                  })
+                } else {
+                  productObj[key] = results.dataValues[key];
+                }
+              }
+            }
+
+            product = productObj
+          }
+
       return res.json({
         product
       });
@@ -199,21 +248,70 @@ router.post(
 // Update product
 router.put(
   '/:id',
+  singleMulterUpload("image"),
   requireAuth,
   asyncHandler(async (req, res)=>{
     const {id} = req.params;
     const {user} = req;
-    const {title, thumbnail, description, productImages} = req.body;
+    const {title, description } = req.body;
+    const thumbnail = await singlePublicFileUpload(req.file);
     const userId = user.id;
+
+    let product;
 
     const exists = await Product.exists(id)
 
     if(user){
       if(exists){
         if(Product.userOwnsProduct(id, userId)){
-          const product = await Product.edit(title, thumbnail, description, id)
-          const productimgs = await ProductImage.bulkUpdate(productImages)
-          return res.json({product, productimgs})
+
+          const result = await Product.edit(title, thumbnail, description, id)
+
+          if (result){
+            const results = await Product.findByPk(result.id,
+              {
+                include: [
+                  {
+                    model: Comment,
+                    include: [Upvote, User.scope('userIcons')]
+                  },
+                  User.scope('userIcons'),
+                  Upvote,
+                  ProductImage.scope('imageUrls')
+                ]
+              });
+
+              let productObj = {}
+
+              if(results){
+                for(const key in results.dataValues){
+                  if(key === 'createdAt' || key === 'updatedAt'){
+                    productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
+                  } else if(key === 'Upvotes') {
+                    productObj['upvotes'] = results.dataValues[key].length
+                  } else if(key === 'Comments'){
+                    productObj['Comments'] = {}
+                    results.dataValues[key].forEach((comment, i)=>{
+                      productObj['Comments'][i+1] = {}
+                      for(const key2 in comment.dataValues){
+                        if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                          productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+                        } else if (key2 === 'Upvotes'){
+                          productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+                        } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+                      }
+                    })
+                  } else {
+                    productObj[key] = results.dataValues[key];
+                  }
+                }
+              }
+
+              product = productObj
+            }
+
+          return res.json({product})
+
         } else {
           res.json({Error: "User does not own this product"})
         }
@@ -223,6 +321,33 @@ router.put(
     }
   })
 )
+
+// router.put(
+//   '/:id',
+//   requireAuth,
+//   asyncHandler(async (req, res)=>{
+//     const {id} = req.params;
+//     const {user} = req;
+//     const {title, thumbnail, description, productImages} = req.body;
+//     const userId = user.id;
+
+//     const exists = await Product.exists(id)
+
+//     if(user){
+//       if(exists){
+//         if(Product.userOwnsProduct(id, userId)){
+//           const product = await Product.edit(title, thumbnail, description, id)
+//           const productimgs = await ProductImage.bulkUpdate(productImages)
+//           return res.json({product, productimgs})
+//         } else {
+//           res.json({Error: "User does not own this product"})
+//         }
+//       } else {
+//         res.json({Error: "This product does not exists"})
+//       }
+//     }
+//   })
+// )
 
 // Delete product
 router.delete(

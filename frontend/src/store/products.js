@@ -49,7 +49,7 @@ export const getOneProduct = id => async dispatch => {
 
   if (response.ok) {
     const product = await response.json();
-    dispatch(addOneProduct(product));
+    dispatch(add(product));
   }
 };
 
@@ -72,7 +72,7 @@ export const postProduct = payload => async dispatch => {
 
   if (response.ok){
     const data = await response.json();
-    dispatch(addOneProduct(data))
+    dispatch(add(data))
     return data;
   }
 }
@@ -124,6 +124,12 @@ const productReducer = (state = initialState, action) => {
         ...state,
         list: listProducts(action.products)
       }
+    }
+    case ADD_PRODUCT: {
+      return {
+        ...state,
+        [action.product.id]: action.product
+      };
     }
     case INITIAL_STATE:
       return {...initialState};

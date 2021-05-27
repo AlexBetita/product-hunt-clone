@@ -14,6 +14,8 @@ const Profile = () => {
     } else return false
   })
 
+  
+
   if (!user){
     return (
       <div>

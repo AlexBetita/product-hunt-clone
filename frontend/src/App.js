@@ -9,7 +9,8 @@ import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import Profile from "./components/Profile";
 import ProfileEdit from './components/ProfileEdit';
-import ProductDetails from './components/ProductDetails'
+import ProductDetails from './components/ProductDetails';
+import Post from './components/Post';
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,9 @@ function App() {
           </Route>
           <Route path='/founder-club'>
             <ProfileEdit />
+          </Route>
+          <Route exact path='/posts/new'>
+            <Post />
           </Route>
           <Route path='/posts/:id'>
             <ProductDetails />
