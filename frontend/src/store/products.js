@@ -105,6 +105,7 @@ export const updateProduct = payload => async dispatch => {
 const initialState = {
   list: [],
   comments: [],
+  upvotes: []
 }
 
 const listProducts = (list) =>{

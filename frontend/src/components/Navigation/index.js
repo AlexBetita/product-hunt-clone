@@ -36,7 +36,7 @@ function Navigation({ isLoaded }){
 
   if (sessionUser) {
     sessionLinks = (
-        <ProfileButton user={sessionUser} handler={handler} />
+        <ProfileButton user={sessionUser} handler={handler} closePopOver={closePopOver}/>
     );
   } else {
     sessionLinks = (

@@ -9,6 +9,7 @@ import Navigation from "./components/Navigation";
 import Home from "./components/HomePage";
 import Profile from "./components/Profile";
 import ProfileEdit from './components/ProfileEdit';
+import ProductDetails from './components/ProductDetails'
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,9 @@ function App() {
           </Route>
           <Route path='/founder-club'>
             <ProfileEdit />
+          </Route>
+          <Route path='/posts/:id'>
+            <ProductDetails />
           </Route>
         </Switch>
       )}

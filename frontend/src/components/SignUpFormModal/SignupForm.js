@@ -90,6 +90,7 @@ function SignupForm() {
           Join our community of friendly folks discovering and sharing the latest products in the world.
         </p>
         <div className='div__form__signup__modal__styles'>
+          
           <form onSubmit={handleSubmit}>
               <label className='label__fullname__signup__modal'>
                 Full Name

@@ -232,13 +232,10 @@
   display: flex;
   align-items: center;
 }
+
 .button__edit__profile__mydetails{
-  background: #cc4d29;
-  border-color: #cc4d29;
-  color: #fff;
-  fill: #fff;
-  vertical-align: top;
   border-radius: 3px;
+  vertical-align: top;
   border: 1px solid transparent;
   box-sizing: border-box;
   outline: 0;
@@ -247,7 +244,7 @@
   align-items: center;
   justify-content: center;
   text-align: center;
-  text-decoration: none!important;
+  text-decoration: none;
   -webkit-appearance: button;
   cursor: pointer;
   text-transform: none;
@@ -258,7 +255,24 @@
   text-transform: uppercase;
   font-weight: 600;
   font-size: 11px;
+  background: #cc4d29;
+  border-color: #cc4d29;
+  color: #fff;
+  fill: #fff;
 }
+
+div#wa.div__edit__profile__mydetails__button__styles:disabled{
+  color: -internal-light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
+  background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+  border-color: -internal-light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+}
+
+button#wo.button__edit__profile__mydetails:disabled{
+  color: -internal-light-dark(rgba(16, 16, 16, 0.3), rgba(255, 255, 255, 0.3));
+  background-color: -internal-light-dark(rgba(239, 239, 239, 0.3), rgba(19, 1, 1, 0.3));
+  border-color: -internal-light-dark(rgba(118, 118, 118, 0.3), rgba(195, 195, 195, 0.3));
+}
+
 
 .div__edit__profile__side__styles{
   min-width: 330px;
@@ -383,4 +397,16 @@
 .div__edit__profile__side__uploadimage__container{
   margin-top: 20px;
   display: block;
+}
+
+.span__edit__profile__status{
+  line-height: 16px;
+  color: #6f6f6f;
+  margin-left: 20px;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+
 }

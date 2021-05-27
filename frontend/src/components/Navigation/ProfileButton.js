@@ -1,9 +1,10 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
+import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 
-function ProfileButton({ user, handler }) {
+function ProfileButton({ user, handler, closePopOver }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
 
@@ -31,6 +32,19 @@ function ProfileButton({ user, handler }) {
 
   return (
     <>
+      <div>
+        <NavLink onClick={closePopOver}
+            activeClassName='unactive'
+            className='navlink__navigation__post__products' to='/posts/new'>Post</NavLink>
+      </div>
+      <div>
+        <NavLink onClick={closePopOver} to='/notifications'>
+          <img className='img__navigation__heartbeat'
+            src='https://media.istockphoto.com/vectors/heart-human-vector-medicalpulse-beat-wave-heartbeat-grey-icon-vector-id1155635774'
+          >
+          </img>
+        </NavLink>
+      </div>
       <button className='button__navigation__profile__image' onClick={handler}>
         <img className='image__navigation__profile__image' src={user.profileImage}>
         </img>

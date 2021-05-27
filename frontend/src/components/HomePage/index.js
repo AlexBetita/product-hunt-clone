@@ -18,9 +18,6 @@ const Home = () => {
 
   useEffect(()=>{
     dispatch(getProducts())
-    return () => {
-      dispatch(resetState())
-    }
   }, [dispatch])
 
 

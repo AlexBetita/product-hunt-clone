@@ -17,8 +17,11 @@ const ProfileEdit = () => {
   const [headline, setHeadline] = useState(user?.headline);
   const [website, setWebsite] = useState(user?.website);
   const [profileImage, setProfileImage] = useState(user?.profileImage);
-
-  let inputElement;
+  const [inputElement, setInputElement] = useState(null);
+  const [spanStatus, setSpanStatus] = useState(true);
+  const [spanSaving, setSpanSaving] = useState(true);
+  const [spanUpdated, setSpanUpdated] = useState(true);
+  const [disableButton, setDisableButton] = useState(false);
 
   const triggerOnChange = function (e){
     const inputField = inputElement;
@@ -34,7 +37,8 @@ const ProfileEdit = () => {
   }
 
   useEffect(() => {
-    inputElement = elementRef.current;
+    setInputElement(elementRef.current);
+    return () => {}
   }, [profileImage])
 
   if(!user){
@@ -47,9 +51,16 @@ const ProfileEdit = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    await setDisableButton(true)
+    await setSpanUpdated(true)
+    await setSpanStatus(false)
+    await setSpanSaving(false)
 
     await dispatch(sessionActions.editDetails({fullName, headline, website}))
 
+    await setSpanSaving(true)
+    await setSpanUpdated(false)
+    await setDisableButton(false)
   }
 
   return (
@@ -94,7 +105,8 @@ const ProfileEdit = () => {
               </div>
 
               <div className='div__edit__profile__mydetails__form__container'>
-                <form className='form__edit__profile__mydetails' onSubmit={handleSubmit}>
+
+                <form onSubmit={handleSubmit}>
 
                   <label className='label__edit__profile__name__styles'>
                     <div className='div__edit__profile__name__styles'>
@@ -128,13 +140,28 @@ const ProfileEdit = () => {
                           onChange={(e) => setWebsite(e.target.value)}
                           />
                   </label>
-                  <div className='div__edit__profile__mydetails__button__styles'>
-                    <button className='button__edit__profile__mydetails'>
+
+                  <div className='div__edit__profile__mydetails__button__styles' disabled={disableButton}>
+                    <button type="submit" className='button__edit__profile__mydetails' disabled={disableButton}>
                       SAVE CHANGES
                     </button>
+
+                    <span className='span__edit__profile__status' hidden={spanStatus}>
+                      <span hidden={spanUpdated}>
+                        <span>👍</span>
+                          {' Updated!'}
+                      </span>
+
+                      <span hidden={spanSaving}>
+                        <span>💾</span>
+                          {' Saving..'}
+                      </span>
+
+                    </span>
                   </div>
 
                 </form>
+
               </div>
 
             </div>
