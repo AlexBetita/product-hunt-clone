@@ -2,19 +2,19 @@ import { NavLink } from 'react-router-dom';
 
 import './Products.css';
 
-const Products = ({id, products}) => {
+const Products = ({products}) => {
 
   return (
 
       <div className='div__product'>
         <div className='div__product__thumbnail'>
-          <img className='img__product__thumbnail' src={products[id].thumbnail}></img>
+          <img className='img__product__thumbnail' src={products.thumbnail}></img>
         </div>
 
         <NavLink
               className='div__styles__content'
               activeClassName='div__styles__content'
-              to={`/posts/${products[id].id}`}
+              to={`/posts/${products.id}`}
               >
         <div className=''>
           <div className='div__product__content'>
@@ -22,13 +22,13 @@ const Products = ({id, products}) => {
             <div
               className='a__product__title'
               >
-                {products[id].title}
+                {products.title}
             </div>
 
             <div
               className='a__product__description'
               >
-                {products[id].description}
+                {products.description}
             </div>
           </div>
 
@@ -41,7 +41,7 @@ const Products = ({id, products}) => {
                 <div
                   className='a__product__comments'
                   >
-                    {Object.keys(products[id].Comments).length}
+                    {Object.keys(products.Comments).length}
                 </div>
 
               </div>
@@ -61,7 +61,7 @@ const Products = ({id, products}) => {
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img>
             <span className='span__product__upvotes'>
-              {products[id].upvotes}
+              {products.upvotes}
             </span>
           </button>
         </div>

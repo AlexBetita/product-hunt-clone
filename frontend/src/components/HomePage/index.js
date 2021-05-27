@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux';
 
-import Products from '../Products'
+import Products from '../Products';
 
 import './Home.css';
 
@@ -20,7 +20,7 @@ const Home = () => {
         Today
       </div>
       {Object.keys(products).map((key) =>{
-        return <Products key={key} id={key} products = {products}/>
+        return <Products key={key} products = {products[key]}/>
       })}
 
     </div>

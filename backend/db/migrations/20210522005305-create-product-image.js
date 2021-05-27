@@ -15,7 +15,8 @@ module.exports = {
       productId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Products'}
+        references: {model: 'Products'},
+        onDelete: 'CASCADE'
       },
       deletedAt: {
         type: Sequelize.DATE

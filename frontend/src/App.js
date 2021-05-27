@@ -12,6 +12,7 @@ import ProfileEdit from './components/ProfileEdit';
 import ProductDetails from './components/ProductDetails';
 import Post from './components/Post';
 import EditProductPage from './components/EditProductPage';
+import DiscussionsPage from './components/DiscussionsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -51,6 +52,9 @@ function App() {
           </Route>
           <Route path='/product/:id/edit'>
             <EditProductPage />
+          </Route>
+          <Route path='/discussions'>
+            <DiscussionsPage />
           </Route>
         </Switch>
       )}

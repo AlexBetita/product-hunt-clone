@@ -98,16 +98,27 @@ const initialState = {
 }
 
 const listProducts = (list) =>{
-  return list.map((product)=> product.id)
+
+  const prodList = []
+
+  let max = list.length
+
+  for(let i = max; i > 0; i--){
+    prodList.push(i)
+  }
+
+  return prodList
 }
 
 const productReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_PRODUCTS: {
       const allProducts = {};
+
       action.products.forEach(product=>{
         allProducts[product.id] = product;
       });
+
       return {
         ...allProducts,
         ...state,

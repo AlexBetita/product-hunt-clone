@@ -81,6 +81,13 @@
   display: block;
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   font-variant-numeric: tabular-nums;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  max-width: 1100px;
 }
 
 .div__edit__profile__details__flex{

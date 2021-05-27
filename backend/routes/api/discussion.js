@@ -37,9 +37,7 @@ router.get(
       discussionsObj = {}
     });
 
-    return res.json({
-      discussions
-    });
+    return res.json(discussions);
   })
 );
 

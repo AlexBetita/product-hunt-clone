@@ -1,5 +1,7 @@
 'use strict';
 
+const faker = require('faker');
+
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Products', [
@@ -56,6 +58,234 @@ module.exports = {
       thumbnail: 'https://www.gia.edu/images/polished-diamond.png',
       description: 'master',
       userId: 6
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title(),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
     },
 
   ], {});

@@ -116,24 +116,24 @@ export const editProfileImage = (user) => async (dispatch) => {
   dispatch(setUser(data));
 };
 
-export const signup = (user) => async (dispatch) => {
-  const { fullName, username, email, password, headline, website, profileImage } = user;
-  const response = await csrfFetch("/api/users", {
-    method: "POST",
-    body: JSON.stringify({
-      fullName,
-      username,
-      email,
-      password,
-      headline,
-      website,
-      profileImage
-    }),
-  });
-  const data = await response.json();
-  await dispatch(setUser(data));
-  return response;
-};
+// export const signup = (user) => async (dispatch) => {
+//   const { fullName, username, email, password, headline, website, profileImage } = user;
+//   const response = await csrfFetch("/api/users", {
+//     method: "POST",
+//     body: JSON.stringify({
+//       fullName,
+//       username,
+//       email,
+//       password,
+//       headline,
+//       website,
+//       profileImage
+//     }),
+//   });
+//   const data = await response.json();
+//   await dispatch(setUser(data));
+//   return response;
+// };
 
 export const logout = () => async (dispatch) => {
   const response = await csrfFetch('/api/session', {

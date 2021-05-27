@@ -1,0 +1,19 @@
+.div__discussion{
+  border-bottom: 1px solid #e8e8e8;
+  display: flex;
+  background: #fff;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.div__discussion__content{
+  width: 400px;
+  flex-grow: 1;
+  padding: 9px;
+  bottom: 98px;
+  position: relative;
+  top: 9px;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}

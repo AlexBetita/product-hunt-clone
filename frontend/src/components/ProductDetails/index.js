@@ -29,7 +29,9 @@ const ProductDetails = () =>{
   return (
     <>
       <div>
-        {product.title}
+        <h1>
+          {product.title}
+        </h1>
       </div>
       <div>
         <img
@@ -41,21 +43,38 @@ const ProductDetails = () =>{
         {product.description}
       </div>
       <div>
-        {product.views}
+        {/* {product.views} */}
       </div>
       <div>
+        <div className='div__product__details__profileimage'>
+          <img
+              className='img__product__details__profileimage'
+              src={product.User.profileImage}
+              >
+          </img>
+        </div>
         {product.User.fullName}
-        {product.User.username}
+        <div className='div__product__details__username'>
+          @{product.User.username}
+        </div>
       </div>
       <ul>
         COMMENTS
         {
           Object.keys(product.Comments).map((key)=>{
             return (
-              <li>
-                  {product.Comments[key].comment}
+              <li key={key}>
+                  <h4>
+                    {product.Comments[key].comment}
+                  </h4>
                 <div>
-                  {`Commented by: ${product.Comments[key].User.username}`}
+                  {`Commented by: `}
+                  <img
+                      className='img__product__details__profileimage'
+                      src={product.Comments[key].User.profileImage}
+                      >
+                  </img>
+                  @{product.Comments[key].User.username}
                 </div>
               </li>
               )
@@ -65,7 +84,11 @@ const ProductDetails = () =>{
       {
         maker
           &&
-        <NavLink to={`/product/${product.id}/edit`}>Edit</NavLink>
+        <NavLink to={`/product/${product.id}/edit`}>
+          <button>
+            Edit
+          </button>
+        </NavLink>
       }
     </>
   )
