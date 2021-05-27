@@ -1,14 +1,44 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import {editDetails, editProfileImage} from "../../store/session";
 
 import './ProfileEdit.css'
 
 const ProfileEdit = () => {
+  const dispatch = useDispatch();
+  const elementRef = useRef();
 
   const user = useSelector((state)=>{
     return state.session.user
   })
+
+  const [fullName, setFullName] = useState(user?.fullName);
+  const [headline, setHeadline] = useState(user?.headline);
+  const [website, setWebsite] = useState(user?.website);
+  const [profileImage, setProfileImage] = useState(user?.profileImage);
+
+  let inputElement;
+  let oldProfileImage = profileImage
+
+  const triggerOnChange = function (e){
+    const inputField = inputElement;
+    inputField.click()
+  }
+
+  const updateFile = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfileImage(file)
+    };
+  }
+
+  useEffect(async () => {
+    inputElement = elementRef.current;
+    if(oldProfileImage !== profileImage){
+      await dispatch(editProfileImage({profileImage}))
+    }
+  }, [profileImage])
 
   if(!user){
     return (
@@ -16,6 +46,13 @@ const ProfileEdit = () => {
         Please sign up
       </>
     )
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    await dispatch(editDetails({fullName, headline, website}))
+
   }
 
   return (
@@ -60,33 +97,39 @@ const ProfileEdit = () => {
               </div>
 
               <div className='div__edit__profile__mydetails__form__container'>
-                <form className='form__edit__profile__mydetails'>
+                <form className='form__edit__profile__mydetails' onSubmit={handleSubmit}>
 
                   <label className='label__edit__profile__name__styles'>
                     <div className='div__edit__profile__name__styles'>
                       Name
                     </div>
-                    <input className='input__edit__profile__name' value={user.fullName}>
 
-                    </input>
+                    <input
+                          className='input__edit__profile__name' value={fullName}
+                          onChange={(e) => setFullName(e.target.value)}
+                          required
+                          />
                   </label>
 
                   <label className='label__edit__profile__headline__styles'>
                     <div className='div__edit__profile__headline__styles'>
                       Headline
                     </div>
-                    <input className='input__edit__profile__headline' value={user.headline}>
-
-                    </input>
+                    <input
+                          className='input__edit__profile__headline' value={headline}
+                          onChange={(e) => setHeadline(e.target.value)}
+                          required
+                          />
                   </label>
 
                   <label className='label__edit__profile__website__styles'>
                     <div className='div__edit__profile__website__styles'>
                       Website
                     </div>
-                    <input className='input__edit__profile__website' value={user.website}>
-
-                    </input>
+                    <input
+                          className='input__edit__profile__website' value={website}
+                          onChange={(e) => setWebsite(e.target.value)}
+                          />
                   </label>
                   <div className='div__edit__profile__mydetails__button__styles'>
                     <button className='button__edit__profile__mydetails'>
@@ -108,7 +151,7 @@ const ProfileEdit = () => {
                   <div className='div__edit__profile__side__profile__image__styles__2'>
                     <div className='div__edit__profile__side__image__styles'>
                       <img className='image__edit__profile__side'
-                        src={user.profileImage}>
+                        src={profileImage}>
                       </img>
                     </div>
                   </div>
@@ -127,7 +170,7 @@ const ProfileEdit = () => {
                     </button>
                   </div>
 
-                  <span className='span__edit__profile__side__uploadimage'>
+                  <span className='span__edit__profile__side__uploadimage' onClick={triggerOnChange}>
                     Upload an image
                   </span>
 
@@ -135,9 +178,12 @@ const ProfileEdit = () => {
                     Recommended size: 400x400px
                   </div>
 
-                  <input type='file' hidden={true}>
-
-                  </input>
+                  <input
+                        className='input__edit__profile__side__uploadprofileimage'
+                        type='file'
+                        hidden={true}
+                        ref={elementRef}
+                        onChange={updateFile} />
 
                   <div className='div__edit__profile__side__uploadimage__container'>
 

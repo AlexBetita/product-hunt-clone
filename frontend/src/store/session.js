@@ -72,6 +72,44 @@ export const restoreUser = () => async dispatch => {
   return response;
 };
 
+export const editDetails = (user) => async (dispatch) => {
+  const { fullName, headline, website } = user;
+  const response = await csrfFetch('/api/users/edit', {
+    method: 'PUT',
+    body: JSON.stringify({
+      fullName,
+      headline,
+      website
+    }),
+  });
+
+  const data = await response.json();
+  dispatch(setUser(data));
+  return response;
+};
+
+
+export const editProfileImage = (user) => async (dispatch) => {
+  const { profileImage } = user;
+  const formData = new FormData();
+
+  if (profileImage) formData.append("image", profileImage);
+
+  console.log('COOOL')
+  console.log('profileimage', profileImage)
+  console.log('form data', formData)
+  const res = await csrfFetch(`/api/users/profileimage'`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  });
+  console.log('NOT COOOL')
+  const data = await res.json();
+  dispatch(setUser(data));
+};
+
 export const signup = (user) => async (dispatch) => {
   const { fullName, username, email, password, headline, website, profileImage } = user;
   const response = await csrfFetch("/api/users", {

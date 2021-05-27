@@ -165,7 +165,6 @@ router.put(
 router.put(
   '/edit/profileImage',
   singleMulterUpload("image"),
-  validateEdit,
   requireAuth,
   asyncHandler(async (req, res) => {
     let {user} = req;
