@@ -90,21 +90,27 @@ export const editDetails = (user) => async (dispatch) => {
 
 
 export const editProfileImage = (user) => async (dispatch) => {
-  const { profileImage } = user;
+  const { profileImages, file } = user;
   const formData = new FormData();
+  formData.append("fullName", 'jibbersigh');
 
-  if (profileImage) formData.append("image", profileImage);
+  // for multiple files
+  if (profileImages && profileImages.length !== 0) {
+    for (var i = 0; i < profileImages.length; i++) {
+      formData.append("images", profileImages[i]);
+    }
+  }
 
-  console.log('COOOL')
-  console.log('profileimage', profileImage)
-  console.log('form data', formData)
-  const res = await csrfFetch(`/api/users/profileimage'`, {
+  if (file) formData.append("image", file);
+
+  const res = await csrfFetch(`/api/users/profileImage`, {
     method: "PUT",
     headers: {
       "Content-Type": "multipart/form-data",
     },
     body: formData,
   });
+
   console.log('NOT COOOL')
   const data = await res.json();
   dispatch(setUser(data));

@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import {editDetails, editProfileImage} from "../../store/session";
+import * as sessionActions from "../../store/session";
 
 import './ProfileEdit.css'
 
@@ -19,7 +19,6 @@ const ProfileEdit = () => {
   const [profileImage, setProfileImage] = useState(user?.profileImage);
 
   let inputElement;
-  let oldProfileImage = profileImage
 
   const triggerOnChange = function (e){
     const inputField = inputElement;
@@ -29,15 +28,13 @@ const ProfileEdit = () => {
   const updateFile = async (e) => {
     const file = e.target.files[0];
     if (file) {
-      setProfileImage(file)
+      await dispatch(sessionActions.editProfileImage({file}))
+      await setProfileImage(user?.profileImage)
     };
   }
 
-  useEffect(async () => {
+  useEffect(() => {
     inputElement = elementRef.current;
-    if(oldProfileImage !== profileImage){
-      await dispatch(editProfileImage({profileImage}))
-    }
   }, [profileImage])
 
   if(!user){
@@ -51,7 +48,7 @@ const ProfileEdit = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    await dispatch(editDetails({fullName, headline, website}))
+    await dispatch(sessionActions.editDetails({fullName, headline, website}))
 
   }
 
@@ -151,7 +148,7 @@ const ProfileEdit = () => {
                   <div className='div__edit__profile__side__profile__image__styles__2'>
                     <div className='div__edit__profile__side__image__styles'>
                       <img className='image__edit__profile__side'
-                        src={profileImage}>
+                        src={user?.profileImage}>
                       </img>
                     </div>
                   </div>

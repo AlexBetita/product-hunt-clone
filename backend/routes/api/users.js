@@ -163,7 +163,7 @@ router.put(
 
 // Edit user profileImage
 router.put(
-  '/edit/profileImage',
+  '/profileImage',
   singleMulterUpload("image"),
   requireAuth,
   asyncHandler(async (req, res) => {
