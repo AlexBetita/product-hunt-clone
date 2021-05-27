@@ -68,6 +68,7 @@
   overflow: hidden;
   cursor: pointer;
   color: grey;
+  text-decoration: none;
 }
 
 
@@ -92,6 +93,10 @@
   max-height: 100%;
 }
 
+
+.a__product__comments{
+  text-decoration: none;
+}
 
 .span__product__availability{
   position: relative;
@@ -127,4 +132,13 @@
   position: relative;
   top: 7px;
   font-size: 13px;
+}
+
+.navlink__products__container{
+  text-decoration: none;
+  color: black;
+}
+
+.products--active{
+  color: black;
 }

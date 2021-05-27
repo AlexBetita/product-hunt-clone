@@ -6,7 +6,7 @@
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
   height: auto;
-  position: sticky;
+  /* position: sticky; */
   top: 0;
   z-index: 20;
   box-shadow: 0 1px 1px 0 rgb(0 0 0 / 5%);
@@ -58,6 +58,14 @@
   right: 2px;
 }
 
+.img__navigation__heartbeat {
+  height: 30px;
+  width: 30px;
+  border-radius: 15%;
+  /* background-color: white; */
+  transform: scaleX(-1);
+  margin-left: 20px
+}
 
 .form__input__navigation__search{
   padding: 6px;
@@ -148,6 +156,7 @@
   border-radius: 50%;
   cursor: pointer;
   line-height: 24px;
+  margin-left: 20px;
 }
 
 .image__navigation__profile__image{
@@ -263,4 +272,17 @@
   position: absolute;
   top: -11px;
   left: 102px;
+}
+
+.navlink__navigation__post__products{
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+  background-color: transparent;
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  font-variant-numeric: tabular-nums;
+  text-decoration: none;
+  color: rgb(153, 154, 156);
 }
