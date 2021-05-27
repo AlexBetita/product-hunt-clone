@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import Products from '../Products'
@@ -23,6 +23,12 @@ const Profile = () => {
       products[key] = state.products[key]
     })
   })
+
+  useEffect(()=>{
+    if(Object.keys(products).length !== 0){
+      setMade(true)
+    }
+  }, [])
 
   if (!user){
     return (
@@ -92,7 +98,7 @@ const Profile = () => {
               </NavLink>
 
               {
-              products &&
+              made &&
               <NavLink className='navlink__profile__nav__made'
                        activeClassName="navlink__profile__nav__made active"
                        exact={true}

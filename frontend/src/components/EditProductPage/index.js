@@ -71,13 +71,13 @@ const EditProductPage = () => {
           <label>
             Description
           </label>
-          <input
+          <textarea
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 />
 
-          <img src={thumbnail}>
+          <img src={product?.thumbnail}>
 
           </img>
 

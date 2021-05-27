@@ -115,6 +115,14 @@ const productReducer = (state = initialState, action) => {
       }
     }
     case ADD_PRODUCT: {
+      if(!state[action.product.id]){
+        const newState = {
+          ...state,
+          [action.product.id]: action.product
+        };
+        newState.list.unshift(action.product.id)
+        return newState
+      }
       return {
         ...state,
         [action.product.id]: action.product

@@ -32,7 +32,7 @@ const Post = () => {
     const results = await dispatch(postProduct({title, description, thumbnail}))
 
     console.log('RESULTS', results)
-    
+
     history.push('/')
   }
 
@@ -57,7 +57,7 @@ const Post = () => {
         <label>
           Description
         </label>
-        <input
+        <textarea
               type="text"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
