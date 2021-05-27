@@ -21,7 +21,10 @@ function Navigation({ isLoaded }){
   let handler;
 
   useEffect(()=>{
-    dispatch(getProducts())
+    const waitForDispatch = async() =>{
+      await dispatch(getProducts())
+    }
+    waitForDispatch();
   }, [dispatch])
 
   const openPopOver = () => {

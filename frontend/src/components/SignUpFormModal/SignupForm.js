@@ -19,13 +19,15 @@ function SignupForm() {
   const [website, setWebsite] = useState("");
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState([]);
-
+  const [loading, setLoading] = useState(false)
   // if (sessionUser) return <Redirect to="/" />;
 
   const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    await setLoading(true)
 
     let newErrors = [];
 
@@ -164,7 +166,24 @@ function SignupForm() {
                     multiple
                     onChange={updateFiles} />
                 </label> */}
-              <button className='button__form__signup__modal' type="submit">Sign Up</button>
+              {loading &&
+                <>
+                <button className='button__form__signup__modal--disabled' disabled type="submit">
+                  <img
+                      className='image__form__signup__loading__image'
+                      src='https://www.pikpng.com/pngl/m/468-4688179_png-file-svg-transparent-loading-icon-png-clipart.png'
+                      >
+                  </img>
+                </button>
+                <div className='div__form__signup__loading__text'>
+                  Loading...
+                </div>
+                </>
+              }
+              {!loading &&
+                <button className='button__form__signup__modal' type="submit">Sign Up</button>
+              }
+
           </form>
         </div>
         <p className="p__signup__modal__sign__2">

@@ -11,6 +11,7 @@ const Post = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState("");
+  const [loading, setLoading] = useState(false)
 
   const history = useHistory();
 
@@ -29,9 +30,9 @@ const Post = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
 
-    const results = await dispatch(postProduct({title, description, thumbnail}))
+    await setLoading(true)
 
-    console.log('RESULTS', results)
+    await dispatch(postProduct({title, description, thumbnail}))
 
     history.push('/')
   }
@@ -69,10 +70,20 @@ const Post = () => {
           onChange={fileUpload}
         >
         </input>
+        {loading &&
+          <>
+            <button type='submit' disabled>
+              Submit Product
+            </button>
+            LOADING
+          </>
+        }
+        {!loading &&
+          <button type='submit'>
+            Submit Product
+          </button>
+        }
 
-        <button type='submit'>
-          Submit Product
-        </button>
       </form>
     </>
   )
