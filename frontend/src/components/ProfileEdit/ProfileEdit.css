@@ -1,0 +1,386 @@
+.div__edit__profile__nav__container{
+  margin-bottom: 30px;
+  background-color: #fff;
+  border-bottom: 1px solid #e8e8e8;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  width: 100%;
+}
+
+.div__edit__profile__nav__styles{
+  max-width: 1100px;
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  padding: 0 15px;
+}
+
+.div__edit__profile__nav__flex{
+  max-width: 100%;
+  height: 60px;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+
+.navlink__edit__profile__nav__settings{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  margin-left: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: #6f6f6f;
+  border: none;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.navlink__edit__profile__nav__subscriptions{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: #6f6f6f;
+  border: none;
+  margin-left: 20px;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.navlink__edit__profile__nav__founderclub{
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  color: #6f6f6f;
+  border: none;
+  margin-left: 20px;
+  text-decoration: none;
+  background-color: transparent;
+}
+
+.active_{
+  box-shadow: inset 0 -5px 0 #cc4d29;
+  color: #000;
+}
+
+.div__edit__profile__details__container{
+  box-sizing: border-box;
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 320px;
+  display: block;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  font-variant-numeric: tabular-nums;
+}
+
+.div__edit__profile__details__flex{
+  max-width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.div__edit__profile__main__container{
+  width: 100%;
+  display: block;
+}
+
+.div__edit__profile__mydetails__container{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 0 30px;
+}
+
+.div__edit__profile__mydetails__header{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  line-height: 32px;
+  font-weight: 600;
+  font-size: 20px;
+}
+
+.div__edit__profile__mydetails__form__container{
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  display: block;
+  background-color: #fff;
+  padding: 20px;
+}
+
+.form__edit__profile__mydetails{
+  display: block;
+  margin-top: 0em;
+}
+
+.label__edit__profile__name__styles{
+  display: block;
+  margin-bottom: 20px;
+  cursor: default;
+}
+
+.div__edit__profile__name__styles{
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  cursor: default;
+  flex: 1;
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.input__edit__profile__name{
+  border-radius: 3px;
+  border: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  font-size: 13px;
+  outline: none;
+  padding: 10px;
+  height: 35px;
+  width: 100%;
+  line-height: normal;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.label__edit__profile__headline__styles{
+  display: block;
+  margin-bottom: 20px;
+  cursor: default;
+}
+
+.div__edit__profile__headline__styles{
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  cursor: default;
+  flex: 1;
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.input__edit__profile__headline{
+  border-radius: 3px;
+  border: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  font-size: 13px;
+  outline: none;
+  padding: 10px;
+  height: 35px;
+  width: 100%;
+  line-height: normal;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.label__edit__profile__website__styles{
+  margin-bottom: 30px;
+  display: block;
+  cursor: default;
+}
+
+.div__edit__profile__website__styles{
+  margin-bottom: 10px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  cursor: default;
+  flex: 1;
+  font-weight: 500;
+  line-height: 20px;
+  font-size: 13px;
+}
+
+.input__edit__profile__website{
+  border-radius: 3px;
+  border: 1px solid #e8e8e8;
+  box-sizing: border-box;
+  font-size: 13px;
+  outline: none;
+  padding: 10px;
+  height: 35px;
+  width: 100%;
+  line-height: normal;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+}
+
+.div__edit__profile__mydetails__button__styles{
+  display: flex;
+  align-items: center;
+}
+.button__edit__profile__mydetails{
+  background: #cc4d29;
+  border-color: #cc4d29;
+  color: #fff;
+  fill: #fff;
+  vertical-align: top;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  outline: 0;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none!important;
+  -webkit-appearance: button;
+  cursor: pointer;
+  text-transform: none;
+  overflow: visible;
+  font: inherit;
+  margin: 0;
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.div__edit__profile__side__styles{
+  min-width: 330px;
+  max-width: 330px;
+  margin-top: 41px;
+  margin-left: 20px;
+  display: block;
+
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+
+}
+
+.div__edit__profile__side__flex{
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  margin: 0 0 20px;
+}
+
+.div__edit__profile__side__container{
+  background-color: #fff;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
+  display: block;
+}
+
+.div__edit__profile__side__profile__image__styles{
+  margin: 20px 20px 30px;
+  display: block;
+}
+
+.div__edit__profile__side__profile__image__styles__2{
+  margin: 0 0 10px;
+  display: block;
+}
+
+.div__edit__profile__side__image__styles{
+  position: relative;
+  display: block;
+}
+
+.image__edit__profile__side{
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  vertical-align: bottom;
+  border: none;
+}
+
+.span__edit__profile__side__profilepicture{
+  line-height: 20px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.div__edit__profile__side__syncprofile{
+  line-height: 20px;
+  margin: 0 0 10px;
+  font-weight: 400;
+  font-size: 13px;
+}
+
+.div__edit__profile__side__syncbutton{
+  max-width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 0 20px;
+}
+
+.button__edit__profile__side__syncbutton{
+  background: #3b5998;
+  border-color: #3b5998;
+  color: #fff;
+  fill: #fff;
+  height: 24px;
+  padding: 0 8px;
+  vertical-align: top;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  box-sizing: border-box;
+  outline: 0;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none!important;
+  -webkit-appearance: button;
+  cursor: pointer;
+  text-transform: none;
+  overflow: visible;
+  font: inherit;
+  margin: 0;
+
+  line-height: 16px;
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 11px;
+}
+
+.span__edit__profile__side__uploadimage{
+  line-height: 20px;
+  cursor: pointer;
+  font-weight: 400;
+  font-size: 13px;
+  color: #cc4d29;
+}
+
+.div__edit__profile__side__recommendedsize{
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 13px;
+  color: #6f6f6f;
+}
+
+.div__edit__profile__side__uploadimage__container{
+  margin-top: 20px;
+  display: block;
+}

@@ -1,14 +1,14 @@
 // frontend/src/components/SignupFormPage/index.js
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
 import './SignupFormModal.css';
 
 function SignupForm() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
+  // const sessionUser = useSelector((state) => state.session.user);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -22,7 +22,9 @@ function SignupForm() {
 
   // if (sessionUser) return <Redirect to="/" />;
 
-  const handleSubmit = (e) => {
+  const history = useHistory();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     let newErrors = [];
@@ -37,17 +39,17 @@ function SignupForm() {
 
     if (!newErrors.length) {
       setErrors([]);
-      return dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
-        .then(() => {
-          setFullName("");
-          setEmail("");
-          setPassword("");
-          setConfirmPassword("");
-          setUsername("");
-          setHeadline("");
-          setWebsite("");
-          setProfileImage(null);
-        })
+      await dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
+        // .then(() => {
+        //   setFullName("");
+        //   setEmail("");
+        //   setPassword("");
+        //   setConfirmPassword("");
+        //   setUsername("");
+        //   setHeadline("");
+        //   setWebsite("");
+        //   setProfileImage(null);
+        // })
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
@@ -55,11 +57,14 @@ function SignupForm() {
             setErrors(newErrors);
           }
         });
+        history.push('/')
     }
 
-    setErrors(newErrors)
+    if(newErrors.length === 0){
+      history.push('/')
+    } else setErrors(newErrors)
 
-    return setErrors
+    // return setErrors
   };
 
   const updateFile = (e) => {

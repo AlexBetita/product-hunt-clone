@@ -46,7 +46,7 @@ export const createUser = (user) => async (dispatch) => {
   });
 
   const data = await res.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
 };
 
 
@@ -61,15 +61,59 @@ export const login = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
 };
 
 export const restoreUser = () => async dispatch => {
   const response = await csrfFetch('/api/session');
   const data = await response.json();
-  dispatch(setUser(data.user));
+  dispatch(setUser(data));
   return response;
+};
+
+export const editDetails = (user) => async (dispatch) => {
+  const { fullName, headline, website } = user;
+  const response = await csrfFetch('/api/users/edit', {
+    method: 'PUT',
+    body: JSON.stringify({
+      fullName,
+      headline,
+      website
+    }),
+  });
+
+  const data = await response.json();
+  dispatch(setUser(data));
+  return response;
+};
+
+
+export const editProfileImage = (user) => async (dispatch) => {
+  const { profileImages, file } = user;
+  const formData = new FormData();
+  formData.append("fullName", 'jibbersigh');
+
+  // for multiple files
+  if (profileImages && profileImages.length !== 0) {
+    for (var i = 0; i < profileImages.length; i++) {
+      formData.append("images", profileImages[i]);
+    }
+  }
+
+  if (file) formData.append("image", file);
+
+  const res = await csrfFetch(`/api/users/profileImage`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+    body: formData,
+  });
+
+  console.log('NOT COOOL')
+  const data = await res.json();
+  dispatch(setUser(data));
 };
 
 export const signup = (user) => async (dispatch) => {
@@ -87,7 +131,7 @@ export const signup = (user) => async (dispatch) => {
     }),
   });
   const data = await response.json();
-  await dispatch(setUser(data.user));
+  await dispatch(setUser(data));
   return response;
 };
 
@@ -100,7 +144,11 @@ export const logout = () => async (dispatch) => {
 };
 
 const initialState = {
-  user: null
+  user: null,
+  upvotes: null,
+  products: null,
+  comments: null,
+  discussions: null
 };
 
 const sessionReducer = (state = initialState, action) => {
@@ -110,11 +158,19 @@ const sessionReducer = (state = initialState, action) => {
     //   return { ...state, user: action.payload };
     case SET_USER:
       newState = Object.assign({}, state);
-      newState.user = action.payload;
+      newState.user = action.payload.user;
+      newState.upvotes = action.payload.upvotes;
+      newState.products = action.payload.products;
+      newState.comments = action.payload.comments;
+      newState.discussions = action.payload.discussions;
       return newState;
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
+      newState.upvotes = null;
+      newState.products = null;
+      newState.comments = null;
+      newState.discussions = null;
       return newState;
     default:
       return state;

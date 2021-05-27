@@ -1,14 +1,13 @@
 // frontend/src/components/SignupFormPage/index.js
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
 import './SignupForm.css';
 
 function SignupFormPage() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.user);
 
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
@@ -20,10 +19,11 @@ function SignupFormPage() {
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState([]);
 
+  const history = useHistory();
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = [];
-
 
     if(password !== confirmPassword){
       newErrors.push('Confirm Password field must be the same as the Password field')
@@ -35,7 +35,7 @@ function SignupFormPage() {
 
     if (!newErrors.length) {
       setErrors([]);
-      return await dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
+      await dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
         .then(() => {
           setFullName("");
           setEmail("");
@@ -53,6 +53,7 @@ function SignupFormPage() {
             setErrors(newErrors);
           }
         });
+      // history.push('/')
     }
 
     setErrors(newErrors)
@@ -146,18 +147,6 @@ function SignupFormPage() {
           </label> */}
         <button type="submit">Sign Up</button>
       </form>
-      <div>
-        {sessionUser && (
-          <div>
-            <h1>{sessionUser.username}</h1>
-            <img
-              style={{ width: "150px" }}
-              src={sessionUser.profileImage}
-              alt="profile"
-            />
-          </div>
-        )}
-      </div>
     </div>
   );
 }
