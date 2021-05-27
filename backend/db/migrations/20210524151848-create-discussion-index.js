@@ -16,7 +16,8 @@ module.exports = {
       discussionId: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: {model: 'Discussions'}
+        references: {model: 'Discussions'},
+        onDelete: 'CASCADE'
       },
       deletedAt: {
         type: Sequelize.DATE

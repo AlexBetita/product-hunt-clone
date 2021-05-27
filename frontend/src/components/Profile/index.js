@@ -8,7 +8,8 @@ import './Profile.css'
 const Profile = () => {
   const { username } = useParams();
   let user;
-  let products = {}
+  let productsMade = {}
+  let productsUpvoted = {}
 
   const [made, setMade] = useState(false);
 
@@ -20,12 +21,18 @@ const Profile = () => {
 
   useSelector((state)=>{
     Object.keys(state.session.products).map((key)=>{
-      products[key] = state.products[key]
+      productsMade[key] = state.products[key]
+    })
+
+    Object.keys(state.session.upvotes).map((key)=>{
+      if(state.session.upvotes[key].upvoteableType === 'product'){
+        productsUpvoted[state.session.upvotes[key].upvoteableId] = state.products[state.session.upvotes[key].upvoteableId]
+      }
     })
   })
 
   useEffect(()=>{
-    if(Object.keys(products).length !== 0){
+    if(Object.keys(productsMade).length !== 0){
       setMade(true)
     }
   }, [])
@@ -37,9 +44,6 @@ const Profile = () => {
       </div>
     )
   }
-
-  // let activityPath = `/@${user.username}`
-  // console.log(activityPath, )
 
   return (
     <>
@@ -104,7 +108,7 @@ const Profile = () => {
                        exact={true}
                        to= {`/@${user.username}/made`}
               >
-                {Object.keys(products).length} MADE
+                {Object.keys(productsMade).length} MADE
               </NavLink>
               }
               <NavLink className='navlink__profile__nav__following'
@@ -125,10 +129,19 @@ const Profile = () => {
           </div>
         </div>
       </div>
+
+      <Route exact path={`/@${user.username}`}>
+        <div>
+            {Object.keys(productsUpvoted).map((key)=>{
+              return <Products key={key} products = {productsUpvoted[key]}/>
+            })}
+          </div>
+      </Route>
+
       <Route path={`/@${user.username}/made`}>
         <div>
-            {Object.keys(products).map((key)=>{
-              return <Products key={key} id={key} products = {products}/>
+            {Object.keys(productsMade).map((key)=>{
+              return <Products key={key} products = {productsMade[key]}/>
             })}
           </div>
       </Route>

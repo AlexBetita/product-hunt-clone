@@ -1,0 +1,14 @@
+.div__product__details__profileimage{
+  display: inline-flex;
+}
+
+.img__product__details__profileimage{
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.div__product__details__username{
+  margin-left: 35px
+}

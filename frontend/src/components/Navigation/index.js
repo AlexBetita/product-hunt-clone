@@ -1,5 +1,5 @@
 // frontend/src/components/Navigation/index.js
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
