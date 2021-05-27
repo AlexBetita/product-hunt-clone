@@ -251,6 +251,7 @@ router.put(
   singleMulterUpload("image"),
   requireAuth,
   asyncHandler(async (req, res)=>{
+
     const {id} = req.params;
     const {user} = req;
     const {title, description } = req.body;
@@ -258,7 +259,6 @@ router.put(
     const userId = user.id;
 
     let product;
-
     const exists = await Product.exists(id)
 
     if(user){
