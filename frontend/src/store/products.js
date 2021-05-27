@@ -1,9 +1,9 @@
 import { csrfFetch } from './csrf';
 
-const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
-const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
-const ADD_PRODUCT = "products/ADD_PRODUCT";
-const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
+export const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
+export const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
+export const ADD_PRODUCT = "products/ADD_PRODUCT";
+export const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
 const INITIAL_STATE = "products/INITIAL_STATE";
 
 const load = (products) => ({

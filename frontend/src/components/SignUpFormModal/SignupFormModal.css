@@ -213,3 +213,35 @@
   font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
   text-align: center;
 }
+
+.button__form__signup__modal--disabled{
+  line-height: 24px;
+  font-weight: 400;
+  font-size: 16px;
+  font-feature-settings: "tnum";
+  font-variant-numeric: tabular-nums;
+  font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+  cursor: pointer;
+  vertical-align: top;
+  box-sizing: 1px border-box;
+  outline: 0;
+  transition: all .3s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  text-decoration: none!important;
+  margin-top: 7px;
+  width: 68px;
+  height: 30px;
+}
+
+.image__form__signup__loading__image{
+  width: 20px;
+  height: 20px;
+}
+
+.div__form__signup__loading__text{
+  position: absolute;
+  left: 253px;
+}

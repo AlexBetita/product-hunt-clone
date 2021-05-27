@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import {LOAD_PRODUCTS, REMOVE_PRODUCT, ADD_PRODUCT, ADD_ONE_PRODUCT} from './products'
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -167,6 +168,12 @@ const sessionReducer = (state = initialState, action) => {
         ...state,
         ...newState
       };
+    case ADD_PRODUCT:
+      newState = {
+        ...state
+      }
+      newState.products[action.product.id] = action.product
+      return newState
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;
