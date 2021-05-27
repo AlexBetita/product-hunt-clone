@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom'
 import { updateProduct } from '../../store/products';
 
-import './EditPage.css'
+import './EditProductPage.css'
 
-const EditPage = () => {
+const EditProductPage = () => {
   const {id} = useParams();
   const dispatch = useDispatch();
 
@@ -77,7 +77,7 @@ const EditPage = () => {
                 required
                 />
 
-          <img src={product.thumbnail}>
+          <img src={thumbnail}>
 
           </img>
 
@@ -90,4 +90,4 @@ const EditPage = () => {
   )
 };
 
-export default EditPage;
+export default EditProductPage;

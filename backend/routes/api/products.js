@@ -238,9 +238,9 @@ router.post(
             product = productObj
           }
 
-      return res.json({
+      return res.json(
         product
-      });
+      );
     }
   })
 );
@@ -310,7 +310,7 @@ router.put(
               product = productObj
             }
 
-          return res.json({product})
+          return res.json(product)
 
         } else {
           res.json({Error: "User does not own this product"})

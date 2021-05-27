@@ -22,7 +22,7 @@ function Navigation({ isLoaded }){
 
   useEffect(()=>{
     dispatch(getProducts())
-  }, [])
+  }, [dispatch])
 
   const openPopOver = () => {
     if(showPopOver) {

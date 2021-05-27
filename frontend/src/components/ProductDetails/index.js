@@ -49,6 +49,18 @@ const ProductDetails = () =>{
       </div>
       <ul>
         COMMENTS
+        {
+          Object.keys(product.Comments).map((key)=>{
+            return (
+              <li>
+                  {product.Comments[key].comment}
+                <div>
+                  {`Commented by: ${product.Comments[key].User.username}`}
+                </div>
+              </li>
+              )
+          })
+        }
       </ul>
       {
         maker
