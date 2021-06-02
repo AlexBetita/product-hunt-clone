@@ -22,4 +22,5 @@ const Discussion = ({discussion}) => {
   )
 };
 
+
 export default Discussion;
