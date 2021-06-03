@@ -14,7 +14,6 @@ const Discussion = ({discussion}) => {
             </h1>
           </div>
           <div>
-            
             {discussion.message}
           </div>
         </div>
