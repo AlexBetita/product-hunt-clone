@@ -10,25 +10,66 @@ const {singlePublicFileUpload, singleMulterUpload} = require('../../awsS3.js')
 
 const router = express.Router();
 
-// const existChecker = function(user, productId){
 
-//   const exists = await Product.exists(productId)
-//   const userId = user.id
+const productCleanUp = (result, multi = false) => {
+  let productObj = {}
 
-//   if(user){
-//     if(exists){
-//       if(Product.userOwnsProduct(productId, userId)){
-//         return userId
-//       } else {
-//         res.json({Error: "User does not own this product"})
-//         return false
-//       }
-//     } else {
-//       res.json({Error: "This product does not exists"})
-//       return false
-//     }
-//   } else return false
-// }
+  if (result && !multi){
+    for(const key in result.dataValues){
+      if(key === 'createdAt' || key === 'updatedAt'){
+        productObj[key] = moment(result.dataValues[key]).startOf('second').fromNow();
+      } else if(key === 'Upvotes') {
+        productObj['upvotes'] = result.dataValues[key].length
+      } else if(key === 'Comments'){
+        productObj['Comments'] = {}
+        result.dataValues[key].forEach((comment, i)=>{
+          productObj['Comments'][i+1] = {}
+          for(const key2 in comment.dataValues){
+            if(key2 === 'createdAt' || key2 === 'updatedAt'){
+              productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+            } else if (key2 === 'Upvotes'){
+              productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+            } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+          }
+        })
+      } else {
+        productObj[key] = result.dataValues[key];
+      }
+    }
+    product = productObj
+    return product
+  }
+
+  if (result && multi){
+    const products = []
+    result.forEach((product, i)=>{
+      for(const key in result[i].dataValues){
+        if(key === 'createdAt' || key === 'updatedAt'){
+          productObj[key] = moment(result[i].dataValues[key]).startOf('second').fromNow();
+        } else if(key === 'Upvotes') {
+          productObj['upvotes'] = result[i].dataValues[key].length
+        } else if(key === 'Comments'){
+          productObj['Comments'] = {}
+          result[i].dataValues[key].forEach((comment, i)=>{
+            productObj['Comments'][i+1] = {}
+            for(const key2 in comment.dataValues){
+              if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+              } else if (key2 === 'Upvotes'){
+                productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+              } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+            }
+          })
+        } else {
+          productObj[key] = result[i].dataValues[key];
+        }
+      }
+      products.push(productObj);
+      productObj = {};
+    });
+    return products
+  }
+}
 
 const validateCreateProduct = [
   check('title')
@@ -66,60 +107,7 @@ router.get(
       ]
     })
 
-    // const results = await Product.findAll({
-    //   attributes: [
-    //     'User.*', 'Comment.*', 'ProductImage.*', 'Upvote.*',
-    //     [Sequelize.fn('COUNT', Sequelize.col('Upvote.id')), 'PostCount']
-    //   ],
-    //   include: [
-    //     {
-    //       model: Comment,
-    //       include: [Upvote]
-    //     },
-    //     Upvote,
-    //     ProductImage.scope('imageUrls')
-    //   ],
-    //   order: [
-    //     ['createdAt', 'DESC']
-    //   ]
-    // })
-
-    const products = []
-    let productsObj = {}
-
-    results.forEach((product, i)=>{
-      // for(const key in results[i].dataValues){
-      //   if(key === 'createdAt' || key === 'updatedAt'){
-      //     productsObj[key] = moment(results[i].dataValues[key]).format('MMMM Do YYYY, h:mm:ss a');
-      //   } else {
-      //     productsObj[key] = results[i].dataValues[key]
-      //   }
-      // }
-      for(const key in results[i].dataValues){
-        if(key === 'createdAt' || key === 'updatedAt'){
-          productsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
-        } else if(key === 'Upvotes') {
-          productsObj['upvotes'] = results[i].dataValues[key].length
-        } else if(key === 'Comments'){
-          productsObj['Comments'] = {}
-          results[i].dataValues[key].forEach((comment, i)=>{
-            productsObj['Comments'][i+1] = {}
-            for(const key2 in comment.dataValues){
-              if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                productsObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-              } else if (key2 === 'Upvotes'){
-                productsObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-              } else productsObj['Comments'][i+1][key2] = comment.dataValues[key2]
-            }
-          })
-        } else {
-          productsObj[key] = results[i].dataValues[key];
-        }
-      }
-      products.push(productsObj);
-      productsObj = {};
-    });
-
+    products = productCleanUp(results, multi = true)
     return res.json(products);
   })
 );
@@ -142,32 +130,9 @@ router.get(
         ]
       });
 
-    let productObj = {}
-
     if(results){
-      for(const key in results.dataValues){
-        if(key === 'createdAt' || key === 'updatedAt'){
-          productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
-        } else if(key === 'Upvotes') {
-          productObj['upvotes'] = results.dataValues[key].length
-        } else if(key === 'Comments'){
-          productObj['Comments'] = {}
-          results.dataValues[key].forEach((comment, i)=>{
-            productObj['Comments'][i+1] = {}
-            for(const key2 in comment.dataValues){
-              if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-              } else if (key2 === 'Upvotes'){
-                productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-              } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
-            }
-          })
-        } else {
-          productObj[key] = results.dataValues[key];
-        }
-      }
 
-      const product = productObj;
+      const product = productCleanUp(results);
 
       return res.json({
         product
@@ -196,32 +161,7 @@ router.post(
         title, thumbnail, description, userId
       });
 
-      let productObj = {}
-      
-        if (result){
-          for(const key in result.dataValues){
-              if(key === 'createdAt' || key === 'updatedAt'){
-                productObj[key] = moment(result.dataValues[key]).startOf('second').fromNow();
-              } else if(key === 'Upvotes') {
-                productObj['upvotes'] = result.dataValues[key].length
-              } else if(key === 'Comments'){
-                productObj['Comments'] = {}
-                result.dataValues[key].forEach((comment, i)=>{
-                  productObj['Comments'][i+1] = {}
-                  for(const key2 in comment.dataValues){
-                    if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                      productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-                    } else if (key2 === 'Upvotes'){
-                      productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-                    } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
-                  }
-                })
-              } else {
-                productObj[key] = result.dataValues[key];
-              }
-            }
-          }
-          product = productObj
+      product = productCleanUp(result)
 
       return res.json(
         product
@@ -229,50 +169,6 @@ router.post(
     }
   })
 );
-      // if (result){
-      //     const results = await Product.findByPk(result.id,
-      //       {
-      //         include: [
-      //           {
-      //             model: Comment,
-      //             include: [Upvote, User.scope('userIcons')]
-      //           },
-      //           User.scope('userIcons'),
-      //           Upvote,
-      //           ProductImage.scope('imageUrls')
-      //         ]
-      //       });
-
-      //       let productObj = {}
-
-      //       if(results){
-      //         for(const key in results.dataValues){
-      //           if(key === 'createdAt' || key === 'updatedAt'){
-      //             productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
-      //           } else if(key === 'Upvotes') {
-      //             productObj['upvotes'] = results.dataValues[key].length
-      //           } else if(key === 'Comments'){
-      //             productObj['Comments'] = {}
-      //             results.dataValues[key].forEach((comment, i)=>{
-      //               productObj['Comments'][i+1] = {}
-      //               for(const key2 in comment.dataValues){
-      //                 if(key2 === 'createdAt' || key2 === 'updatedAt'){
-      //                   productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-      //                 } else if (key2 === 'Upvotes'){
-      //                   productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-      //                 } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
-      //               }
-      //             })
-      //           } else {
-      //             productObj[key] = results.dataValues[key];
-      //           }
-      //         }
-      //       }
-
-      //       product = productObj
-      //     }
-
-
 
 // Update product
 router.put(
