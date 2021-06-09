@@ -38,11 +38,21 @@ const Products = ({products}) => {
                   src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
                 </img>
 
-                <div
-                  className='a__product__comments'
+                {products.Comments
+                  ?
+                    <div
+                    className='a__product__comments'
+                    >
+                      {Object.keys(products.Comments).length}
+
+                  </div>
+                  :
+                  <div
+                    className='a__product__comments'
                   >
-                    {Object.keys(products.Comments).length}
-                </div>
+                      0
+                  </div>
+                }
 
               </div>
               <span className='span__product__availability'>
@@ -61,7 +71,7 @@ const Products = ({products}) => {
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img>
             <span className='span__product__upvotes'>
-              {products.upvotes}
+              {products.upvotes ? products.upvotes : 0}
             </span>
           </button>
         </div>

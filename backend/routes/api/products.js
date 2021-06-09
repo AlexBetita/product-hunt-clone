@@ -50,6 +50,7 @@ const validateProductImages = [
 router.get(
   '/',
   asyncHandler(async (req, res)=>{
+
     const results = await Product.findAll({
       include: [
         {
@@ -195,48 +196,32 @@ router.post(
         title, thumbnail, description, userId
       });
 
-      if (result){
-          const results = await Product.findByPk(result.id,
-            {
-              include: [
-                {
-                  model: Comment,
-                  include: [Upvote, User.scope('userIcons')]
-                },
-                User.scope('userIcons'),
-                Upvote,
-                ProductImage.scope('imageUrls')
-              ]
-            });
-
-            let productObj = {}
-
-            if(results){
-              for(const key in results.dataValues){
-                if(key === 'createdAt' || key === 'updatedAt'){
-                  productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
-                } else if(key === 'Upvotes') {
-                  productObj['upvotes'] = results.dataValues[key].length
-                } else if(key === 'Comments'){
-                  productObj['Comments'] = {}
-                  results.dataValues[key].forEach((comment, i)=>{
-                    productObj['Comments'][i+1] = {}
-                    for(const key2 in comment.dataValues){
-                      if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                        productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-                      } else if (key2 === 'Upvotes'){
-                        productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-                      } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
-                    }
-                  })
-                } else {
-                  productObj[key] = results.dataValues[key];
-                }
+      let productObj = {}
+      
+        if (result){
+          for(const key in result.dataValues){
+              if(key === 'createdAt' || key === 'updatedAt'){
+                productObj[key] = moment(result.dataValues[key]).startOf('second').fromNow();
+              } else if(key === 'Upvotes') {
+                productObj['upvotes'] = result.dataValues[key].length
+              } else if(key === 'Comments'){
+                productObj['Comments'] = {}
+                result.dataValues[key].forEach((comment, i)=>{
+                  productObj['Comments'][i+1] = {}
+                  for(const key2 in comment.dataValues){
+                    if(key2 === 'createdAt' || key2 === 'updatedAt'){
+                      productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+                    } else if (key2 === 'Upvotes'){
+                      productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+                    } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+                  }
+                })
+              } else {
+                productObj[key] = result.dataValues[key];
               }
             }
-
-            product = productObj
           }
+          product = productObj
 
       return res.json(
         product
@@ -244,6 +229,50 @@ router.post(
     }
   })
 );
+      // if (result){
+      //     const results = await Product.findByPk(result.id,
+      //       {
+      //         include: [
+      //           {
+      //             model: Comment,
+      //             include: [Upvote, User.scope('userIcons')]
+      //           },
+      //           User.scope('userIcons'),
+      //           Upvote,
+      //           ProductImage.scope('imageUrls')
+      //         ]
+      //       });
+
+      //       let productObj = {}
+
+      //       if(results){
+      //         for(const key in results.dataValues){
+      //           if(key === 'createdAt' || key === 'updatedAt'){
+      //             productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
+      //           } else if(key === 'Upvotes') {
+      //             productObj['upvotes'] = results.dataValues[key].length
+      //           } else if(key === 'Comments'){
+      //             productObj['Comments'] = {}
+      //             results.dataValues[key].forEach((comment, i)=>{
+      //               productObj['Comments'][i+1] = {}
+      //               for(const key2 in comment.dataValues){
+      //                 if(key2 === 'createdAt' || key2 === 'updatedAt'){
+      //                   productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+      //                 } else if (key2 === 'Upvotes'){
+      //                   productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
+      //                 } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
+      //               }
+      //             })
+      //           } else {
+      //             productObj[key] = results.dataValues[key];
+      //           }
+      //         }
+      //       }
+
+      //       product = productObj
+      //     }
+
+
 
 // Update product
 router.put(

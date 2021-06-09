@@ -18,6 +18,10 @@ const ProductDetails = () =>{
     return state.products[id]
   })
 
+  const user = useSelector((state)=>{
+    return state.session.user
+  })
+
   if(!product){
     return (
       <>
@@ -47,40 +51,70 @@ const ProductDetails = () =>{
       </div>
       <div>
         <div className='div__product__details__profileimage'>
-          <img
+
+          {product.User
+            ?
+            <img
               className='img__product__details__profileimage'
               src={product.User.profileImage}
-              >
-          </img>
+            >
+            </img>
+            :
+            <img
+              className='img__product__details__profileimage'
+              src={user.profileImage}
+            >
+            </img>
+          }
+
         </div>
-        {product.User.fullName}
-        <div className='div__product__details__username'>
-          @{product.User.username}
-        </div>
-      </div>
-      <ul>
-        COMMENTS
-        {
-          Object.keys(product.Comments).map((key)=>{
-            return (
-              <li key={key}>
-                  <h4>
-                    {product.Comments[key].comment}
-                  </h4>
-                <div>
-                  {`Commented by: `}
-                  <img
-                      className='img__product__details__profileimage'
-                      src={product.Comments[key].User.profileImage}
-                      >
-                  </img>
-                  @{product.Comments[key].User.username}
-                </div>
-              </li>
-              )
-          })
+
+        {product.User ? product.User.fullName : user.fullName}
+
+        {product.User
+          ?
+            <div className='div__product__details__username'>
+              @{product.User.username}
+            </div>
+          :
+            <div className='div__product__details__username'>
+              @{user.username}
+            </div>
         }
-      </ul>
+
+      </div>
+
+      {product.Comments
+        ?
+        <ul>
+            COMMENTS
+
+            {
+              Object.keys(product.Comments).map((key)=>{
+                return (
+                  <li key={key}>
+                      <h4>
+                        {product.Comments[key].comment}
+                      </h4>
+                    <div>
+                      {`Commented by: `}
+                      <img
+                          className='img__product__details__profileimage'
+                          src={product.Comments[key].User.profileImage}
+                          >
+                      </img>
+                      @{product.Comments[key].User.username}
+                    </div>
+                  </li>
+                  )
+              })
+            }
+          </ul>
+        :
+        <ul>
+            COMMENTS
+        </ul>
+      }
       {
         maker
           &&
