@@ -1,7 +1,9 @@
 // frontend/src/components/Navigation/index.js
-import {useState, useEffect} from 'react';
+import {useState, useEffect, render} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
+import _ from 'lodash'
+
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormModal';
@@ -11,24 +13,31 @@ import {getProducts} from '../../store/products';
 
 import './Navigation.css';
 
+
+
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
-  const [currentPage, setCurrentPage] = useState(1);
+  // const [currentPage, setCurrentPage] = useState(1);
   // const [isScrolled, setIsScrolled] = useState(false);
 
   // let isScrolled = false;
   // let callFunction = true
+  let pageCounter = 1
   let sessionLinks;
   let handler;
 
   useEffect(()=>{
     const waitForDispatch = async() =>{
-      await dispatch(getProducts(currentPage))
+      await dispatch(getProducts(pageCounter))
     }
     waitForDispatch();
+
+    if(window.addEventListener){
+      window.addEventListener('scroll', _.throttle(scroll, 1000));
+    }
   }, [dispatch])
 
   const openPopOver = () => {
@@ -69,8 +78,15 @@ function Navigation({ isLoaded }){
   };
 
   const setNextPage = async () => {
-    setCurrentPage(currentPage + 1)
-    await dispatch(getProducts(currentPage + 1))
+    await dispatch(getProducts(pageCounter + 1))
+    pageCounter += 1
+  }
+
+  function scroll(ev){
+    const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    if((st+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
+      setNextPage()
+    }
   }
 
   // function getScrollXY() {
@@ -107,38 +123,38 @@ function Navigation({ isLoaded }){
   //     }
   // });
 
-  function debounce(func, wait, immediate) {
-    let timeout;
-    return function() {
-      const context = this, args = arguments;
-      const later = function() {
-        timeout = null;
-        if (!immediate) func.apply(context, args);
-      };
-      const callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) func.apply(context, args);
-    };
-  };
+  // function debounce(func, wait, immediate) {
+  //   let timeout;
+  //   return function() {
+  //     const context = this, args = arguments;
+  //     const later = function() {
+  //       timeout = null;
+  //       if (!immediate) func.apply(context, args);
+  //     };
+  //     const callNow = immediate && !timeout;
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(later, wait);
+  //     if (callNow) func.apply(context, args);
+  //   };
+  // };
 
-  const limitFn = debounce(function() {
-    function scroll(ev){
-      const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-        if((st+document.documentElement.clientHeight)>=document.documentElement.scrollHeight ){
-            setNextPage()
-        }
-    }
-    scroll()
-  }, 1000);
+  // const limitFn = debounce(function() {
+  //   function scroll(ev){
+  //     const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+  //       if((st+document.documentElement.clientHeight)>=document.documentElement.scrollHeight ){
+  //           setNextPage()
+  //       }
+  //   }
+  //   scroll()
+  // }, 1000);
 
-  if(window.addEventListener){
-    window.addEventListener('scroll', limitFn);
-  }else if(window.attachEvent){
-    window.attachEvent('onscroll', limitFn);
-  }
+  // if(window.addEventListener){
+  //   window.addEventListener('scroll', limitFn);
+  // }else if(window.attachEvent){
+  //   window.attachEvent('onscroll', limitFn);
+  // }
 
-  window.addEventListener('resize', limitFn);
+  // window.addEventListener('resize', limitFn);
 
 
   // if(window.addEventListener){
