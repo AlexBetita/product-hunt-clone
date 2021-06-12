@@ -109,7 +109,7 @@ const validateProductImages = [
 
 // Get all products
 router.get(
-  '/:page',
+  '/page/:page',
   asyncHandler(async (req, res)=>{
     const {page} = req.params
     let offset = (10 * page) - 10

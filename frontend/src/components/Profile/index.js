@@ -21,12 +21,14 @@ const Profile = () => {
 
   useSelector((state)=>{
     Object.keys(state.session.products).map((key)=>{
-      productsMade[key] = state.products[key]
+      productsMade[key] = state.session.products[key]
     })
 
     Object.keys(state.session.upvotes).map((key)=>{
       if(state.session.upvotes[key].upvoteableType === 'product'){
-        productsUpvoted[state.session.upvotes[key].upvoteableId] = state.products[state.session.upvotes[key].upvoteableId]
+        if(state.session.products[state.session.upvotes[key].upvoteableId]){
+          productsUpvoted[state.session.upvotes[key].upvoteableId] = state.session.products[state.session.upvotes[key].upvoteableId]
+        }
       }
     })
   })
@@ -176,7 +178,7 @@ const Profile = () => {
       <Route exact path={`/@${user.username}`}>
         <div>
             {Object.keys(productsUpvoted).map((key)=>{
-              return <Products key={key} products = {productsUpvoted[key]}/>
+              return <Products key={key} products = {productsUpvoted[key]} profile = {true}/>
             })}
           </div>
       </Route>
@@ -184,7 +186,7 @@ const Profile = () => {
       <Route path={`/@${user.username}/made`}>
         <div>
             {Object.keys(productsMade).map((key)=>{
-              return <Products key={key} products = {productsMade[key]}/>
+              return <Products key={key} products = {productsMade[key]} profile = {true}/>
             })}
           </div>
       </Route>

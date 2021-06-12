@@ -1,5 +1,3 @@
-import { useSelector } from 'react-redux';
-
 import './Discussion.css'
 
 const Discussion = ({discussion}) => {

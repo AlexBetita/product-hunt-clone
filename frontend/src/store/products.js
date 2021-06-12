@@ -3,6 +3,7 @@ import { csrfFetch } from './csrf';
 export const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
 export const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
 export const ADD_PRODUCT = "products/ADD_PRODUCT";
+export const VIEW_PRODUCT = "products/VIEW_PRODUCT";
 export const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
 const INITIAL_STATE = "products/INITIAL_STATE";
 
@@ -16,6 +17,12 @@ const add = (product) => ({
   product
 });
 
+const view = (product) => ({
+  type: VIEW_PRODUCT,
+  product
+});
+
+
 const remove = (productId) => ({
   type: REMOVE_PRODUCT,
   productId
@@ -26,7 +33,7 @@ export const resetState = () => ({
 });
 
 export const getProducts = page => async dispatch => {
-  const response = await fetch(`/api/products/${page}`);
+  const response = await fetch(`/api/products/page/${page}`);
   if (response.ok) {
     const products = await response.json();
     dispatch(load(products));
@@ -39,6 +46,15 @@ export const getOneProduct = id => async dispatch => {
   if (response.ok) {
     const product = await response.json();
     dispatch(add(product));
+  }
+};
+
+export const viewOneProduct = id => async dispatch => {
+  const response = await fetch(`/api/products/${id}`);
+  if (response.ok) {
+    const product = await response.json();
+    console.log(product)
+    dispatch(view(product));
   }
 };
 
@@ -93,34 +109,35 @@ export const updateProduct = payload => async dispatch => {
 
 const initialState = {
   list: [],
-  comments: [],
-  upvotes: []
+  viewedProducts: {},
 }
 
 const listProducts = (list, state) =>{
 
   const prodList = []
 
-
   delete state['list']
-  delete state['comments']
-  delete state['upvotes']
 
   if (state){
     let reverse = Object.keys(state).reverse()
     reverse.forEach(id =>{
-      prodList.push(parseInt(id))
+      if(id != 'viewedProducts'){
+        prodList.push(parseInt(id))
+      }
     })
   }
 
   list.forEach(product=>{
-    prodList.push(product.id)
+    if(product){
+      prodList.push(product.id)
+    }
   })
 
   return prodList
 }
 
 const productReducer = (state = initialState, action) => {
+  let newState;
   switch (action.type) {
     case LOAD_PRODUCTS: {
       const allProducts = {};
@@ -139,7 +156,7 @@ const productReducer = (state = initialState, action) => {
     }
     case ADD_PRODUCT: {
       if(!state[action.product.id]){
-        const newState = {
+        newState = {
           ...state,
           [action.product.id]: action.product
         };
@@ -150,6 +167,13 @@ const productReducer = (state = initialState, action) => {
         ...state,
         [action.product.id]: action.product
       };
+    }
+    case VIEW_PRODUCT: {
+      newState = {
+        ...state
+      }
+      newState.viewedProducts[action.product.product['id']] = action.product.product
+      return newState
     }
     case INITIAL_STATE:
       return {...initialState};

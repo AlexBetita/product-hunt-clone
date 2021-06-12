@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Product } = require('../../db/models');
+const { User, Product, Comment, Upvote, ProductImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const {singlePublicFileUpload, singleMulterUpload} = require('../../awsS3.js')
@@ -75,7 +75,15 @@ const userObject = async (user) => {
     const products = await user.getProducts({
       attributes: {
         exclude: ['deletedAt']
-      }
+      }, include: [
+        {
+          model: Comment,
+          include: [Upvote, User.scope('userIcons')]
+        },
+        Upvote,
+        User.scope('userIcons'),
+        ProductImage.scope('imageUrls')
+      ]
   })
     const comments = await user.getComments({
         attributes: {

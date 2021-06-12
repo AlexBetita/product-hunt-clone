@@ -1,5 +1,5 @@
 // frontend/src/components/Navigation/index.js
-import {useState, useEffect, render} from 'react';
+import {useState, useEffect} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash'
@@ -8,8 +8,8 @@ import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormModal';
 
-import {logout} from '../../store/session';
-import {getProducts} from '../../store/products';
+import { logout } from '../../store/session';
+import { getProducts } from '../../store/products';
 
 import './Navigation.css';
 
@@ -20,11 +20,7 @@ function Navigation({ isLoaded }){
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
-  // const [currentPage, setCurrentPage] = useState(1);
-  // const [isScrolled, setIsScrolled] = useState(false);
 
-  // let isScrolled = false;
-  // let callFunction = true
   let pageCounter = 1
   let sessionLinks;
   let handler;
@@ -89,92 +85,6 @@ function Navigation({ isLoaded }){
     }
   }
 
-  // function getScrollXY() {
-  //   var scrOfX = 0, scrOfY = 0;
-  //   if( typeof( window.pageYOffset ) == 'number' ) {
-  //       //Netscape compliant
-  //       scrOfY = window.pageYOffset;
-  //       scrOfX = window.pageXOffset;
-  //   } else if( document.body && ( document.body.scrollLeft || document.body.scrollTop ) ) {
-  //       //DOM compliant
-  //       scrOfY = document.body.scrollTop;
-  //       scrOfX = document.body.scrollLeft;
-  //   } else if( document.documentElement && ( document.documentElement.scrollLeft || document.documentElement.scrollTop ) ) {
-  //       //IE6 standards compliant mode
-  //       scrOfY = document.documentElement.scrollTop;
-  //       scrOfX = document.documentElement.scrollLeft;
-  //   }
-  //   return [ scrOfX, scrOfY ];
-  // }
-
-  // function getDocHeight() {
-  //     var D = document;
-  //     return Math.max(
-  //         D.body.scrollHeight, D.documentElement.scrollHeight,
-  //         D.body.offsetHeight, D.documentElement.offsetHeight,
-  //         D.body.clientHeight, D.documentElement.clientHeight
-  //     );
-  // }
-
-  // document.addEventListener("scroll", async function (event) {
-  //   console.log('what')
-  //     if (getDocHeight() == getScrollXY()[1] + window.innerHeight) {
-  //       await setNextPage()
-  //     }
-  // });
-
-  // function debounce(func, wait, immediate) {
-  //   let timeout;
-  //   return function() {
-  //     const context = this, args = arguments;
-  //     const later = function() {
-  //       timeout = null;
-  //       if (!immediate) func.apply(context, args);
-  //     };
-  //     const callNow = immediate && !timeout;
-  //     clearTimeout(timeout);
-  //     timeout = setTimeout(later, wait);
-  //     if (callNow) func.apply(context, args);
-  //   };
-  // };
-
-  // const limitFn = debounce(function() {
-  //   function scroll(ev){
-  //     const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-  //       if((st+document.documentElement.clientHeight)>=document.documentElement.scrollHeight ){
-  //           setNextPage()
-  //       }
-  //   }
-  //   scroll()
-  // }, 1000);
-
-  // if(window.addEventListener){
-  //   window.addEventListener('scroll', limitFn);
-  // }else if(window.attachEvent){
-  //   window.attachEvent('onscroll', limitFn);
-  // }
-
-  // window.addEventListener('resize', limitFn);
-
-
-  // if(window.addEventListener){
-  //     window.addEventListener('scroll', scroll);
-  //   }else if(window.attachEvent){
-  //     window.attachEvent('onscroll', scroll);
-  //   }
-
-  // function scroll(ev){
-  //   ev.preventDefault()
-  //   const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-  //     if((st+document.documentElement.clientHeight)>=document.documentElement.scrollHeight ){
-  //       setTimeout(async fn=>{
-  //         await setNextPage()
-  //       }, 1000)
-  //       clearTimeout()
-  //     }
-  //   callFunction=true
-  // }
-
   return (
     <>
       <div className='div__navigation__styles'>
@@ -222,9 +132,6 @@ function Navigation({ isLoaded }){
           </div>
           {isLoaded && sessionLinks}
         </div>
-        <button onClick={setNextPage}>
-          NEXT PAGE
-        </button>
       </div>
       {showPopOver &&
         <>

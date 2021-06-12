@@ -1,21 +1,36 @@
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
+import {useEffect} from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import { viewOneProduct } from '../../store/products';
 
 import './ProductDetails.css';
 
 const ProductDetails = () =>{
+  const dispatch = useDispatch();
+
   const {id} = useParams();
   let maker = false;
 
-  const product = useSelector((state)=>{
-    try{
-      if(state.products[id].id === state.session.products[id].id){
+  useEffect(()=> {
+    const viewProduct = async () => {
+      await dispatch(viewOneProduct(id))
+    }
+    viewProduct()
+
+  }, [])
+
+
+  let product = useSelector((state)=>{
+
+  try{
+      if(state.products[id].id === state.products.viewedProducts[id]){
         maker = true
       }
-    } catch(e) {
-      //
     }
-    return state.products[id]
+  catch(e) {
+    //
+  }
+    return state.products.viewedProducts[id]
   })
 
   const user = useSelector((state)=>{
