@@ -25,8 +25,8 @@ export const resetState = () => ({
   type: INITIAL_STATE,
 });
 
-export const getProducts = () => async dispatch => {
-  const response = await fetch(`/api/products`);
+export const getProducts = page => async dispatch => {
+  const response = await fetch(`/api/products/${page}`);
   if (response.ok) {
     const products = await response.json();
     dispatch(load(products));
@@ -97,15 +97,25 @@ const initialState = {
   upvotes: []
 }
 
-const listProducts = (list) =>{
+const listProducts = (list, state) =>{
 
   const prodList = []
 
-  let max = list.length
 
-  for(let i = max; i > 0; i--){
-    prodList.push(i)
+  delete state['list']
+  delete state['comments']
+  delete state['upvotes']
+
+  if (state){
+    let reverse = Object.keys(state).reverse()
+    reverse.forEach(id =>{
+      prodList.push(parseInt(id))
+    })
   }
+
+  list.forEach(product=>{
+    prodList.push(product.id)
+  })
 
   return prodList
 }
@@ -119,10 +129,12 @@ const productReducer = (state = initialState, action) => {
         allProducts[product.id] = product;
       });
 
+      let list = listProducts(action.products, state)
+
       return {
         ...allProducts,
         ...state,
-        list: listProducts(action.products)
+        list: list
       }
     }
     case ADD_PRODUCT: {

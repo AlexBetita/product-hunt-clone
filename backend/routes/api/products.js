@@ -109,9 +109,11 @@ const validateProductImages = [
 
 // Get all products
 router.get(
-  '/',
+  '/:page',
   asyncHandler(async (req, res)=>{
-
+    const {page} = req.params
+    let offset = (10 * page) - 10
+    let limit = 10
     const results = await Product.findAll({
       include: [
         {
@@ -123,8 +125,10 @@ router.get(
         ProductImage.scope('imageUrls')
       ],
       order: [
-        ['createdAt', 'DESC']
-      ]
+        ['id', 'DESC']
+      ],
+      offset: offset,
+      limit: limit
     })
 
     products = productObjCleanUp(results, multi = true)

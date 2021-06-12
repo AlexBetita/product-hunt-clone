@@ -16,13 +16,14 @@ function Navigation({ isLoaded }){
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
 
   let sessionLinks;
   let handler;
 
   useEffect(()=>{
     const waitForDispatch = async() =>{
-      await dispatch(getProducts())
+      await dispatch(getProducts(currentPage))
     }
     waitForDispatch();
   }, [dispatch])
@@ -63,6 +64,12 @@ function Navigation({ isLoaded }){
     dispatch(logout());
     history.push('/')
   };
+
+  const setNextPage = async (e) => {
+    e.preventDefault();
+    await setCurrentPage(currentPage + 1)
+    await dispatch(getProducts(currentPage + 1))
+  }
 
   return (
     <>
@@ -111,6 +118,9 @@ function Navigation({ isLoaded }){
           </div>
           {isLoaded && sessionLinks}
         </div>
+        <button onClick={setNextPage}>
+          NEXT PAGE
+        </button>
       </div>
       {showPopOver &&
         <>

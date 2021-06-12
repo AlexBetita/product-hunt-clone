@@ -6,7 +6,6 @@ const { setTokenCookie, restoreUser } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
-
 const router = express.Router();
 
 const validateLogin = [
@@ -82,6 +81,7 @@ router.post(
         const { credential, password } = req.body;
 
         const user = await User.login({ credential, password });
+        console.log(user, 'current user that is logged in')
 
         if (!user) {
             const err = new Error('Login failed');

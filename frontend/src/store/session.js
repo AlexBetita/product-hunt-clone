@@ -112,7 +112,6 @@ export const editProfileImage = (user) => async (dispatch) => {
     body: formData,
   });
 
-  console.log('NOT COOOL')
   const data = await res.json();
   dispatch(setUser(data));
 };

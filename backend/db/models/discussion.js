@@ -52,7 +52,11 @@ module.exports = (sequelize, DataTypes) => {
       where: {
         id: discussionId,
         userId: userId
-      }
+      },
+      include: [
+        Comment,
+        Upvote
+      ]
     }) ? true : false
   };
 
@@ -83,7 +87,11 @@ module.exports = (sequelize, DataTypes) => {
     const discussion = await Discussion.findAll({
       where: {
         userId : userId
-      }
+      },
+      include: [
+        Comment,
+        Upvote
+      ]
     })
     return discussion
   };
