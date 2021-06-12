@@ -80,6 +80,17 @@ module.exports = (sequelize, DataTypes) => {
     productsViewed: {
       type: DataTypes.INTEGER
     },
+    headerImage: {
+      type: DataTypes.STRING,
+      validate: {
+        len:[0, 256],
+        isUrl(value) {
+          if(!Validator.isUrl(value) && value.length){
+            throw new Error('Must be a valid url format')
+          }
+        }
+      }
+    },
     visits: {
       type: DataTypes.INTEGER
     },

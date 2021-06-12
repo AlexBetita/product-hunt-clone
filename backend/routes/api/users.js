@@ -118,6 +118,8 @@ const userObject = async (user) => {
   return userObj
 }
 
+const defaultProfileImage = `https://producthuntclone.s3.amazonaws.com/1623466906472.jpg`
+
 // Sign up
 router.post(
   '/',
@@ -133,7 +135,18 @@ router.post(
             website
            } = req.body;
 
-    const profileImage = await singlePublicFileUpload(req.file);
+    let profileImage;
+    try {
+      profileImage = await singlePublicFileUpload(req.file);
+    }
+    catch {
+      profileImage = null
+    }
+
+    if (!profileImage){
+        profileImage = defaultProfileImage
+    }
+
     const user = await User.signup({ fullName, email, username, password, headline, website, profileImage });
 
     await setTokenCookie(res, user);
@@ -170,7 +183,18 @@ router.put(
     let {user} = req;
 
     const userId = user.id;
-    const profileImage = await singlePublicFileUpload(req.file);
+
+    let profileImage;
+    try {
+      profileImage = await singlePublicFileUpload(req.file);
+    }
+    catch {
+      profileImage = null
+    }
+
+    if (!profileImage){
+        profileImage = defaultProfileImage
+    }
 
     if(user){
       user = await User.editProfileImage({profileImage, userId})

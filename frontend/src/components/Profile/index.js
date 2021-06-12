@@ -48,8 +48,51 @@ const Profile = () => {
   return (
     <>
       <div className='div__profile__container'>
-        <div className='div__profile__styles'>
 
+        {user.headerImage
+          ?
+          <div className='div__profile__styles' style={{
+            backgroundImage: `url(${user.headerImage})`
+          }} >
+            <div className='div__profile__image'>
+            <div className='div__profile__image__styles'>
+              <img className ='image__profile__image'
+              src={`${user.profileImage}`}>
+              </img>
+            </div>
+          </div>
+
+          <div className='div__profile__details'>
+            <div className='div__profile__fullname'>
+                {user.fullName}
+                <div className='div__profile__fullname__icon'>
+                  🎈
+                </div>
+            </div>
+
+            <div className='div__profile__headline'>
+                {user.headline}
+            </div>
+            <div className='div__profile__id__username'>
+              <span className='span__profile__id'>
+                #{user.id}
+              </span>
+              <span className='span__profile__username'>
+                @{user.username}
+              </span>
+            </div>
+
+            <div className='div__profile__edit__profile__button__styles'>
+              <NavLink className='navlink__edit__profile__button'
+                  to='/my/settings/edit'
+                >
+                  EDIT MY PROFILE
+                </NavLink>
+            </div>
+          </div>
+        </div>
+          :
+           <div className='div__profile__styles' >
           <div className='div__profile__image'>
             <div className='div__profile__image__styles'>
               <img className ='image__profile__image'
@@ -86,8 +129,8 @@ const Profile = () => {
                 </NavLink>
             </div>
           </div>
-
         </div>
+        }
 
         <div className='div__profile__nav__container'>
           <div className='div__profile__nav__styles'>

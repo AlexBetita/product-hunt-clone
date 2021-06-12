@@ -9,7 +9,27 @@ const { handleValidationErrors } = require('../../utils/validation');
 const {singlePublicFileUpload, singleMulterUpload} = require('../../awsS3.js')
 
 const router = express.Router();
+const defaultProductImage = 'https://producthuntclone.s3.amazonaws.com/1623467455869.jpg'
 
+const checkThumbnail = async (req, id = null) => {
+    let thumbnail
+    try {
+      thumbnail = await singlePublicFileUpload(req.file);
+    }
+    catch {
+      thumbnail = null
+    }
+    if (!thumbnail){
+      if (id){
+        let product = await Product.findByPk(id);
+        thumbnail = product.thumbnail
+      }
+      else {
+        thumbnail = defaultProductImage
+      }
+    }
+    return thumbnail
+}
 
 const productCleanUp = (result, multi = false) => {
   let productObj = {}
@@ -153,7 +173,9 @@ router.post(
     const {user} = req;
     const userId = user.id
 
-    const thumbnail = await singlePublicFileUpload(req.file);
+    let thumbnail = await checkThumbnail(req)
+    console.log(thumbnail, ' this is the thumbnail')
+
     let product;
 
     if(user){
@@ -180,8 +202,9 @@ router.put(
     const {id} = req.params;
     const {user} = req;
     const {title, description } = req.body;
-    const thumbnail = await singlePublicFileUpload(req.file);
     const userId = user.id;
+
+    let thumbnail = await checkThumbnail(req, id)
 
     let product;
     const exists = await Product.exists(id)
