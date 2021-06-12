@@ -31,7 +31,7 @@ const checkThumbnail = async (req, id = null) => {
     return thumbnail
 }
 
-const productCleanUp = (result, multi = false) => {
+const productObjCleanUp = (result, multi = false) => {
   let productObj = {}
 
   if (result && !multi){
@@ -127,7 +127,7 @@ router.get(
       ]
     })
 
-    products = productCleanUp(results, multi = true)
+    products = productObjCleanUp(results, multi = true)
     return res.json(products);
   })
 );
@@ -152,7 +152,7 @@ router.get(
 
     if(results){
 
-      const product = productCleanUp(results);
+      const product = productObjCleanUp(results);
 
       return res.json({
         product
@@ -183,7 +183,7 @@ router.post(
         title, thumbnail, description, userId
       });
 
-      product = productCleanUp(result)
+      product = productObjCleanUp(result)
 
       return res.json(
         product
@@ -213,53 +213,13 @@ router.put(
       if(exists){
         if(Product.userOwnsProduct(id, userId)){
 
-          const result = await Product.edit(title, thumbnail, description, id)
-
-          if (result){
-            const results = await Product.findByPk(result.id,
-              {
-                include: [
-                  {
-                    model: Comment,
-                    include: [Upvote, User.scope('userIcons')]
-                  },
-                  User.scope('userIcons'),
-                  Upvote,
-                  ProductImage.scope('imageUrls')
-                ]
-              });
-
-              let productObj = {}
-
-              if(results){
-                for(const key in results.dataValues){
-                  if(key === 'createdAt' || key === 'updatedAt'){
-                    productObj[key] = moment(results.dataValues[key]).startOf('second').fromNow();
-                  } else if(key === 'Upvotes') {
-                    productObj['upvotes'] = results.dataValues[key].length
-                  } else if(key === 'Comments'){
-                    productObj['Comments'] = {}
-                    results.dataValues[key].forEach((comment, i)=>{
-                      productObj['Comments'][i+1] = {}
-                      for(const key2 in comment.dataValues){
-                        if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                          productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
-                        } else if (key2 === 'Upvotes'){
-                          productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
-                        } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
-                      }
-                    })
-                  } else {
-                    productObj[key] = results.dataValues[key];
-                  }
-                }
-              }
-
-              product = productObj
-            }
+          const result = await Product.edit(title, thumbnail,
+                                            description, id,
+                                            Comment, User, Upvote,
+                                            ProductImage)
+          product = productObjCleanUp(result)
 
           return res.json(product)
-
         } else {
           res.json({Error: "User does not own this product"})
         }

@@ -56,11 +56,16 @@ module.exports = (sequelize, DataTypes) => {
     }) ? true : false
   };
 
-  Discussion.edit = async function(discussion, message, discussionId){
-    const editedDiscussion = await Discussion.findOne({
-      where: {
-        id: discussionId
-      }
+  Discussion.edit = async function(
+                                  discussion, message, discussionId,
+                                  Comment, Upvote
+                                  ){
+    const editedDiscussion = await Discussion.findByPk(discussionId,
+      {
+        include: [
+          Comment,
+          Upvote
+      ]
     });
 
     editedDiscussion.discussion = discussion;

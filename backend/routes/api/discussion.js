@@ -9,6 +9,25 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+const discussionObjCleanUp = (results) =>{
+  const discussions = []
+  let discussionsObj = {}
+
+  results.forEach((discussion, i)=>{
+    for(const key in results[i].dataValues){
+      if(key === 'createdAt' || key === 'updatedAt'){
+        discussionsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
+      } else {
+        discussionsObj[key] = results[i].dataValues[key]
+      }
+    }
+    discussions.push(discussionsObj)
+    discussionsObj = {}
+  });
+
+  return discussions
+}
+
 // Get all discussions
 router.get(
   '/',
@@ -22,20 +41,7 @@ router.get(
         Upvote
       ]
     })
-    const discussions = []
-    let discussionsObj = {}
-
-    results.forEach((discussion, i)=>{
-      for(const key in results[i].dataValues){
-        if(key === 'createdAt' || key === 'updatedAt'){
-          discussionsObj[key] = moment(results[i].dataValues[key]).startOf('second').fromNow();
-        } else {
-          discussionsObj[key] = results[i].dataValues[key]
-        }
-      }
-      discussions.push(discussionsObj)
-      discussionsObj = {}
-    });
+    const discussions = discussionObjCleanUp(results)
 
     return res.json(discussions);
   })
@@ -171,7 +177,10 @@ router.put(
         if(Discussion.userOwnsDiscussion(id, userId)){
           const discussionIndex = await DiscussionIndex.findByDiscussionId(id)
           await DiscussionIndex.edit(discussion, discussionIndex.id)
-          const editedDiscussion = await Discussion.edit(discussion, message, id)
+          const editedDiscussion = await Discussion.edit(
+                                                        discussion, message, id,
+                                                        Comment, Upvote
+                                                        )
           return res.json({discussion: editedDiscussion})
         } return res.json({Error: 'User does not own this discussion'})
       } return res.json({Error: 'This discussion does not exists'})

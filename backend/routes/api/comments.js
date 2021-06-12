@@ -35,7 +35,6 @@ router.get(
       ]
     });
 
-
     const comments = {}
 
     let commentsArr = []
