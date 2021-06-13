@@ -178,7 +178,6 @@ router.post(
     const userId = user.id
 
     let thumbnail = await checkThumbnail(req)
-    console.log(thumbnail, ' this is the thumbnail')
 
     let product;
 

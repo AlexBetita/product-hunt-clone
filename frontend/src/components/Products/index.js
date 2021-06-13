@@ -46,10 +46,12 @@ const Products = ({products}) => {
 
           <div className='div__product__content__meta'>
               <div className='div__comments'>
-                <img className='img__comment__icon'
+                {/* <img className='img__comment__icon'
                   src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
-                </img>
-
+                </img> */}
+                <div className='img__comment__icon'>
+                  <i class="fas fa-comment"></i>
+                </div>
                 {products.Comments
                   ?
                     <div
@@ -79,9 +81,14 @@ const Products = ({products}) => {
 
         <div className='div__product__vote'>
           <button className='button__product__vote'>
-            <img className='img__upvote__icon'
+            {/* <img className='img__upvote__icon'
+
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
-            </img>
+            </img> */}
+            <div className='img__upvote__icon'>
+              ▲
+              {/* 🔺 */}
+            </div>
             <span className='span__product__upvotes'>
                 {upvotes}
             </span>

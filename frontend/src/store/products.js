@@ -53,7 +53,6 @@ export const viewOneProduct = id => async dispatch => {
   const response = await fetch(`/api/products/${id}`);
   if (response.ok) {
     const product = await response.json();
-    console.log(product)
     dispatch(view(product));
   }
 };
@@ -108,7 +107,6 @@ export const updateProduct = payload => async dispatch => {
 
 export const removeProduct = payload => async dispatch => {
   const { id } = payload;
-  console.log('id', id)
   const response = await csrfFetch(`/api/products/${id}`, {
     method: "DELETE"
   })
