@@ -226,5 +226,14 @@ module.exports = (sequelize, DataTypes) => {
     return user
   };
 
+  User.getByEmail= async function (email){
+    const user = await User.findOne({
+      where: {
+        username: {[Op.iLike]: `%${email}%`}
+      }
+    })
+    return user
+  };
+
   return User;
 };

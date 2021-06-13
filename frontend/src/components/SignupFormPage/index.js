@@ -19,6 +19,14 @@ function SignupFormPage() {
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState([]);
 
+  function isURL(str) {
+    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
+  }
+
+  function isEmail(str){
+    return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(str);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = [];
@@ -27,9 +35,36 @@ function SignupFormPage() {
       newErrors.push('Confirm Password field must be the same as the Password field')
     }
 
-    if(username !== username.toLowerCase()){
+    if(fullName.length < 4){
+      newErrors.push('Full Name is too short, min 4 chars')
+    } else if(fullName.length > 40){
+      newErrors.push('Full Name is too long, max 40 chars')
+    }
+
+    if(username.length < 3){
+      newErrors.push('Username too short')
+    } else if(username.length > 20){
+      newErrors.push('Username too long, maximum is 20 chars')
+    } else if(username !== username.toLowerCase()){
       newErrors.push('Username must be lower case')
     }
+
+    if(headline.length > 40){
+      newErrors.push('Headline too long, maximum is 40 chars')
+    }
+
+    if(website.length > 256){
+      newErrors.push('Website Url is too long, please provide a shorter format, maximum is 256 chars')
+    } else if (!isURL(website)){
+      newErrors.push('Not a valid URL')
+    }
+
+    if(email.length < 3){
+      newErrors.push('Email is to short to be valid')
+    } else if(!isEmail(email)){
+      newErrors.push('Not a valid URL')
+    }
+
 
     if (!newErrors.length) {
       setErrors([]);
@@ -51,7 +86,6 @@ function SignupFormPage() {
             setErrors(newErrors);
           }
         });
-      // history.push('/')
     }
 
     setErrors(newErrors)

@@ -265,4 +265,34 @@ router.get(
   })
 );
 
+// Check User
+router.get(
+  '/checkUser/:username',
+  asyncHandler(async (req, res) =>{
+    const {username} = req.params;
+    const user = await User.getByUsername(username);
+
+    if (user) {
+      return res.json({'exist' : true})
+    } else {
+      return res.json({'exist' : false})
+    }
+  })
+)
+
+//Check Email
+router.get(
+  '/checkEmail/:email',
+  asyncHandler(async (req, res) =>{
+    const {email} = req.params;
+    const user = await User.getByEmail(email);
+
+    if (user) {
+      return res.json({'exist' : true})
+    } else {
+      return res.json({'exist' : false})
+    }
+  })
+)
+
 module.exports = router;

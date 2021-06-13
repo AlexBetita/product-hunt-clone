@@ -1,5 +1,5 @@
 import { csrfFetch } from './csrf';
-import {LOAD_PRODUCTS, REMOVE_PRODUCT, ADD_PRODUCT, ADD_ONE_PRODUCT} from './products'
+import {REMOVE_PRODUCT, ADD_PRODUCT} from './products'
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';

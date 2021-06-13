@@ -24,10 +24,28 @@ function SignupForm() {
 
   const history = useHistory();
 
+  function isURL(str) {
+    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
+  }
+
+  function isEmail(str){
+    return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(str);
+  }
+
+  async function ifExists(str, type){
+    if(type === 'username'){
+      const response = await fetch(`/api/users/checkUser/${str}`)
+      const data = await response.json();
+      return data['exist']
+    } else if (type === 'email'){
+      const response = await fetch(`/api/users/checkEmail/${str}`)
+      const data = await response.json();
+      return data['exist']
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    await setLoading(true)
 
     let newErrors = [];
 
@@ -35,23 +53,48 @@ function SignupForm() {
       newErrors.push('Confirm Password field must be the same as the Password field')
     }
 
-    if(username !== username.toLowerCase()){
+    if(fullName.length < 4){
+      newErrors.push('Full Name is too short, min 4 chars')
+    } else if(fullName.length > 40){
+      newErrors.push('Full Name is too long, max 40 chars')
+    }
+
+    if(email.length < 3){
+      newErrors.push('Email is to short to be valid')
+    } else if(!isEmail(email)){
+      newErrors.push('Not a valid email')
+    } else if(await ifExists(email, 'email')){
+      newErrors.push('Email already exists')
+    }
+
+    if(username.length < 3){
+      newErrors.push('Username too short')
+    } else if(username.length > 20){
+      newErrors.push('Username too long, maximum is 20 chars')
+    } else if(username !== username.toLowerCase()){
       newErrors.push('Username must be lower case')
+    } else if(await ifExists(username, 'username')){
+      newErrors.push('Username already exists')
+    }
+
+    if(headline.length > 40){
+      newErrors.push('Headline too long, maximum is 40 chars')
+    }
+
+    if(website.length > 0){
+      if(website.length > 256){
+        newErrors.push('Website Url is too long, please provide a shorter format, maximum is 256 chars')
+      } else if (!isURL(website)){
+        newErrors.push('Not a valid URL, gotta have http:// or https://')
+      }
     }
 
     if (!newErrors.length) {
+      await setLoading(true)
       setErrors([]);
-      await dispatch(sessionActions.createUser({ fullName, email, username, password, headline, website, profileImage }))
-        // .then(() => {
-        //   setFullName("");
-        //   setEmail("");
-        //   setPassword("");
-        //   setConfirmPassword("");
-        //   setUsername("");
-        //   setHeadline("");
-        //   setWebsite("");
-        //   setProfileImage(null);
-        // })
+      await dispatch(sessionActions.createUser({ fullName, email, username,
+                                                 password, headline,
+                                                 website, profileImage }))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
@@ -66,7 +109,6 @@ function SignupForm() {
       history.push('/')
     } else setErrors(newErrors)
 
-    // return setErrors
   };
 
   const updateFile = (e) => {
