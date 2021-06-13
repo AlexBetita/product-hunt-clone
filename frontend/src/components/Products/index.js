@@ -4,12 +4,24 @@ import './Products.css';
 
 const Products = ({products}) => {
 
+  let upvotes = 0
+  if(products.upvotes){
+    upvotes = products.upvotes
+  } else if (products.Upvotes) {
+    upvotes = Object.keys(products.Upvotes).length
+  }
+
   return (
 
       <div className='div__product'>
-        <div className='div__product__thumbnail'>
-          <img className='img__product__thumbnail' src={products.thumbnail}></img>
-        </div>
+          <NavLink
+              activeClassName='div__styles__content'
+              to={`/posts/${products.id}`}
+              >
+            <div className='div__product__thumbnail'>
+              <img className='img__product__thumbnail' src={products.thumbnail}></img>
+            </div>
+        </NavLink>
 
         <NavLink
               className='div__styles__content'
@@ -28,7 +40,7 @@ const Products = ({products}) => {
             <div
               className='a__product__description'
               >
-                {products.description}
+                {products.tagline}
             </div>
           </div>
 
@@ -38,11 +50,21 @@ const Products = ({products}) => {
                   src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
                 </img>
 
-                <div
-                  className='a__product__comments'
+                {products.Comments
+                  ?
+                    <div
+                    className='a__product__comments'
+                    >
+                      {Object.keys(products.Comments).length}
+
+                  </div>
+                  :
+                  <div
+                    className='a__product__comments'
                   >
-                    {Object.keys(products.Comments).length}
-                </div>
+                      0
+                  </div>
+                }
 
               </div>
               <span className='span__product__availability'>
@@ -61,7 +83,7 @@ const Products = ({products}) => {
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img>
             <span className='span__product__upvotes'>
-              {products.upvotes}
+                {upvotes}
             </span>
           </button>
         </div>

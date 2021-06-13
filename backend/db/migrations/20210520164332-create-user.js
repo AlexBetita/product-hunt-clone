@@ -33,7 +33,7 @@ module.exports = {
         type: Sequelize.STRING(256)
       },
       profileImage: {
-        type: Sequelize.STRING(256)
+        type: Sequelize.STRING(256),
       },
       productsViewed: {
         type: Sequelize.INTEGER,
@@ -42,6 +42,9 @@ module.exports = {
       visits: {
         type: Sequelize.INTEGER,
         defaultValue: 0
+      },
+      headerImage: {
+        type: Sequelize.STRING(256)
       },
       deletedAt: {
         type: Sequelize.DATE,

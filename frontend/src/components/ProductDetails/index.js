@@ -1,21 +1,39 @@
-import { useSelector} from 'react-redux';
+import { useSelector, useDispatch} from 'react-redux';
+import {useEffect} from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import { viewOneProduct } from '../../store/products';
 
 import './ProductDetails.css';
 
 const ProductDetails = () =>{
+  const dispatch = useDispatch();
+
   const {id} = useParams();
   let maker = false;
 
-  const product = useSelector((state)=>{
+  useEffect(()=> {
+    const viewProduct = async () => {
+      await dispatch(viewOneProduct(id))
+    }
+    viewProduct()
+
+  }, [])
+
+
+  let product = useSelector((state)=>{
     try{
-      if(state.products[id].id === state.session.products[id].id){
-        maker = true
+        if(state.session.products[id].id === state.products.viewedProducts[id].id){
+          maker = true
+        }
       }
-    } catch(e) {
+    catch(e) {
       //
     }
-    return state.products[id]
+      return state.products.viewedProducts[id]
+    })
+
+  const user = useSelector((state)=>{
+    return state.session.user
   })
 
   if(!product){
@@ -34,6 +52,11 @@ const ProductDetails = () =>{
         </h1>
       </div>
       <div>
+        <h3>
+          {product.tagline}
+        </h3>
+      </div>
+      <div>
         <img
           src={product.thumbnail}
         >
@@ -47,40 +70,70 @@ const ProductDetails = () =>{
       </div>
       <div>
         <div className='div__product__details__profileimage'>
-          <img
+
+          {product.User
+            ?
+            <img
               className='img__product__details__profileimage'
               src={product.User.profileImage}
-              >
-          </img>
+            >
+            </img>
+            :
+            <img
+              className='img__product__details__profileimage'
+              src={user.profileImage}
+            >
+            </img>
+          }
+
         </div>
-        {product.User.fullName}
-        <div className='div__product__details__username'>
-          @{product.User.username}
-        </div>
-      </div>
-      <ul>
-        COMMENTS
-        {
-          Object.keys(product.Comments).map((key)=>{
-            return (
-              <li key={key}>
-                  <h4>
-                    {product.Comments[key].comment}
-                  </h4>
-                <div>
-                  {`Commented by: `}
-                  <img
-                      className='img__product__details__profileimage'
-                      src={product.Comments[key].User.profileImage}
-                      >
-                  </img>
-                  @{product.Comments[key].User.username}
-                </div>
-              </li>
-              )
-          })
+
+        {product.User ? product.User.fullName : user.fullName}
+
+        {product.User
+          ?
+            <div className='div__product__details__username'>
+              @{product.User.username}
+            </div>
+          :
+            <div className='div__product__details__username'>
+              @{user.username}
+            </div>
         }
-      </ul>
+
+      </div>
+
+      {product.Comments
+        ?
+        <ul>
+            COMMENTS
+
+            {
+              Object.keys(product.Comments).map((key)=>{
+                return (
+                  <li key={key}>
+                      <h4>
+                        {product.Comments[key].comment}
+                      </h4>
+                    <div>
+                      {`Commented by: `}
+                      <img
+                          className='img__product__details__profileimage'
+                          src={product.Comments[key].User.profileImage}
+                          >
+                      </img>
+                      @{product.Comments[key].User.username}
+                    </div>
+                  </li>
+                  )
+              })
+            }
+          </ul>
+        :
+        <ul>
+            COMMENTS
+        </ul>
+      }
       {
         maker
           &&

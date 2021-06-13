@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Product } = require('../../db/models');
+const { User, Product, Comment, Upvote, ProductImage } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const {singlePublicFileUpload, singleMulterUpload} = require('../../awsS3.js')
@@ -75,7 +75,15 @@ const userObject = async (user) => {
     const products = await user.getProducts({
       attributes: {
         exclude: ['deletedAt']
-      }
+      }, include: [
+        {
+          model: Comment,
+          include: [Upvote, User.scope('userIcons')]
+        },
+        Upvote,
+        User.scope('userIcons'),
+        ProductImage.scope('imageUrls')
+      ]
   })
     const comments = await user.getComments({
         attributes: {
@@ -118,12 +126,14 @@ const userObject = async (user) => {
   return userObj
 }
 
+const defaultProfileImage = `https://producthuntclone.s3.amazonaws.com/1623466906472.jpg`
+
 // Sign up
 router.post(
   '/',
   singleMulterUpload("image"),
   validateSignup,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const {
             fullName,
             email,
@@ -133,8 +143,29 @@ router.post(
             website
            } = req.body;
 
-    const profileImage = await singlePublicFileUpload(req.file);
-    const user = await User.signup({ fullName, email, username, password, headline, website, profileImage });
+    let user;
+    let profileImage;
+    try {
+      profileImage = await singlePublicFileUpload(req.file);
+    }
+    catch {
+      profileImage = null
+    }
+
+    if (!profileImage){
+        profileImage = defaultProfileImage
+    }
+
+    try {
+      user = await User.signup({ fullName, email, username, password, headline, website, profileImage });
+    }
+    catch (e){
+      const err = new Error(e.errors[0]);
+      err.status = 401;
+      err.title = 'Signup failed';
+      err.errors = [e.errors[0]['message']]
+      return next(err)
+    }
 
     await setTokenCookie(res, user);
 
@@ -170,7 +201,18 @@ router.put(
     let {user} = req;
 
     const userId = user.id;
-    const profileImage = await singlePublicFileUpload(req.file);
+
+    let profileImage;
+    try {
+      profileImage = await singlePublicFileUpload(req.file);
+    }
+    catch {
+      profileImage = null
+    }
+
+    if (!profileImage){
+        profileImage = defaultProfileImage
+    }
 
     if(user){
       user = await User.editProfileImage({profileImage, userId})
@@ -232,5 +274,35 @@ router.get(
     return res.json(await userObject(user));
   })
 );
+
+// // Check User
+// router.get(
+//   '/checkUser/:username',
+//   asyncHandler(async (req, res) =>{
+//     const {username} = req.params;
+//     const user = await User.getByUsername(username);
+
+//     if (user) {
+//       return res.json({'exist' : true})
+//     } else {
+//       return res.json({'exist' : false})
+//     }
+//   })
+// )
+
+// //Check Email
+// router.get(
+//   '/checkEmail/:email',
+//   asyncHandler(async (req, res) =>{
+//     const {email} = req.params;
+//     const user = await User.getByEmail(email);
+
+//     if (user) {
+//       return res.json({'exist' : true})
+//     } else {
+//       return res.json({'exist' : false})
+//     }
+//   })
+// )
 
 module.exports = router;

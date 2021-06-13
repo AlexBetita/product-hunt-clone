@@ -1,5 +1,5 @@
 import { csrfFetch } from './csrf';
-import {LOAD_PRODUCTS, REMOVE_PRODUCT, ADD_PRODUCT, ADD_ONE_PRODUCT} from './products'
+import {REMOVE_PRODUCT, ADD_PRODUCT} from './products'
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -112,7 +112,6 @@ export const editProfileImage = (user) => async (dispatch) => {
     body: formData,
   });
 
-  console.log('NOT COOOL')
   const data = await res.json();
   dispatch(setUser(data));
 };
@@ -144,6 +143,43 @@ export const logout = () => async (dispatch) => {
   return response;
 };
 
+const removeUpvotes = (id, type, state) => {
+  for (const key in state.upvotes){
+    if (type === 'product'){
+      if (state.upvotes[key].upvoteableId === id && state.upvotes[key].upvoteableType === 'product'){
+        delete state.upvotes[key]
+      }
+    } else if (type === 'comment'){
+      if (state.upvotes[key].upvoteableId === id && state.upvotes[key].upvoteableType === 'comment'){
+        delete state.upvotes[key]
+      }
+    } else if (type === 'discussion'){
+      if (state.upvotes[key].upvoteableId === id && state.upvotes[key].upvoteableType === 'discussion'){
+        delete state.upvotes[key]
+      }
+    }
+  }
+}
+
+const removeDiscussion = (id, state) => {
+  delete state.discussions[id]
+}
+
+const removeComments = (id, type, state) => {
+  for (const key in state.comments){
+    if (type === 'product'){
+      if (state.comments[key].commentableId === id && state.comments[key].commentableType === 'product'){
+        delete state.comments[key]
+      }
+    } else if (type === 'discussion'){
+      if (state.comments[key].commentableId === id && state.comments[key].commentableType === 'discussion'){
+        delete state.comments[key]
+      }
+    }
+  }
+}
+
+
 const initialState = {
   user: null,
   upvotes: null,
@@ -174,6 +210,15 @@ const sessionReducer = (state = initialState, action) => {
       }
       newState.products[action.product.id] = action.product
       return newState
+    case REMOVE_PRODUCT:{
+      delete state.products[action.productId]
+      removeComments(action.productId, 'product', state)
+      removeUpvotes(action.productId, 'product', state)
+      newState = {
+        ...state
+      }
+      return newState
+    }
     case REMOVE_USER:
       newState = Object.assign({}, state);
       newState.user = null;

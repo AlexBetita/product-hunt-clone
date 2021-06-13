@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     title: DataTypes.STRING,
+    tagline: DataTypes.STRING,
     thumbnail: DataTypes.STRING,
     description: DataTypes.TEXT,
     views: DataTypes.INTEGER,
@@ -105,8 +106,23 @@ module.exports = (sequelize, DataTypes) => {
     } else return false
   }
 
-  Product.edit = async function(title, thumbnail, description,  productId){
-    const product = await Product.findByPk(productId)
+  Product.edit = async function(title, thumbnail,
+                                description,  productId,
+                                Comment, User, Upvote,
+                                ProductImage){
+    const product = await Product.findByPk(productId,
+      {
+        include: [
+          {
+            model: Comment,
+            include: [Upvote, User.scope('userIcons')]
+          },
+          User.scope('userIcons'),
+          Upvote,
+          ProductImage.scope('imageUrls')
+        ]
+    });
+
     if(product){
       product.title = title;
       product.thumbnail = thumbnail;

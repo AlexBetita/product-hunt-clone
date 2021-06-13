@@ -88,8 +88,29 @@ module.exports = {
     {
       discussion: 'Just starting a discussion',
       message:faker.lorem.paragraph(),
-      userId: faker.datatype.number(34) + 1,
+      userId: 1,
     },
+    {
+      discussion: 'This is amazing!',
+      message:faker.lorem.paragraph(),
+      userId: 1,
+    },
+    {
+      discussion: 'Woah cool features!',
+      message:faker.lorem.paragraph(),
+      userId: 1,
+    },
+    {
+      discussion: 'Just like producthunt.',
+      message:faker.lorem.paragraph(),
+      userId: 1,
+    },
+    {
+      discussion: 'Hmm want to discuss?',
+      message:faker.lorem.paragraph(),
+      userId: 1,
+    },
+
     ], {});
   },
 

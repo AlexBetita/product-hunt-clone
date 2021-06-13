@@ -10,6 +10,7 @@ const Profile = () => {
   let user;
   let productsMade = {}
   let productsUpvoted = {}
+  let productsCommented = {}
 
   const [made, setMade] = useState(false);
 
@@ -21,13 +22,23 @@ const Profile = () => {
 
   useSelector((state)=>{
     Object.keys(state.session.products).map((key)=>{
-      productsMade[key] = state.products[key]
+      productsMade[key] = state.session.products[key]
     })
 
+    // Object.keys(state.session.upvotes).map((key)=>{
+    //   if(state.session.upvotes[key].upvoteableType === 'product'){
+    //     if(state.session.products[state.session.upvotes[key].upvoteableId]){
+    //       productsUpvoted[state.session.upvotes[key].upvoteableId] = state.session.products[state.session.upvotes[key].upvoteableId]
+    //     }
+    //   }
+    // })
+    
     Object.keys(state.session.upvotes).map((key)=>{
-      if(state.session.upvotes[key].upvoteableType === 'product'){
-        productsUpvoted[state.session.upvotes[key].upvoteableId] = state.products[state.session.upvotes[key].upvoteableId]
-      }
+      productsUpvoted[key] = state.session.upvotes[key]
+    })
+
+    Object.keys(state.session.comments).map((key)=>{
+      productsCommented[key] = state.session.comments[key]
     })
   })
 
@@ -48,8 +59,51 @@ const Profile = () => {
   return (
     <>
       <div className='div__profile__container'>
-        <div className='div__profile__styles'>
 
+        {user.headerImage
+          ?
+          <div className='div__profile__styles' style={{
+            backgroundImage: `url(${user.headerImage})`
+          }} >
+            <div className='div__profile__image'>
+            <div className='div__profile__image__styles'>
+              <img className ='image__profile__image'
+              src={`${user.profileImage}`}>
+              </img>
+            </div>
+          </div>
+
+          <div className='div__profile__details'>
+            <div className='div__profile__fullname'>
+                {user.fullName}
+                <div className='div__profile__fullname__icon'>
+                  🎈
+                </div>
+            </div>
+
+            <div className='div__profile__headline'>
+                {user.headline}
+            </div>
+            <div className='div__profile__id__username'>
+              <span className='span__profile__id'>
+                #{user.id}
+              </span>
+              <span className='span__profile__username'>
+                @{user.username}
+              </span>
+            </div>
+
+            <div className='div__profile__edit__profile__button__styles'>
+              <NavLink className='navlink__edit__profile__button'
+                  to='/my/settings/edit'
+                >
+                  EDIT MY PROFILE
+                </NavLink>
+            </div>
+          </div>
+        </div>
+          :
+           <div className='div__profile__styles' >
           <div className='div__profile__image'>
             <div className='div__profile__image__styles'>
               <img className ='image__profile__image'
@@ -86,8 +140,8 @@ const Profile = () => {
                 </NavLink>
             </div>
           </div>
-
         </div>
+        }
 
         <div className='div__profile__nav__container'>
           <div className='div__profile__nav__styles'>
@@ -131,17 +185,33 @@ const Profile = () => {
       </div>
 
       <Route exact path={`/@${user.username}`}>
-        <div>
-            {Object.keys(productsUpvoted).map((key)=>{
-              return <Products key={key} products = {productsUpvoted[key]}/>
-            })}
+        <div className='div__profile__products__activity'>
+          <div className='div__profile__products__activity__style'>
+
+            <div className='div__profile__products__activity__style__container'>
+              <div className='div__profile__products__activity__header'>
+                <span className='span__profile__activity'> Upvotes ({Object.keys(productsUpvoted).length})</span>
+              </div>
+              {Object.keys(productsUpvoted).map((key)=>{
+                  return <Products key={key} products = {productsUpvoted[key]} profile = {true}/>
+                })}
+
+              <div className='div__profile__products__activity__header'>
+                <span className='span__profile__activity'> Commented ({Object.keys(productsCommented).length})</span>
+              </div>
+              {Object.keys(productsCommented).map((key)=>{
+                  return <Products key={key} products = {productsCommented[key]} profile = {true}/>
+                })}
+             </div>
+
+            </div>
           </div>
       </Route>
 
       <Route path={`/@${user.username}/made`}>
         <div>
             {Object.keys(productsMade).map((key)=>{
-              return <Products key={key} products = {productsMade[key]}/>
+              return <Products key={key} products = {productsMade[key]} profile = {true}/>
             })}
           </div>
       </Route>

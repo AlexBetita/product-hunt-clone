@@ -80,6 +80,17 @@ module.exports = (sequelize, DataTypes) => {
     productsViewed: {
       type: DataTypes.INTEGER
     },
+    headerImage: {
+      type: DataTypes.STRING,
+      validate: {
+        len:[0, 256],
+        isUrl(value) {
+          if(!Validator.isUrl(value) && value.length){
+            throw new Error('Must be a valid url format')
+          }
+        }
+      }
+    },
     visits: {
       type: DataTypes.INTEGER
     },
@@ -210,6 +221,15 @@ module.exports = (sequelize, DataTypes) => {
     const user = await User.findOne({
       where: {
         username: {[Op.iLike]: `%${username}%`}
+      }
+    })
+    return user
+  };
+
+  User.getByEmail= async function (email){
+    const user = await User.findOne({
+      where: {
+        username: {[Op.iLike]: `%${email}%`}
       }
     })
     return user

@@ -9,6 +9,7 @@ const Post = () => {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useState("");
+  const [tagline, setTagline] = useState("");
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [loading, setLoading] = useState(false)
@@ -55,6 +56,15 @@ const Post = () => {
               required
               />
 
+        <label>
+          Tagline
+        </label>
+        <input
+              type="text"
+              value={title}
+              onChange={(e) => setTagline(e.target.value)}
+              required
+              />
         <label>
           Description
         </label>
