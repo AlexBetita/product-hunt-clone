@@ -1,5 +1,5 @@
 // frontend/src/components/Navigation/index.js
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useRef} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash'
@@ -18,6 +18,7 @@ import './Navigation.css';
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
+  const elementRef = useRef();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
 
@@ -32,7 +33,7 @@ function Navigation({ isLoaded }){
     waitForDispatch();
 
     if(window.addEventListener){
-      window.addEventListener('scroll', _.throttle(scroll, 1000));
+      window.addEventListener('scroll', _.throttle(scroll, 500));
     }
   }, [dispatch])
 
@@ -85,12 +86,22 @@ function Navigation({ isLoaded }){
     }
   }
 
+  function activateProgress(){
+    closePopOver()
+    console.log(elementRef)
+    elementRef.current.classList.add('active')
+    setTimeout(fn=>{
+      elementRef.current.classList.remove('active')
+    }, 200)
+  }
+
   return (
     <>
+      <div id='nprogress' ref={elementRef}></div>
       <div className='div__navigation__styles'>
         <div className='div__navigation'>
 
-        <NavLink exact to="/" onClick={closePopOver}>
+        <NavLink exact to="/" onClick={activateProgress}>
           <img className='img__producthunt__icon'
               src='https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Product_Hunt-512.png'>
             </img>

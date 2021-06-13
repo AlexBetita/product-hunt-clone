@@ -19,8 +19,6 @@ function SignupFormPage() {
   const [profileImage, setProfileImage] = useState(null);
   const [errors, setErrors] = useState([]);
 
-  const history = useHistory();
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     let newErrors = [];

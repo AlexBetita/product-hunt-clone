@@ -286,3 +286,15 @@
   text-decoration: none;
   color: rgb(153, 154, 156);
 }
+
+#nprogress {
+  width: 0%;
+  position: absolute;
+  transition: width 0.2s;
+}
+
+#nprogress.active {
+  width: 100%;
+  height: 1.5px;
+  background-color: #e4461b;
+}

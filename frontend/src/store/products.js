@@ -172,7 +172,13 @@ const productReducer = (state = initialState, action) => {
       newState = {
         ...state
       }
+      for (const props in state){
+        if (props != 'viewedProducts'){
+          newState.viewedProducts[state[props]['id']] = state[props]
+        }
+      }
       newState.viewedProducts[action.product.product['id']] = action.product.product
+      delete newState.viewedProducts['undefined']
       return newState
     }
     case INITIAL_STATE:

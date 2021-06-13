@@ -173,7 +173,7 @@ router.post(
   validateCreateProduct,
   requireAuth,
   asyncHandler(async (req, res)=>{
-    const {title, description} = req.body;
+    const {title, tagline, description} = req.body;
     const {user} = req;
     const userId = user.id
 
@@ -184,7 +184,7 @@ router.post(
 
     if(user){
       const result = await Product.create({
-        title, thumbnail, description, userId
+        title, tagline, thumbnail, description, userId
       });
 
       product = productObjCleanUp(result)
@@ -205,7 +205,7 @@ router.put(
 
     const {id} = req.params;
     const {user} = req;
-    const {title, description } = req.body;
+    const {title, tagline, description } = req.body;
     const userId = user.id;
 
     let thumbnail = await checkThumbnail(req, id)
@@ -217,7 +217,7 @@ router.put(
       if(exists){
         if(Product.userOwnsProduct(id, userId)){
 
-          const result = await Product.edit(title, thumbnail,
+          const result = await Product.edit(title, tagline, thumbnail,
                                             description, id,
                                             Comment, User, Upvote,
                                             ProductImage)

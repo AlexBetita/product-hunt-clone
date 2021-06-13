@@ -23,6 +23,7 @@ const EditProductPage = () => {
   })
 
   const [title, setTitle] = useState(product?.title);
+  const [tagline, setTagline] = useState(product?.tagline)
   const [description, setDescription] = useState(product?.description);
   const [thumbnail, setThumbnail] = useState(product?.thumbnail);
 
@@ -50,7 +51,7 @@ const EditProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await dispatch(updateProduct({title, description, thumbnail, id: product.id}))
+    await dispatch(updateProduct({title, tagline, description, thumbnail, id: product.id}))
 
   }
 
@@ -65,6 +66,15 @@ const EditProductPage = () => {
           <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                required
+                />
+
+          <label>
+            Tagline
+          </label>
+          <input
+                value={title}
+                onChange={(e) => setTagline(e.target.value)}
                 required
                 />
 

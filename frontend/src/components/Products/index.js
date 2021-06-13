@@ -28,7 +28,7 @@ const Products = ({products}) => {
             <div
               className='a__product__description'
               >
-                {products.description}
+                {products.tagline}
             </div>
           </div>
 

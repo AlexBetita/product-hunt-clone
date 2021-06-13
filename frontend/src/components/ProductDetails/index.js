@@ -53,6 +53,11 @@ const ProductDetails = () =>{
         </h1>
       </div>
       <div>
+        <h3>
+          {product.tagline}
+        </h3>
+      </div>
+      <div>
         <img
           src={product.thumbnail}
         >

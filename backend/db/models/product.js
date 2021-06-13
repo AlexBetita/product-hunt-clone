@@ -8,6 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
     },
     title: DataTypes.STRING,
+    tagline: DataTypes.STRING,
     thumbnail: DataTypes.STRING,
     description: DataTypes.TEXT,
     views: DataTypes.INTEGER,
