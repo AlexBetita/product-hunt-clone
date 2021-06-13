@@ -112,8 +112,8 @@ router.get(
   '/page/:page',
   asyncHandler(async (req, res)=>{
     const {page} = req.params
-    let offset = (10 * page) - 10
-    let limit = 10
+    let offset = (15 * page) - 15
+    let limit = 15
     const results = await Product.findAll({
       include: [
         {
@@ -280,8 +280,7 @@ router.delete(
               id: id
             }
           })
-          const products = await Product.getProductsByUserId(userId)
-          return res.json({products})
+          return res.json({'message': 'success'})
         } else {
           res.json({Error: "User does not own this product"})
         }

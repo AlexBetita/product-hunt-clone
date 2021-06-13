@@ -287,6 +287,11 @@
   color: rgb(153, 154, 156);
 }
 
+
+.div__navigation__popover > .ul__navigation__styles > li a:hover{
+  text-decoration: underline;
+}
+
 #nprogress {
   width: 0%;
   position: absolute;

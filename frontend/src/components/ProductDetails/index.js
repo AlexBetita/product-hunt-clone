@@ -21,17 +21,16 @@ const ProductDetails = () =>{
 
 
   let product = useSelector((state)=>{
-
-  try{
-      if(state.products[id].id === state.products.viewedProducts[id]){
-        maker = true
+    try{
+        if(state.session.products[id].id === state.products.viewedProducts[id].id){
+          maker = true
+        }
       }
+    catch(e) {
+      //
     }
-  catch(e) {
-    //
-  }
-    return state.products.viewedProducts[id]
-  })
+      return state.products.viewedProducts[id]
+    })
 
   const user = useSelector((state)=>{
     return state.session.user

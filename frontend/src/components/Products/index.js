@@ -4,12 +4,24 @@ import './Products.css';
 
 const Products = ({products}) => {
 
+  let upvotes = 0
+  if(products.upvotes){
+    upvotes = products.upvotes
+  } else if (products.Upvotes) {
+    upvotes = Object.keys(products.Upvotes).length
+  }
+
   return (
 
       <div className='div__product'>
-        <div className='div__product__thumbnail'>
-          <img className='img__product__thumbnail' src={products.thumbnail}></img>
-        </div>
+          <NavLink
+              activeClassName='div__styles__content'
+              to={`/posts/${products.id}`}
+              >
+            <div className='div__product__thumbnail'>
+              <img className='img__product__thumbnail' src={products.thumbnail}></img>
+            </div>
+        </NavLink>
 
         <NavLink
               className='div__styles__content'
@@ -71,7 +83,7 @@ const Products = ({products}) => {
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img>
             <span className='span__product__upvotes'>
-              {products.upvotes ? products.upvotes : 0}
+                {upvotes}
             </span>
           </button>
         </div>

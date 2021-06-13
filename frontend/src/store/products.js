@@ -106,6 +106,20 @@ export const updateProduct = payload => async dispatch => {
   }
 }
 
+export const removeProduct = payload => async dispatch => {
+  const { id } = payload;
+  console.log('id', id)
+  const response = await csrfFetch(`/api/products/${id}`, {
+    method: "DELETE"
+  })
+
+  if (response.ok){
+    const data = await response.json();
+    dispatch(remove(id))
+    return data
+  }
+}
+
 
 const initialState = {
   list: [],
@@ -167,6 +181,16 @@ const productReducer = (state = initialState, action) => {
         ...state,
         [action.product.id]: action.product
       };
+    }
+    case REMOVE_PRODUCT: {
+      delete state[action.productId]
+      delete state.viewedProducts[action.productId]
+      let list = listProducts([], state)
+      newState = {
+        ...state,
+        list: list
+      }
+      return newState
     }
     case VIEW_PRODUCT: {
       newState = {

@@ -32,17 +32,17 @@ function SignupForm() {
     return /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/.test(str);
   }
 
-  async function ifExists(str, type){
-    if(type === 'username'){
-      const response = await fetch(`/api/users/checkUser/${str}`)
-      const data = await response.json();
-      return data['exist']
-    } else if (type === 'email'){
-      const response = await fetch(`/api/users/checkEmail/${str}`)
-      const data = await response.json();
-      return data['exist']
-    }
-  }
+  // async function ifExists(str, type){
+  //   if(type === 'username'){
+  //     const response = await fetch(`/api/users/checkUser/${str}`)
+  //     const data = await response.json();
+  //     return data['exist']
+  //   } else if (type === 'email'){
+  //     const response = await fetch(`/api/users/checkEmail/${str}`)
+  //     const data = await response.json();
+  //     return data['exist']
+  //   }
+  // }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -63,9 +63,10 @@ function SignupForm() {
       newErrors.push('Email is to short to be valid')
     } else if(!isEmail(email)){
       newErrors.push('Not a valid email')
-    } else if(await ifExists(email, 'email')){
-      newErrors.push('Email already exists')
     }
+    // else if(await ifExists(email, 'email')){
+    //   newErrors.push('Email already exists')
+    // }
 
     if(username.length < 3){
       newErrors.push('Username too short')
@@ -73,9 +74,10 @@ function SignupForm() {
       newErrors.push('Username too long, maximum is 20 chars')
     } else if(username !== username.toLowerCase()){
       newErrors.push('Username must be lower case')
-    } else if(await ifExists(username, 'username')){
-      newErrors.push('Username already exists')
     }
+    // else if(await ifExists(username, 'username')){
+    //   newErrors.push('Username already exists')
+    // }
 
     if(headline.length > 40){
       newErrors.push('Headline too long, maximum is 40 chars')
@@ -89,26 +91,21 @@ function SignupForm() {
       }
     }
 
+    setErrors(newErrors)
     if (!newErrors.length) {
-      await setLoading(true)
       setErrors([]);
       await dispatch(sessionActions.createUser({ fullName, email, username,
                                                  password, headline,
                                                  website, profileImage }))
+        .then(history.push('/'))
         .catch(async (res) => {
           const data = await res.json();
           if (data && data.errors) {
-            newErrors = data.errors;
-            setErrors(newErrors);
+            setErrors(data.errors);
+            await setLoading(false)
           }
         });
-        history.push('/')
     }
-
-    if(newErrors.length === 0){
-      history.push('/')
-    } else setErrors(newErrors)
-
   };
 
   const updateFile = (e) => {
@@ -119,7 +116,9 @@ function SignupForm() {
   return (
     <div className='div__signup__modal__container'>
       <ul>
-          {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+          {errors.map((error, idx) =>
+          <li key={idx}>{error}</li>)
+          }
       </ul>
       <div className='div__styles__signup__modal'>
         <div className='div__styles__login__image__modal'>

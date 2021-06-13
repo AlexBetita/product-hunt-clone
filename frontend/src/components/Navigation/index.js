@@ -149,12 +149,12 @@ function Navigation({ isLoaded }){
           <div className='div__navigation__popover'>
             <ul className='ul__navigation__styles'>
 
+             <li className='li__navigation__style'>
               <NavLink
                 className='navlink__popover__styles' onClick={closePopOver} to={`/@${sessionUser.username}`}>
-                  <li className='li__navigation__style'>
-                    My profile
-                  </li>
+                  My Profile
                 </NavLink>
+              </li>
 
               <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/collections`}>My Collections</NavLink>

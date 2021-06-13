@@ -133,7 +133,7 @@ router.post(
   '/',
   singleMulterUpload("image"),
   validateSignup,
-  asyncHandler(async (req, res) => {
+  asyncHandler(async (req, res, next) => {
     const {
             fullName,
             email,
@@ -143,6 +143,7 @@ router.post(
             website
            } = req.body;
 
+    let user;
     let profileImage;
     try {
       profileImage = await singlePublicFileUpload(req.file);
@@ -155,7 +156,16 @@ router.post(
         profileImage = defaultProfileImage
     }
 
-    const user = await User.signup({ fullName, email, username, password, headline, website, profileImage });
+    try {
+      user = await User.signup({ fullName, email, username, password, headline, website, profileImage });
+    }
+    catch (e){
+      const err = new Error(e.errors[0]);
+      err.status = 401;
+      err.title = 'Signup failed';
+      err.errors = [e.errors[0]['message']]
+      return next(err)
+    }
 
     await setTokenCookie(res, user);
 
@@ -265,34 +275,34 @@ router.get(
   })
 );
 
-// Check User
-router.get(
-  '/checkUser/:username',
-  asyncHandler(async (req, res) =>{
-    const {username} = req.params;
-    const user = await User.getByUsername(username);
+// // Check User
+// router.get(
+//   '/checkUser/:username',
+//   asyncHandler(async (req, res) =>{
+//     const {username} = req.params;
+//     const user = await User.getByUsername(username);
 
-    if (user) {
-      return res.json({'exist' : true})
-    } else {
-      return res.json({'exist' : false})
-    }
-  })
-)
+//     if (user) {
+//       return res.json({'exist' : true})
+//     } else {
+//       return res.json({'exist' : false})
+//     }
+//   })
+// )
 
-//Check Email
-router.get(
-  '/checkEmail/:email',
-  asyncHandler(async (req, res) =>{
-    const {email} = req.params;
-    const user = await User.getByEmail(email);
+// //Check Email
+// router.get(
+//   '/checkEmail/:email',
+//   asyncHandler(async (req, res) =>{
+//     const {email} = req.params;
+//     const user = await User.getByEmail(email);
 
-    if (user) {
-      return res.json({'exist' : true})
-    } else {
-      return res.json({'exist' : false})
-    }
-  })
-)
+//     if (user) {
+//       return res.json({'exist' : true})
+//     } else {
+//       return res.json({'exist' : false})
+//     }
+//   })
+// )
 
 module.exports = router;

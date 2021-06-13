@@ -5,6 +5,1274 @@ const faker = require('faker');
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.bulkInsert('Products', [
+
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.business(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.fashion(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.animals(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.food(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.nature(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.abstract(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.city(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.sports(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.transport(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
+    {
+      title: faker.name.title().slice(0,40),
+      tagline: faker.random.words(2),
+      thumbnail: faker.image.technics(),
+      description: faker.lorem.text(3),
+      userId: faker.datatype.number(34) + 1
+    },
     {
       title: 'Potato',
       tagline: faker.random.words(2),
@@ -67,272 +1335,6 @@ module.exports = {
       thumbnail: 'https://www.gia.edu/images/polished-diamond.png',
       description: 'master',
       userId: 6
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.business(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
-    },
-    {
-      title: faker.name.title(),
-      tagline: faker.random.words(2),
-      thumbnail: faker.image.fashion(),
-      description: faker.lorem.text(3),
-      userId: faker.datatype.number(34) + 1
     },
 
   ], {});

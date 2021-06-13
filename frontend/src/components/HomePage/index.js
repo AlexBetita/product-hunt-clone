@@ -15,7 +15,7 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <div className='div__home__styles'>
       <div className='div__home__date'>
         Today
       </div>

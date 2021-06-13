@@ -73,6 +73,22 @@ module.exports = {
       discussion: 'just starting a discussion',
       discussionId: 17
     },
+    {
+      discussion: 'this is amazing',
+      discussionId: 18
+    },
+    {
+      discussion: 'woah cool features',
+      discussionId: 19
+    },
+    {
+      discussion: 'just like producthunt',
+      discussionId: 20
+    },
+    {
+      discussion: 'hmm want to discuss',
+      discussionId: 21
+    },
     ], {});
   },
 
