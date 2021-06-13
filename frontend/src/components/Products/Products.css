@@ -42,7 +42,7 @@
 .div__comments{
   display: flex;
   height: 15px;
-  width: 35px;
+  min-width: 35px;
   background: #fff;
   color: #000;
   fill: #000;
@@ -76,18 +76,18 @@
 
 
 .img__comment__icon {
-  max-width: 80%;
-  max-height: 80%;
+  /* max-width: 80%;
+  max-height: 80%; */
   filter: grayscale(100%);
-  position: relative;
-  top: 2px;
+  /* position: relative;
+  top: 2px; */
 }
 
 .img__upvote__icon{
-  min-width:0.75rem;
-  max-width:0.75rem;
-  min-height:0.75rem;
-  max-height:0.75rem;
+  min-width: 0.75rem;
+  /* max-width: 0.75rem; */
+  /* min-height: 0.75rem; */
+  max-height: 0.75rem;
   display: flex;
 }
 
@@ -145,3 +145,9 @@
 .products--active{
   color: black;
 }
+
+.fas.fa-comment{
+  font-size:small;
+}
+
+

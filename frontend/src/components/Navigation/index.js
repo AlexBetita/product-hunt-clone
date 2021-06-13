@@ -2,7 +2,7 @@
 import {useState, useEffect, useRef} from 'react';
 import { NavLink, useHistory } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import _ from 'lodash'
+// import _ from 'lodash'
 
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
@@ -32,9 +32,10 @@ function Navigation({ isLoaded }){
     }
     waitForDispatch();
 
-    if(window.addEventListener){
-      window.addEventListener('scroll', _.throttle(scroll, 500));
-    }
+    // if(window.addEventListener){
+    //   window.addEventListener('scroll', _.throttle(scroll, 500));
+    // }
+
   }, [dispatch])
 
   const openPopOver = () => {
@@ -74,26 +75,27 @@ function Navigation({ isLoaded }){
     history.push('/')
   };
 
-  const setNextPage = async () => {
-    await dispatch(getProducts(pageCounter + 1))
-    pageCounter += 1
-  }
+  // const setNextPage = async () => {
+  //   await dispatch(getProducts(pageCounter + 1))
+  //   pageCounter += 1
+  // }
 
-  function scroll(ev){
-    const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-    if((st+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
-      setNextPage()
-    }
-  }
+  // function scroll(ev){
+  //   const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+  //   if((st+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
+  //     setNextPage()
+  //   }
+  // }
+
 
   function activateProgress(){
     closePopOver()
-    console.log(elementRef)
     elementRef.current.classList.add('active')
     setTimeout(fn=>{
       elementRef.current.classList.remove('active')
     }, 200)
   }
+
 
   return (
     <>
