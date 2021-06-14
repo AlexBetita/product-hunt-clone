@@ -50,7 +50,7 @@ const Products = ({products}) => {
                   src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
                 </img> */}
                 <div className='img__comment__icon'>
-                  <i class="fas fa-comment"></i>
+                  <i className="fas fa-comment"></i>
                 </div>
                 {products.Comments
                   ?

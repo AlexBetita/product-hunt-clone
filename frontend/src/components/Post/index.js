@@ -13,6 +13,7 @@ const Post = () => {
   const [description, setDescription] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [loading, setLoading] = useState(false)
+  const [errors, setErrors] = useState([]);
 
   const history = useHistory();
 
@@ -31,11 +32,32 @@ const Post = () => {
   const handleSubmit = async (e) =>{
     e.preventDefault();
 
-    await setLoading(true)
+    let newErrors = [];
 
-    await dispatch(postProduct({title, description, thumbnail}))
+    if(title.length < 3){
+      newErrors.push('Title is to short, minimum 3 chars')
+    } else if(title.length > 40){
+      newErrors.push('Title too long, maximum 40 chars')
+    }
 
-    history.push('/')
+    if(description.length > 2500){
+      newErrors.push('Description is too long, limit 2500')
+    }
+
+    setErrors(newErrors)
+    if(!newErrors.length){
+      setErrors([]);
+      await setLoading(true)
+      await dispatch(postProduct({title, description, thumbnail})).then(()=>history.push('/'))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+          await setLoading(false)
+        }
+      });
+    }
+    await setLoading(false)
   }
 
   const fileUpload = (e) =>{
@@ -45,56 +67,73 @@ const Post = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Title
-        </label>
-        <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              required
-              />
+      <ul>
+          {errors.map((error, idx) =>
+          <li key={idx}>{error}</li>)
+          }
+      </ul>
+      <div>
+          <form onSubmit={handleSubmit}>
+            <div>
+              <label>
+                Title
+              </label>
+              <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
+                    required
+                    />
+            </div>
 
-        <label>
-          Tagline
-        </label>
-        <input
-              type="text"
-              value={title}
-              onChange={(e) => setTagline(e.target.value)}
-              required
-              />
-        <label>
-          Description
-        </label>
-        <textarea
-              type="text"
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-              />
+            <div>
+              <label>
+                Tagline
+              </label>
+              <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTagline(e.target.value)}
+                    required
+                    />
+            </div>
 
-        <input
-          type='file'
-          onChange={fileUpload}
-        >
-        </input>
-        {loading &&
-          <>
-            <button type='submit' disabled>
-              Submit Product
-            </button>
-            LOADING
-          </>
-        }
-        {!loading &&
-          <button type='submit'>
-            Submit Product
-          </button>
-        }
+            <div>
+              <label>
+                Description
+              </label>
+                <textarea
+                      type="text"
+                      value={description}
+                      onChange={(e) => setDescription(e.target.value)}
+                      required
+                      />
+            </div>
 
-      </form>
+            <div>
+              <input
+                    type='file'
+                    onChange={fileUpload}
+                  />
+            </div>
+
+            <div>
+            {loading &&
+              <>
+                <button type='submit' disabled>
+                  Submit Product
+                </button>
+                LOADING
+              </>
+            }
+            {!loading &&
+              <button type='submit'>
+                Submit Product
+              </button>
+            }
+            </div>
+          </form>
+      </div>
     </>
   )
 };

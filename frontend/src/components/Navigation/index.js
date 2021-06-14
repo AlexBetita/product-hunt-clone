@@ -13,12 +13,11 @@ import { getProducts } from '../../store/products';
 
 import './Navigation.css';
 
-
-
 function Navigation({ isLoaded }){
   const dispatch = useDispatch();
   const history = useHistory();
   const elementRef = useRef();
+  const popOver = useRef();
   const sessionUser = useSelector(state => state.session.user);
   const [showPopOver, setPopOver] = useState(false);
 
@@ -32,9 +31,10 @@ function Navigation({ isLoaded }){
     }
     waitForDispatch();
 
-    // if(window.addEventListener){
-    //   window.addEventListener('scroll', _.throttle(scroll, 500));
-    // }
+    document.addEventListener("mousedown", handleClick);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+    };
 
   }, [dispatch])
 
@@ -48,6 +48,17 @@ function Navigation({ isLoaded }){
 
   const closePopOver = () => {
     setPopOver(false)
+  }
+
+  const handleClick = e =>{
+    try {
+      if(popOver.current.contains(e.target)){
+        return
+      }
+      setPopOver(false)
+    } catch {
+      //
+    }
   }
 
   handler = openPopOver
@@ -148,7 +159,7 @@ function Navigation({ isLoaded }){
       </div>
       {showPopOver &&
         <>
-          <div className='div__navigation__popover'>
+          <div className='div__navigation__popover' ref={popOver}>
             <ul className='ul__navigation__styles'>
 
              <li className='li__navigation__style'>
