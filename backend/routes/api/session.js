@@ -34,7 +34,7 @@ const userObject = async (user) => {
         upvoteIds.push(upvotes.upvoteableId)
       }
     });
-    
+
     upvotes = await Product.findAll({
       where:{
         id: upvoteIds
@@ -162,6 +162,19 @@ router.post(
     }),
 );
 
+//demo
+router.get(
+  '/demo',
+  asyncHandler(async (_req, res) =>{
+    const { credential, password } = {'credential':'demo-lition', 'password':'password'}
+    const user = await User.login({ credential, password });
+
+    await setTokenCookie(res, user)
+
+    return res.json(await userObject(user));
+  })
+)
+
 // Restore session user
 router.get(
     '/',
@@ -182,6 +195,7 @@ router.delete(
       res.clearCookie('token');
       return res.json({ message: 'success' });
     }
-  );
+);
+
 
 module.exports = router;

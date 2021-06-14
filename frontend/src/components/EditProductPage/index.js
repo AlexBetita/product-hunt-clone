@@ -37,6 +37,7 @@ const EditProductPage = () => {
   const [tagline, setTagline] = useState(product?.tagline)
   const [description, setDescription] = useState(product?.description);
   const [thumbnail, setThumbnail] = useState(product?.thumbnail);
+  const [errors, setErrors] = useState([]);
 
   if(!product){
     return (
@@ -62,19 +63,53 @@ const EditProductPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
 
-    await dispatch(updateProduct({title, tagline, description, thumbnail, id: product.id}))
+    let newErrors = [];
+
+    if(title.length < 3){
+      newErrors.push('Title is to short, minimum 3 chars')
+    } else if(title.length > 40){
+      newErrors.push('Title too long, maximum 40 chars')
+    }
+
+    if(description.length > 2500){
+      newErrors.push('Description is too long, limit 2500')
+    }
+
+    setErrors(newErrors)
+    if(!newErrors.length){
+      setErrors([]);
+      await dispatch(updateProduct({title, tagline, description, thumbnail, id: product.id}))
+        .catch(async (res) => {
+          const data = await res.json();
+          if (data && data.errors) {
+            setErrors(data.errors);
+          }
+        });
+    }
 
   }
 
   const deleteProduct = async (e) => {
     e.preventDefault()
+    setErrors([]);
     await dispatch(removeProduct({id}))
-    history.push('/')
+      .then(()=> history.push('/'))
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
   }
 
   return (
     <>
       <div>
+        <ul>
+            {errors.map((error, idx) =>
+            <li key={idx}>{error}</li>)
+            }
+        </ul>
         <form onSubmit={handleSubmit}>
 
           <label>

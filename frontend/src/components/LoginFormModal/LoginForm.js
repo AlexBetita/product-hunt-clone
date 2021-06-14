@@ -20,6 +20,18 @@ function LoginForm() {
     );
   };
 
+  const loginDemo = (e) =>{
+    e.preventDefault()
+    setErrors([]);
+    return dispatch(sessionActions.demo())
+      .catch(
+        async (res) => {
+          const data = await res.json();
+          if (data && data.errors) setErrors(data.errors);
+        }
+      );
+  };
+
   return (
     <div className='div__login__modal__container'>
       <div className='div__styles__login__modal'>
@@ -61,6 +73,7 @@ function LoginForm() {
             </label>
             <button className='button__form__login__modal' type="submit">Log In</button>
           </form>
+          <button className='button__form__login__modal' onClick={loginDemo}>DEMO</button>
         </div>
         <p className='p__login__modal__sign__2'>
          Meow'll never post to any of your accounts without your permission.

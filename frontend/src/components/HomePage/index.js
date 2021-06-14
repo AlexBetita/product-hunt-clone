@@ -43,10 +43,14 @@ const Home = () => {
 
   function scrollToTopChecker(ev){
     const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-    if(!st){
-      buttonScrollToTop.current.classList.add('hidden')
-    } else {
-      buttonScrollToTop.current.classList.remove('hidden')
+    try{
+      if(!st){
+        buttonScrollToTop.current.classList.add('hidden')
+      } else {
+        buttonScrollToTop.current.classList.remove('hidden')
+      }
+    } catch {
+      //
     }
   }
 
@@ -69,11 +73,11 @@ const Home = () => {
       })}
 
     </div>
-      <button class='button__to__top hidden'
+      <button className='button__to__top hidden'
       ref={buttonScrollToTop}
       onClick={scrollToTop}
       >
-        <div class='angle__up'>
+        <div className='angle__up'>
           ⌃︁
         </div>
     </button>

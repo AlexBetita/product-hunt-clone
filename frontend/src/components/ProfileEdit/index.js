@@ -18,9 +18,11 @@ const ProfileEdit = () => {
   const [website, setWebsite] = useState(user?.website);
   const [profileImage, setProfileImage] = useState(user?.profileImage);
   const [inputElement, setInputElement] = useState(null);
+  const [errors, setErrors] = useState([]);
   const [spanStatus, setSpanStatus] = useState(true);
   const [spanSaving, setSpanSaving] = useState(true);
   const [spanUpdated, setSpanUpdated] = useState(true);
+  const [spanWarning, setSpanWarning] = useState(true);
   const [disableButton, setDisableButton] = useState(false);
 
   const triggerOnChange = function (e){
@@ -49,17 +51,62 @@ const ProfileEdit = () => {
     )
   }
 
+  function isURL(str) {
+    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     await setDisableButton(true)
     await setSpanUpdated(true)
     await setSpanStatus(false)
     await setSpanSaving(false)
+    await setSpanWarning(true)
 
-    await dispatch(sessionActions.editDetails({fullName, headline, website}))
+    let newErrors = [];
 
-    await setSpanSaving(true)
-    await setSpanUpdated(false)
+    if(fullName.length < 4){
+      newErrors.push('Full Name is too short, min 4 chars')
+    } else if(fullName.length > 40){
+      newErrors.push('Full Name is too long, max 40 chars')
+    }
+
+    if(headline.length > 40){
+      newErrors.push('Headline too long, maximum is 40 chars')
+    }
+
+    if(website.length > 0){
+      if(website.length > 256){
+        newErrors.push('Website Url is too long, please provide a shorter format, maximum is 256 chars')
+      } else if (!isURL(website)){
+        newErrors.push('Not a valid URL, gotta have http:// or https://')
+      }
+    }
+
+    setErrors(newErrors)
+
+    if (!newErrors.length){
+      setErrors([]);
+
+      await dispatch(sessionActions.editDetails({fullName, headline, website})).catch(async (res)=>{
+        const data = await res.json();
+            if (data && data.errors) {
+              setErrors(data.errors);
+        }
+      });
+
+    }
+
+    if (!newErrors.length){
+      await setSpanSaving(true)
+      await setSpanUpdated(false)
+    } else {
+      await setSpanSaving(true)
+      await setSpanUpdated(true)
+      await setSpanWarning(false)
+    }
+
     await setDisableButton(false)
   }
 
@@ -105,7 +152,11 @@ const ProfileEdit = () => {
               </div>
 
               <div className='div__edit__profile__mydetails__form__container'>
-
+                  <ul>
+                      {errors.map((error, idx) =>
+                      <li key={idx}>{error}</li>)
+                      }
+                  </ul>
                 <form onSubmit={handleSubmit}>
 
                   <label className='label__edit__profile__name__styles'>
@@ -155,6 +206,11 @@ const ProfileEdit = () => {
                       <span hidden={spanSaving}>
                         <span>💾</span>
                           {' Saving..'}
+                      </span>
+
+                      <span hidden={spanWarning}>
+                        <span>⚠️</span>
+                          {' Warning..'}
                       </span>
 
                     </span>
