@@ -106,7 +106,7 @@ module.exports = (sequelize, DataTypes) => {
     } else return false
   }
 
-  Product.edit = async function(title, thumbnail,
+  Product.edit = async function(title, tagline, thumbnail,
                                 description,  productId,
                                 Comment, User, Upvote,
                                 ProductImage){
@@ -125,6 +125,7 @@ module.exports = (sequelize, DataTypes) => {
 
     if(product){
       product.title = title;
+      product.tagline = tagline;
       product.thumbnail = thumbnail;
       product.description = description
       await product.save();

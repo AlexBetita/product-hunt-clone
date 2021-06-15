@@ -13,23 +13,10 @@ const EditProductPage = () => {
 
   let maker = false;
 
-  useEffect(()=> {
-    const viewProduct = async () => {
-      await dispatch(viewOneProduct(id))
-    }
-    viewProduct()
-
-  }, [])
-
   let product = useSelector((state)=>{
-    try{
-        if(state.session.products[id].id === state.products.viewedProducts[id].id){
-          maker = true
-        }
+      if(state.session?.products[id]?.id === state?.products?.viewedProducts[id]?.id){
+        maker = true
       }
-    catch(e) {
-      //
-    }
       return state.products.viewedProducts[id]
   })
 
@@ -38,6 +25,13 @@ const EditProductPage = () => {
   const [description, setDescription] = useState(product?.description);
   const [thumbnail, setThumbnail] = useState(product?.thumbnail);
   const [errors, setErrors] = useState([]);
+
+  useEffect(()=> {
+    const viewProduct = async () => {
+      await dispatch(viewOneProduct(id))
+    }
+    viewProduct()
+  }, [dispatch])
 
   if(!product){
     return (
@@ -116,16 +110,15 @@ const EditProductPage = () => {
             Titlle
           </label>
           <input
-                value={title}
+                value={title || product?.title}
                 onChange={(e) => setTitle(e.target.value)}
                 required
-                />
-
+            />
           <label>
             Tagline
           </label>
           <input
-                value={title}
+                value={tagline || product?.tagline}
                 onChange={(e) => setTagline(e.target.value)}
                 required
                 />
@@ -134,7 +127,7 @@ const EditProductPage = () => {
             Description
           </label>
           <textarea
-                value={description}
+                value={description || product?.description}
                 onChange={(e) => setDescription(e.target.value)}
                 required
                 />

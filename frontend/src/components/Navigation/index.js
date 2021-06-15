@@ -132,7 +132,7 @@ function Navigation({ isLoaded }){
             </form>
           </div>
 
-          <div className='div__navigation__styles__links' onClick={closePopOver}>
+          <div className='div__navigation__styles__links'>
 
             <NavLink to="/discussions" style={{ textDecoration: 'none', color: '#999A9C' }}>
               <div className='div__navigation__discussions'>
@@ -140,14 +140,14 @@ function Navigation({ isLoaded }){
                 </div>
             </NavLink>
 
-            <div className='div__navigation__deals' onClick={closePopOver}>
+            <div className='div__navigation__deals'>
               <NavLink to="/deals" style={{ textDecoration: 'none', color: '#999A9C' }}>Deals</NavLink>
               </div>
 
-              <div className='div__navigation__jobs' onClick={closePopOver}>
+              <div className='div__navigation__jobs'>
                 <NavLink to="/jobs" style={{ textDecoration: 'none', color: '#999A9C' }}>Jobs</NavLink>
               </div>
-              <div className='div__navigation__ship' onClick={closePopOver}>
+              <div className='div__navigation__ship'>
                 <NavLink to="/ship" style={{ textDecoration: 'none', color: '#999A9C' }}>Ship</NavLink>
               </div>
               <label className='label__navigation__dropdown'>
@@ -164,7 +164,7 @@ function Navigation({ isLoaded }){
 
              <li className='li__navigation__style'>
               <NavLink
-                className='navlink__popover__styles' onClick={closePopOver} to={`/@${sessionUser.username}`}>
+                className='navlink__popover__styles' to={`/@${sessionUser.username}`}>
                   My Profile
                 </NavLink>
               </li>

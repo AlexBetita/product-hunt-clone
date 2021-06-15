@@ -162,7 +162,7 @@ router.get(
         product
       })
 
-    } else res.json({Error: 'This product does not exist'})
+    } else res.json(err.errors = ['This product does not exist'])
   })
 );
 
@@ -172,7 +172,7 @@ router.post(
   singleMulterUpload("image"),
   validateCreateProduct,
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {title, tagline, description} = req.body;
     const {user} = req;
     const userId = user.id
@@ -191,7 +191,7 @@ router.post(
       return res.json(
         product
       );
-    }
+    } else return next(err.errors=['Must be logged on to create product'])
   })
 );
 
@@ -200,93 +200,64 @@ router.put(
   '/:id',
   singleMulterUpload("image"),
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
 
     const {id} = req.params;
     const {user} = req;
     const {title, tagline, description } = req.body;
-    const userId = user.id;
 
     let thumbnail = await checkThumbnail(req, id)
 
     let product;
-    const exists = await Product.exists(id)
+    let result;
 
     if(user){
-      if(exists){
-        if(Product.userOwnsProduct(id, userId)){
 
-          const result = await Product.edit(title, tagline, thumbnail,
-                                            description, id,
-                                            Comment, User, Upvote,
-                                            ProductImage)
-          product = productObjCleanUp(result)
-
-          return res.json(product)
-        } else {
-          res.json({Error: "User does not own this product"})
-        }
-      } else {
-        res.json({Error: "This product does not exists"})
+      try{
+        result = await Product.edit(title, tagline, thumbnail,
+                                          description, id,
+                                          Comment, User, Upvote,
+                                          ProductImage)
       }
-    }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Update failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
+      product = productObjCleanUp(result)
+
+      return res.json(product)
+    } else return next(err.errors=['Must be logged on to update product'])
   })
 )
-
-// router.put(
-//   '/:id',
-//   requireAuth,
-//   asyncHandler(async (req, res)=>{
-//     const {id} = req.params;
-//     const {user} = req;
-//     const {title, thumbnail, description, productImages} = req.body;
-//     const userId = user.id;
-
-//     const exists = await Product.exists(id)
-
-//     if(user){
-//       if(exists){
-//         if(Product.userOwnsProduct(id, userId)){
-//           const product = await Product.edit(title, thumbnail, description, id)
-//           const productimgs = await ProductImage.bulkUpdate(productImages)
-//           return res.json({product, productimgs})
-//         } else {
-//           res.json({Error: "User does not own this product"})
-//         }
-//       } else {
-//         res.json({Error: "This product does not exists"})
-//       }
-//     }
-//   })
-// )
 
 // Delete product
 router.delete(
   '/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {id} = req.params;
     const {user} = req;
-    const userId = user.id;
-
-    const exists = await Product.exists(id)
 
     if(user){
-      if(exists){
-        if(Product.userOwnsProduct(id, userId)){
-          await Product.destroy({
-            where: {
-              id: id
-            }
-          })
-          return res.json({'message': 'success'})
-        } else {
-          res.json({Error: "User does not own this product"})
-        }
-      } else {
-        res.json({Error: "This product does not exists"})
+      try{
+        await Product.destroy({
+          where: {
+            id: id
+          }
+        })
       }
-    }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Delete product failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
+      return res.json({'message': 'success'})
+    } else return next(err.errors=['Must be logged on to delete product'])
   })
 )
 
@@ -299,25 +270,24 @@ router.put(
     const {user} = req;
     const userId = user.id;
 
-    const exists = await Product.getSoftDeletedProductById(id)
-
     if(user){
-      if(exists){
-        if(Product.userOwnsProduct(id, userId)){
-          await Product.restore({
-            where: {
-              id: id
-            }
-          });
-          const products = await Product.getProductsByUserId(userId);
-          return res.json({products});
-        } else {
-          res.json({Error: "User does not own this product"})
-        }
-      } else {
-        res.json({Error: "This product does not exists"})
+      try {
+        await Product.restore({
+          where: {
+            id: id
+          }
+        });
       }
-    }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Restore product failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
+      const products = await Product.getProductsByUserId(userId);
+      return res.json({products});
+    } else return next(err.errors=['Must be logged on to restore product'])
   })
 )
 
@@ -331,26 +301,22 @@ router.post(
     const {productImages} = req.body;
     const {user} = req;
 
-    const exists = await Product.exists(id)
-
     if(user){
-      if(exists){
-        const userId = user.id
-        if(Product.userOwnsProduct(id, userId)){
-          productImages.forEach((object)=>{
-            object['productId'] = id
-          })
-          const result = await ProductImage.addImages(productImages, id)
-          return res.json({
-            result
-          })
-        } else {
-          res.json({Error: 'User does not own the product'})
-        }
-      } else {
-        res.json({Error: 'Product does not exists'})
+      try {
+        productImages.forEach((object)=>{
+          object['productId'] = id
+        })
+        const result = await ProductImage.addImages(productImages, id)
       }
-    }
+      catch (e) {
+        const err = new Error('Create product images failed');
+        err.status = 401;
+        err.title = 'Create product images failed';
+        err.errors = ['Create product images failed.'];
+        return next(err);
+      }
+      return res.json({ result })
+    } else return next(err.errors=['Must be logged on to create product image'])
   })
 )
 

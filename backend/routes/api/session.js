@@ -44,31 +44,6 @@ const userObject = async (user) => {
       ]
     })
 
-    // const upvotes = await Upvote.findAll({
-    //   where: {
-    //     upvoteableType: 'product',
-    //     userId: user.id
-    //   },
-    //   include: [
-    //     {
-    //       model: Product,
-    //       required: false
-    //     },
-    //   ],
-    // })
-
-    // const upvotes = await Product.findAll({
-    //   where: {
-    //     '$Upvotes.userId$': user.id,
-    //     '$Upvotes.upvoteableType$': 'product'
-    //   },
-    //   include: [
-    //     {
-    //       model: Upvote
-    //     },
-    //   ],
-    // })
-
     const products = await user.getProducts({
       attributes: {
         exclude: ['deletedAt']
@@ -82,12 +57,6 @@ const userObject = async (user) => {
         ProductImage.scope('imageUrls')
       ]
     })
-
-    // const comments = await user.getComments({
-    //     attributes: {
-    //       exclude: ['deletedAt']
-    //     },
-    // })
 
     const comments = await Product.findAll({
       include: [
