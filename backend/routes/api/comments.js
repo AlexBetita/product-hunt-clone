@@ -27,9 +27,6 @@ router.get(
           ]
         },
         Upvote],
-      // {
-      //   model: Comment, as: 'Reply'
-      // }],
       order: [
         ['createdAt',  'DESC']
       ]
@@ -78,47 +75,59 @@ router.get(
 // Get comment by id
 router.get(
   '/:id',
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {id} = req.params;
 
-    const exists = await Comment.exists(id)
-    if(exists){
-      const comment = await Comment.scope('commentsNoDates').findByPk(id,{
+    let comment;
+    try{
+      comment = await Comment.scope('commentsNoDates').findByPk(id,{
         include: [Product.scope('products'), Discussion]
       });
-
-      return res.json({comment, commentedOn: comment.commentable})
-    } else {
-      res.json({Error: 'Comment does not exists'})
     }
-  })
+    catch (e){
+      const err = new Error(e.errors[0]);
+      err.status = 401;
+      err.title = 'Comment failed';
+      err.errors = [e.errors[0]['message']]
+      return next(err)
+    }
+
+    return res.json({comment, commentedOn: comment.commentable})
+    }
+  )
 );
 
 // Post comment on product
 router.post(
   '/product/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
     const userId = user.id;
     const {id} = req.params;
     const {comment} = req.body;
 
-    const exists = await Product.exists(id);
-
     if(user){
-      if(exists){
+
+      try{
         const product = await Product.findByPk(id);
-        const commentRes = await product.createComment({
+        comment = await product.createComment({
           comment: comment,
           userId: userId
         });
-        return res.json({
-          commentRes
-        })
-      } else res.json({Error: "This product does not exists"})
-    }
+      }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Comment failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
 
+      return res.json({
+        commentRes
+      })
+    } else return next(err.errors=['Must be logged on to post comment'])
   })
 );
 
@@ -126,27 +135,35 @@ router.post(
 router.post(
   '/discussion/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
     const userId = user.id;
     const {id} = req.params;
     const {comment} = req.body;
 
-    const exists = await Discussion.exists(id);
+    let commentRes;
 
     if(user){
-      if(exists){
+
+      try{
         const discussion = await Discussion.findByPk(id);
-        const commentRes = await discussion.createComment({
+        commentRes = await discussion.createComment({
           comment: comment,
           userId: userId
         });
-        return res.json({
-          commentRes
-        })
-      } else res.json({Error: "This discussion does not exists"})
-    }
+      }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Comment failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
 
+      return res.json({
+        commentRes
+      })
+    } else return next(err.errors=['Must be logged on to post comment'])
   })
 );
 
@@ -154,23 +171,28 @@ router.post(
 router.put(
   '/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
-    const userId = user.id;
     const {id} = req.params;
 
     const {comment} = req.body;
 
-    const exists = await Comment.exists(id);
+
+    let editedComment;
 
     if(user){
-      if(exists){
-        if(Comment.userOwnsComment(id, userId)){
-          const editedComment = await Comment.edit(id, comment);
-          return res.json({editedComment})
-        } else res.json({Error: 'Not users comment'})
-      } else res.json({Error: 'Comment does not exists'})
-    }
+      try{
+        editedComment = await Comment.edit(id, comment);
+      }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Updating comment failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
+      return res.json({editedComment})
+    } else return next(err.errors=['Must be logged on to update comment'])
   })
 );
 
@@ -178,28 +200,30 @@ router.put(
 router.delete(
   '/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
-    const userId = user.id;
     const {id} = req.params;
 
-    const exists = await Comment.exists(id);
-
     if(user){
-      if(exists){
-        if(Comment.userOwnsComment(id, userId)){
-          await Comment.destroy({
-            where: {
-              id: id
-            }
-          })
 
-          const comments = await Comment.getCommentsByUserId(id);
-          return res.json({comments})
+      try{
+        await Comment.destroy({
+          where: {
+            id: id
+          }
+        })
+      }
+      catch (e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Deleting comment failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
 
-        } else res.json({Error: 'Not users comment'})
-      } else res.json({Error: 'Comment does not exists'})
-    }
+      const comments = await Comment.getCommentsByUserId(id);
+      return res.json({comments})
+    } else return next(err.errors=['Must be logged on to delete comment'])
   })
 );
 
@@ -207,26 +231,32 @@ router.delete(
 router.put(
   '/:id/restore',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
     const userId = user.id;
     const {id} = req.params;
 
-    const exists = await Comment.getSoftDeletedCommentById(id);
+    let comments;
 
     if(user){
-      if(exists){
-        if(Comment.userOwnsComment(id, userId)){
-          await Comment.restore({
-            where: {
-              id: id
-            }
-          })
-          const comments = await Comment.getCommentsByUserId(userId);
-          return res.json({comments})
-        } else res.json({Error: 'Not users comment'})
-      } else res.json({Error: 'Comment does not exists'})
-    }
+      try{
+        await Comment.restore({
+          where: {
+            id: id
+          }
+        })
+        comments = await Comment.getCommentsByUserId(userId);
+      }
+      catch(e){
+        const err = new Error(e.errors[0]);
+        err.status = 401;
+        err.title = 'Restore comment failed';
+        err.errors = [e.errors[0]['message']]
+        return next(err)
+      }
+
+      return res.json({comments})
+    } else return next(err.errors=['Must be logged on to restore comment'])
   })
 );
 

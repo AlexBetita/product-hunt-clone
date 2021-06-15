@@ -51,7 +51,7 @@ router.get(
 router.post(
   '/',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
     const userId = user.id;
 
@@ -80,15 +80,15 @@ router.post(
         return res.json({
           discussion
         })
-      }
-    } else return res.json({Error: 'Discussion has already been made'})
+      } else return next(err.errors=['Must be logged on to create comment'])
+    } else return next(err.errors = ["The discussion doesn't exists."])
   })
 );
 
 // Get discussion by title
 router.get(
   '/:discussion',
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     let {discussion} = req.params;
     discussion = discussion.replace(/[^\w\s]/gi, ' ');
     discussion = discussion.replace(/^\s+|\s+$/g, "");
@@ -120,16 +120,15 @@ router.get(
         discussion
       })
     } else {
-      res.json({Error: 'This discussion does not exist'})
+      return next(err.errors = ["The discussion doesn't exists."])
     }
-
   })
 );
 
 // Get discussion by id
 router.get(
   '/id/:id',
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     let {id} = req.params;
 
     let discussion = await Discussion.findByPk(id,{
@@ -156,7 +155,7 @@ router.get(
         discussion
       })
     } else {
-      res.json({Error: 'This discussion does not exist'})
+      return next(err.errors = ["The discussion doesn't exists."])
     }
 
   })
@@ -166,25 +165,29 @@ router.get(
 router.put(
   '/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
-    const {user} = req;
-    const userId = user.id;
+  asyncHandler(async (req, res, next)=>{
     const {id} = req.params;
     const {discussion, message} = req.body;
 
-    if(user){
       if(Discussion.exists(id)){
-        if(Discussion.userOwnsDiscussion(id, userId)){
+        let editedDiscussion;
+        try {
           const discussionIndex = await DiscussionIndex.findByDiscussionId(id)
           await DiscussionIndex.edit(discussion, discussionIndex.id)
-          const editedDiscussion = await Discussion.edit(
-                                                        discussion, message, id,
-                                                        Comment, Upvote
-                                                        )
-          return res.json({discussion: editedDiscussion})
-        } return res.json({Error: 'User does not own this discussion'})
-      } return res.json({Error: 'This discussion does not exists'})
-    }
+          editedDiscussion = await Discussion.edit(
+                                                      discussion, message, id,
+                                                      Comment, Upvote
+                                                      )
+        }
+        catch (e){
+          const err = new Error('Updated discussion failed');
+          err.status = 401;
+          err.title = 'Updated discussion failed';
+          err.errors = ['Updated discussion failed.'];
+          return next(err);
+        }
+        return res.json({discussion: editedDiscussion})
+    } return next(err.errors = ["The discussion doesn't exists."])
   })
 );
 
@@ -192,29 +195,34 @@ router.put(
 router.delete(
   '/:id',
   requireAuth,
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {user} = req;
     const userId = user.id;
     const {id} = req.params;
 
     if(user){
-      if(Discussion.exists(id)){
-        if(Discussion.userOwnsDiscussion(id, userId)){
-          await Discussion.destroy({
-            where: {
-              id: id
-            }
-          });
-          await DiscussionIndex.destory({
-            where:{
-              discussionId: id
-            }
-          });
-          const discussions = await Discussion.getDiscussionsByUserId(userId)
-          return res.json({discussions})
-        } return res.json({Error: 'User does not own this discussion'})
-      } return res.json({Error: 'This discussion does not exists'})
-    }
+      try {
+        await Discussion.destroy({
+          where: {
+            id: id
+          }
+        });
+        await DiscussionIndex.destory({
+          where:{
+            discussionId: id
+          }
+        });
+      }
+      catch(e){
+        const err = new Error('Deleted discussion failed');
+        err.status = 401;
+        err.title = 'Deleted discussion failed';
+        err.errors = ['Deleted discussion failed.'];
+        return next(err);
+      }
+      const discussions = await Discussion.getDiscussionsByUserId(userId)
+      return res.json({discussions})
+    } else return next(err.errors=['Must be logged on to delete discussion'])
   })
 );
 
@@ -228,24 +236,28 @@ router.put(
     const {id} = req.params;
 
     if(user){
-      if(Discussion.getSoftDeletedDiscussionById(id)){
-        if(Discussion.userOwnsDiscussion(id, userId)){
-          await Discussion.restore({
-            where: {
-              id: id
-            }
-          });
-          await DiscussionIndex.restore({
-            where:{
-              discussionId: id
-            }
-          });
-          const discussions = await Discussion.getDiscussionsByUserId(userId);
-          return res.json({discussions})
-        } return res.json({Error: 'User does not own this discussion'})
-      } return res.json({Error: 'This discussion does not exists'})
-    }
-
+      try{
+        await Discussion.restore({
+          where: {
+            id: id
+          }
+        });
+        await DiscussionIndex.restore({
+          where:{
+            discussionId: id
+          }
+        });
+      }
+      catch(e){
+        const err = new Error('Restore discussion failed');
+        err.status = 401;
+        err.title = 'Restore discussion failed';
+        err.errors = ['Restore discussion failed.'];
+        return next(err);
+      }
+      const discussions = await Discussion.getDiscussionsByUserId(userId);
+      return res.json({discussions})
+    } else return next(err.errors=['Must be logged on to restore discussion'])
   })
 );
 
