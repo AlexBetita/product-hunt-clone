@@ -134,21 +134,29 @@ function Navigation({ isLoaded }){
 
           <div className='div__navigation__styles__links'>
 
-            <NavLink to="/discussions" style={{ textDecoration: 'none', color: '#999A9C' }}>
+            <NavLink to="/discussions" style={{ textDecoration: 'none', color: '#999A9C' }}
+              onClick={activateProgress}
+              >
               <div className='div__navigation__discussions'>
                   Discussions
                 </div>
             </NavLink>
 
             <div className='div__navigation__deals'>
-              <NavLink to="/deals" style={{ textDecoration: 'none', color: '#999A9C' }}>Deals</NavLink>
+              <NavLink to="/deals" style={{ textDecoration: 'none', color: '#999A9C' }}
+                onClick={activateProgress}
+                >Deals</NavLink>
               </div>
 
               <div className='div__navigation__jobs'>
-                <NavLink to="/jobs" style={{ textDecoration: 'none', color: '#999A9C' }}>Jobs</NavLink>
+                <NavLink to="/jobs" style={{ textDecoration: 'none', color: '#999A9C' }}
+                  onClick={activateProgress}
+                  >Jobs</NavLink>
               </div>
               <div className='div__navigation__ship'>
-                <NavLink to="/ship" style={{ textDecoration: 'none', color: '#999A9C' }}>Ship</NavLink>
+                <NavLink to="/ship" style={{ textDecoration: 'none', color: '#999A9C' }}
+                  onClick={activateProgress}
+                  >Ship</NavLink>
               </div>
               <label className='label__navigation__dropdown'>
                 ...
