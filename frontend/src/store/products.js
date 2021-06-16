@@ -58,10 +58,11 @@ export const viewOneProduct = id => async dispatch => {
 };
 
 export const postProduct = payload => async dispatch => {
-  const { title, thumbnail, description } = payload;
+  const { title, tagline, thumbnail, description } = payload;
   const formData = new FormData();
 
   formData.append("title", title);
+  formData.append("tagline", tagline);
   formData.append("description", description);
 
   if(thumbnail) formData.append("image", thumbnail);
@@ -82,10 +83,11 @@ export const postProduct = payload => async dispatch => {
 }
 
 export const updateProduct = payload => async dispatch => {
-  const { title, thumbnail, description } = payload;
+  const { title, tagline, thumbnail, description } = payload;
   const formData = new FormData();
 
   formData.append("title", title);
+  formData.append("tagline", tagline);
   formData.append("description", description);
 
   if(thumbnail) formData.append("image", thumbnail);
@@ -170,14 +172,22 @@ const productReducer = (state = initialState, action) => {
       if(!state[action.product.id]){
         newState = {
           ...state,
-          [action.product.id]: action.product
+          [action.product.id]: action.product,
+          viewedProducts:{
+            ...state.viewedProducts,
+            [action.product.id]: action.product
+          }
         };
         newState.list.unshift(action.product.id)
         return newState
       }
       return {
         ...state,
-        [action.product.id]: action.product
+        [action.product.id]: action.product,
+        viewedProducts: {
+          ...state.viewedProducts,
+          [action.product.id]: action.product
+        }
       };
     }
     case REMOVE_PRODUCT: {
