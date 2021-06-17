@@ -16,7 +16,7 @@ const Products = ({products}) => {
               products.Upvotes ? Object.keys(products.Upvotes).length : 0)
               )
 
-  const upvoted = useSelector((state)=>{
+  let upvoted = useSelector((state)=>{
     if(state.session.user){
       user = state.session.user
       for (const [key, value] of Object.entries(state.session.upvotes)){
@@ -31,7 +31,7 @@ const Products = ({products}) => {
     if(upvoted){
       upvoteElementRef.current.classList.add('voted__true')
     }
-  })
+  },[user])
 
   const vote = async () =>{
     if(user){

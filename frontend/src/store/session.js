@@ -218,6 +218,8 @@ const sessionReducer = (state = initialState, action) => {
         ...state
       }
       newState.products[action.product.id] = action.product
+      newState.products[action.product.id]['Upvotes'] = []
+      delete newState.products[action.product.id]['upvotes']
       return newState
     }
     case REMOVE_PRODUCT:{
