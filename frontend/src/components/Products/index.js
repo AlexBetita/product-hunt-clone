@@ -11,10 +11,14 @@ const Products = ({products}) => {
   let user;
 
   const upvoteElementRef = useRef()
+  const triangleRef = useRef()
+  const circleRef = useRef()
+
   const dispatch = useDispatch()
   const [getUpvotes, setUpvotes] = useState(products.upvotes ? products.upvotes : (
               products.Upvotes ? Object.keys(products.Upvotes).length : 0)
               )
+  const [disableVote, setDisableVote] = useState(false)
 
   let upvoted = useSelector((state)=>{
     if(state.session.user){
@@ -36,13 +40,29 @@ const Products = ({products}) => {
   const vote = async () =>{
     if(user){
       if (upvoteElementRef.current.classList.contains('voted__true')){
-        upvoteElementRef.current.classList.remove('voted__true')
+
+        setDisableVote(true)
+        await upvoteElementRef.current.classList.remove('voted__true')
         await dispatch(voteProduct(products.id))
         setUpvotes(getUpvotes - 1)
+        setDisableVote(false)
       } else {
-        upvoteElementRef.current.classList.add('voted__true')
+        setDisableVote(true)
+        await triangleRef.current.classList.add('hidden')
+
+        await circleRef.current.classList.remove('hidden')
+        await circleRef.current.classList.add('scale')
+
+        setTimeout(()=>{
+          triangleRef.current.classList.remove('hidden')
+          circleRef.current.classList.remove('scale')
+          circleRef.current.classList.add('hidden')
+        }, 200)
+        await upvoteElementRef.current.classList.add('voted__true')
+
         await dispatch(voteProduct(products.id))
         setUpvotes(getUpvotes + 1)
+        setDisableVote(false)
       }
     }
   }
@@ -118,12 +138,16 @@ const Products = ({products}) => {
         </NavLink>
 
         <div className='div__product__vote'>
-          <button className='button__product__vote' ref={upvoteElementRef} onClick={vote}>
+          <button className='button__product__vote' ref={upvoteElementRef}
+            disabled={disableVote} onClick={vote}>
             {/* <img className='img__upvote__icon'
 
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img> */}
-            <div className='img__upvote__icon'>
+            <div className='upvote__circle__progress hidden' ref={circleRef}>
+
+            </div>
+            <div className='img__upvote__icon' ref={triangleRef}>
               ▲
             </div>
             <span className='span__product__upvotes'>

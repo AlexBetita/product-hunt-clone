@@ -17,6 +17,23 @@ body{
   background-color: #e4461b;
 }
 
+.upvote__circle__progress {
+  width: 7px;
+  height: 7px;
+  border: 1px solid #cc4d29;
+  border-radius: 50%;
+  position: absolute;
+  left: 30.5px;
+  top: 30px;
+}
+
+.upvote__circle__progress.scale {
+  transform: scale(1.5);
+  width: 7px;
+  height: 7px;
+  transition: transform .05s, width 0.1s ease 0.05s, height 0.1s ease 0.05s;
+}
+
 .error {
   font-size: large;
 }

@@ -154,3 +154,7 @@
 .fas.fa-comment{
   font-size:small;
 }
+
+.hidden{
+  visibility: hidden;
+}
