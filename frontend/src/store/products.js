@@ -5,6 +5,7 @@ export const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
 export const ADD_PRODUCT = "products/ADD_PRODUCT";
 export const VIEW_PRODUCT = "products/VIEW_PRODUCT";
 export const ADD_ONE_PRODUCT = "products/ADD_ONE_PRODUCT";
+export const VOTE_PRODUCT = "products/VOTE_PRODUCT";
 const INITIAL_STATE = "products/INITIAL_STATE";
 
 const load = (products) => ({
@@ -27,6 +28,11 @@ const remove = (productId) => ({
   type: REMOVE_PRODUCT,
   productId
 });
+
+const vote = (product) => ({
+  type: VOTE_PRODUCT,
+  product
+})
 
 export const resetState = () => ({
   type: INITIAL_STATE,
@@ -120,6 +126,17 @@ export const removeProduct = payload => async dispatch => {
   }
 }
 
+export const voteProduct = payload => async dispatch => {
+  const response = await csrfFetch(`/api/upvote/product/${payload}`,{
+    method: "PUT"
+  })
+
+  if(response.ok){
+    const data = await response.json();
+    dispatch(vote(data))
+    return data
+  }
+}
 
 const initialState = {
   list: [],
@@ -211,6 +228,27 @@ const productReducer = (state = initialState, action) => {
       }
       newState.viewedProducts[action.product.product['id']] = action.product.product
       delete newState.viewedProducts['undefined']
+      return newState
+    }
+    case VOTE_PRODUCT: {
+      newState = {
+        ...state
+      }
+      if (action.product.result === 'upvote'){
+        if(newState[action.product.id]){
+          newState[action.product.id].upvotes += 1
+        }
+        if(newState.viewedProducts[action.product.id]){
+          newState.viewedProducts[action.product.id].upvotes += 1
+        }
+      } else if (action.product.result === 'downvote'){
+        if(newState[action.product.id]){
+          newState[action.product.id].upvotes -= 1
+        }
+        if(newState.viewedProducts[action.product.id]){
+          newState.viewedProducts[action.product.id].upvotes -= 1
+        }
+      }
       return newState
     }
     case INITIAL_STATE:

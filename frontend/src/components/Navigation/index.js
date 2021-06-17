@@ -1,9 +1,12 @@
 // frontend/src/components/Navigation/index.js
 import {useState, useEffect, useRef} from 'react';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink, useHistory, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 // import _ from 'lodash'
-
+// import {ReactComponent as ReactLogo} from '../../svg/email.svg'
+import linkedin from '../../img/linkedin_16.png'
+import email from '../../img/email_16.png'
+import github from '../../img/github_16.png'
 import ProfileButton from './ProfileButton';
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from '../SignUpFormModal';
@@ -59,6 +62,10 @@ function Navigation({ isLoaded }){
     } catch {
       //
     }
+  }
+
+  const openEmail = () =>{
+    window.open('mailto:alexbheb25@gmail.com')
   }
 
   handler = openPopOver
@@ -138,29 +145,36 @@ function Navigation({ isLoaded }){
               onClick={activateProgress}
               >
               <div className='div__navigation__discussions'>
-                  Discussions
+                   Discussions
                 </div>
             </NavLink>
 
+              <label className='label__navigation__dropdown'>
+                Personal
+              </label>
+
             <div className='div__navigation__deals'>
-              <NavLink to="/deals" style={{ textDecoration: 'none', color: '#999A9C' }}
-                onClick={activateProgress}
-                >Deals</NavLink>
+              <img src={email} alt="email image" onClick={()=> openEmail()}></img>
               </div>
 
               <div className='div__navigation__jobs'>
-                <NavLink to="/jobs" style={{ textDecoration: 'none', color: '#999A9C' }}
-                  onClick={activateProgress}
-                  >Jobs</NavLink>
+                <Link to="/" style={{ textDecoration: 'none', color: '#999A9C' }}
+                  onClick={()=>{
+                    window.location.href = 'https://github.com/AlexBetita/'
+                  }}
+                  >
+                    <img src={github} alt="github image"></img>
+                  </Link>
               </div>
               <div className='div__navigation__ship'>
-                <NavLink to="/ship" style={{ textDecoration: 'none', color: '#999A9C' }}
-                  onClick={activateProgress}
-                  >Ship</NavLink>
+                <NavLink to="/" style={{ textDecoration: 'none', color: '#999A9C' }}
+                  onClick={()=>{
+                    window.location.href = 'https://www.linkedin.com/in/alex-betita/'
+                  }}
+                  >
+                    <img src={linkedin} alt='linkedin image'></img>
+                  </NavLink>
               </div>
-              <label className='label__navigation__dropdown'>
-                ...
-              </label>
           </div>
           {isLoaded && sessionLinks}
         </div>
@@ -178,23 +192,33 @@ function Navigation({ isLoaded }){
               </li>
 
               <li className='li__navigation__style' onClick={closePopOver}>
-                <NavLink className='navlink__popover__styles' to={`/collections`}>My Collections</NavLink>
+                 Personal
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
                 <hr className='hr__popover__class__separator'></hr>
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
-                <NavLink className='navlink__popover__styles' to={`/settings/edit`}>Settings</NavLink>
+                <NavLink className='navlink__popover__styles' to={'/'}
+                  onClick={()=>{
+                    window.location.href = 'https://github.com/AlexBetita/'
+                  }}>
+                  <img src={github} alt="github image"></img>
+                </NavLink>
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
-                <NavLink className='navlink__popover__styles' to={`/subscriptions`}>Subscriptions</NavLink>
+                <NavLink className='navlink__popover__styles' to={`/`}
+                onClick={()=>{
+                  window.location.href = 'https://www.linkedin.com/in/alex-betita/'
+                }}>
+                  <img src={linkedin} alt='linkedin image'></img>
+                </NavLink>
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
-                <NavLink className='navlink__popover__styles' to={`/founder-club`}>Founder Club</NavLink>
+                  <img src={email} alt="email image" className='img__email__popup' onClick={()=> openEmail()}></img>
               </li>
-              <li className='li__navigation__style' onClick={closePopOver}>
+              {/* <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/oauth/applications`}>API Dashboard</NavLink>
-              </li>
+              </li> */}
               <li className='li__navigation__style' onClick={closePopOver}>
                 <hr className='hr__popover__class__separator'></hr>
               </li>

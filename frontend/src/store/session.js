@@ -1,5 +1,5 @@
 import { csrfFetch } from './csrf';
-import {REMOVE_PRODUCT, ADD_PRODUCT} from './products'
+import {REMOVE_PRODUCT, ADD_PRODUCT, VOTE_PRODUCT} from './products'
 
 const SET_USER = 'session/setUser';
 const REMOVE_USER = 'session/removeUser';
@@ -201,7 +201,7 @@ const sessionReducer = (state = initialState, action) => {
   switch (action.type) {
     // case SET_USER:
     //   return { ...state, user: action.payload };
-    case SET_USER:
+    case SET_USER:{
       newState = Object.assign({}, state);
       newState.user = action.payload.user;
       newState.upvotes = action.payload.upvotes;
@@ -212,12 +212,14 @@ const sessionReducer = (state = initialState, action) => {
         ...state,
         ...newState
       };
-    case ADD_PRODUCT:
+    }
+    case ADD_PRODUCT:{
       newState = {
         ...state
       }
       newState.products[action.product.id] = action.product
       return newState
+    }
     case REMOVE_PRODUCT:{
       delete state.products[action.productId]
       removeComments(action.productId, 'product', state)
@@ -227,7 +229,7 @@ const sessionReducer = (state = initialState, action) => {
       }
       return newState
     }
-    case REMOVE_USER:
+    case REMOVE_USER:{
       newState = Object.assign({}, state);
       newState.user = null;
       newState.upvotes = null;
@@ -238,6 +240,41 @@ const sessionReducer = (state = initialState, action) => {
         ...state,
         ...newState
       }
+    }
+    case VOTE_PRODUCT:{
+      newState = {
+        ...state
+      }
+
+      if (action.product.result === 'upvote'){
+        newState.upvotes[action.product.id] = action.product.data
+        if(newState.products[action.product.id]){
+          newState.products[action.product.id].Upvotes.push(action.product.upvote)
+        }
+        if(newState.comments[action.product.id]){
+          newState.comments[action.product.id].Upvotes.push(action.product.upvote)
+        }
+      } else if (action.product.result === 'downvote'){
+        delete newState.upvotes[action.product.id]
+
+        for (const [key, value] of Object.entries(newState.products)){
+          value.Upvotes.forEach((upvote, index)=>{
+              if(upvote.upvoteableId === parseInt(action.product.id) && upvote.upvoteableType === 'product'){
+                newState.products[key].Upvotes.splice(index, 1)
+              }
+            })
+        }
+
+        for (const [key, value] of Object.entries(newState.comments)){
+          value.Upvotes.forEach((upvote, index)=>{
+              if(upvote.upvoteableId === parseInt(action.product.id) && upvote.upvoteableType === 'product'){
+                newState.comments[key].Upvotes.splice(index, 1)
+              }
+            })
+        }
+      }
+      return newState
+    }
     default:
       return state;
   }

@@ -154,7 +154,7 @@ const ProfileEdit = () => {
               <div className='div__edit__profile__mydetails__form__container'>
                   <ul>
                       {errors.map((error, idx) =>
-                      <li key={idx}>{error}</li>)
+                      <li key={idx} className="error">{error}</li>)
                       }
                   </ul>
                 <form onSubmit={handleSubmit}>

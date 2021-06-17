@@ -40,6 +40,12 @@ const Post = () => {
       newErrors.push('Title too long, maximum 40 chars')
     }
 
+    if(tagline.length < 3){
+      newErrors.push('Tagline is to short, minimum 3 chars')
+    } else if(tagline.length > 50){
+      newErrors.push('Tagline is to long, maximum 50 chars')
+    }
+
     if(description.length > 2500){
       newErrors.push('Description is too long, limit 2500')
     }
@@ -48,7 +54,7 @@ const Post = () => {
     if(!newErrors.length){
       setErrors([]);
       await setLoading(true)
-      await dispatch(postProduct({title, description, thumbnail})).then(()=>history.push('/'))
+      await dispatch(postProduct({title, tagline, description, thumbnail})).then(()=>history.push('/'))
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {

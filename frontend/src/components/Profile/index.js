@@ -32,7 +32,7 @@ const Profile = () => {
     //     }
     //   }
     // })
-    
+
     Object.keys(state.session.upvotes).map((key)=>{
       productsUpvoted[key] = state.session.upvotes[key]
     })
@@ -209,7 +209,7 @@ const Profile = () => {
       </Route>
 
       <Route path={`/@${user.username}/made`}>
-        <div>
+        <div className='div__profile__products__made'>
             {Object.keys(productsMade).map((key)=>{
               return <Products key={key} products = {productsMade[key]} profile = {true}/>
             })}

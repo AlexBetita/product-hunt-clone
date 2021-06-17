@@ -35,7 +35,7 @@
 .div__login__modal__container{
 
   width: 560px;
-  height: 461px;
+  min-height: 461px;
   padding: 30px;
 
 

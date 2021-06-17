@@ -3,7 +3,7 @@ const express = require('express');
 const asyncHandler = require('express-async-handler');
 
 const { setTokenCookie, restoreUser } = require('../../utils/auth');
-const { User, Comment, Upvote, ProductImage, Product, Sequelize } = require('../../db/models');
+const { User, Comment, Upvote, ProductImage, Product } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
@@ -22,27 +22,84 @@ const validateLogin = [
 const userObject = async (user) => {
     const userObj = {}
 
-    let upvotes = await user.getUpvotes({
-      attributes: {
-          exclude: ['deletedAt']
+    // let upvotes = await user.getUpvotes({
+    //   attributes: {
+    //       exclude: ['deletedAt']
+    //     }, include: [
+    //       {
+    //         model: Product,
+    //         where: {
+    //           id: await user.getUpvotes({
+    //             where: {
+    //               upvoteableType: 'product',
+    //               userId: user.id
+    //             }
+    //           }).map(upvote => {
+    //             return upvote.id
+    //           })
+    //         },
+    //         required: false
+    //       }
+    //     ],
+    //     required: true
+    //   })
+
+    let upvotedProducts = await Product.findAll({
+      include: [{
+        model: Upvote,
+        where: {
+          upvoteableId: await user.getUpvotes({
+            where: {
+              upvoteableType: 'product'
+            }
+          }).map(upvote => upvote.upvoteableId)
         }
-      })
-
-    let upvoteIds = []
-    upvotes.forEach((upvotes)=>{
-      if(upvotes.upvoteableType === 'product'){
-        upvoteIds.push(upvotes.upvoteableId)
-      }
-    });
-
-    upvotes = await Product.findAll({
-      where:{
-        id: upvoteIds
-      },
-      include: [
-        Upvote,
-      ]
+      }]
     })
+
+    let upvotedDiscussions = await Product.findAll({
+      include: [{
+        model: Upvote,
+        where: {
+          upvoteableId: await user.getUpvotes({
+            where: {
+              upvoteableType: 'comment'
+            }
+          }).map(upvote => upvote.upvoteableId)
+        }
+      }]
+    })
+
+    let upvotedComments = await Product.findAll({
+      include: [{
+        model: Upvote,
+        where: {
+          upvoteableId: await user.getUpvotes({
+            where: {
+              upvoteableType: 'discussion'
+            }
+          }).map(upvote => upvote.upvoteableId)
+        }
+      }]
+    })
+
+    const upvotes = upvotedProducts.concat(upvotedDiscussions).concat(upvotedComments)
+
+    // let upvoteIds = []
+    // upvotes.forEach((upvotes)=>{
+    //   if(upvotes.upvoteableType === 'product'){
+    //     upvoteIds.push(upvotes.upvoteableId)
+    //   }
+    // });
+
+    // upvotes = await Product.findAll({
+    //   where:{
+    //     id: upvoteIds
+    //   },
+    //   include: [
+    //     Upvote,
+    //   ]
+    // })
 
     const products = await user.getProducts({
       attributes: {

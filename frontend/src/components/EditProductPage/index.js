@@ -121,7 +121,7 @@ const EditProductPage = () => {
       <div>
         <ul>
             {errors.map((error, idx) =>
-            <li key={idx}>{error}</li>)
+            <li key={idx} className="error">{error}</li>)
             }
         </ul>
         <form onSubmit={handleSubmit}>
