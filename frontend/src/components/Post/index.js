@@ -98,7 +98,7 @@ const Post = () => {
               </label>
               <input
                     type="text"
-                    value={title}
+                    value={tagline}
                     onChange={(e) => setTagline(e.target.value)}
                     required
                     />

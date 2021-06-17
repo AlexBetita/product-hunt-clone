@@ -86,10 +86,14 @@ function Navigation({ isLoaded }){
     );
   }
 
-  const logoutPopover = (e) => {
+  const logoutPopover = async (e) => {
     e.preventDefault();
+    const elements = document.querySelectorAll('.voted__true')
+    elements.forEach((el)=>{
+      el.classList.remove('voted__true')
+    })
     openPopOver();
-    dispatch(logout());
+    await dispatch(logout());
     history.push('/')
   };
 

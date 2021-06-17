@@ -1,8 +1,10 @@
 // frontend/src/components/Navigation/ProfileButton.js
-import React, { useState, useEffect } from "react";
+import { useState, useEffect} from "react";
 import { NavLink } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import * as sessionActions from '../../store/session';
+// import Products from '../Products/index'
 
 function ProfileButton({ user, handler, closePopOver }) {
   const dispatch = useDispatch();
@@ -12,6 +14,7 @@ function ProfileButton({ user, handler, closePopOver }) {
   //   if (showMenu) return;
   //   setShowMenu(true);
   // };
+
 
   useEffect(() => {
     if (!showMenu) return;

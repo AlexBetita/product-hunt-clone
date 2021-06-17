@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 import {REMOVE_PRODUCT, ADD_PRODUCT, VOTE_PRODUCT} from './products'
 
 const SET_USER = 'session/setUser';
-const REMOVE_USER = 'session/removeUser';
+export const REMOVE_USER = 'session/removeUser';
 
 const setUser = (user) => {
   return {

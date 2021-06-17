@@ -1,4 +1,5 @@
 import { csrfFetch } from './csrf';
+import { REMOVE_USER } from './session';
 
 export const LOAD_PRODUCTS = "products/LOAD_PRODUCTS";
 export const REMOVE_PRODUCT = "products/REMOVE_PRODUCT";
@@ -248,6 +249,12 @@ const productReducer = (state = initialState, action) => {
         if(newState.viewedProducts[action.product.id]){
           newState.viewedProducts[action.product.id].upvotes -= 1
         }
+      }
+      return newState
+    }
+    case REMOVE_USER: {
+      newState = {
+        ...state,
       }
       return newState
     }
