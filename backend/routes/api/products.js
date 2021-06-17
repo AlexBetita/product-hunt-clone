@@ -182,9 +182,21 @@ router.post(
     let product;
 
     if(user){
-      const result = await Product.create({
+      let result = await Product.create({
         title, tagline, thumbnail, description, userId
       });
+
+      result = await Product.findByPk(result.dataValues.id, {
+        include: [
+          {
+            model: Comment,
+            include: [Upvote, User.scope('userIcons')]
+          },
+          Upvote,
+          User.scope('userIcons'),
+          ProductImage.scope('imageUrls')
+        ],
+      })
 
       product = productObjCleanUp(result)
 

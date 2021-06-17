@@ -21,25 +21,22 @@ const Profile = () => {
   })
 
   useSelector((state)=>{
-    Object.keys(state.session.products).map((key)=>{
-      productsMade[key] = state.session.products[key]
-    })
+    //Temporary fix
+    if(state.session.user){
 
-    // Object.keys(state.session.upvotes).map((key)=>{
-    //   if(state.session.upvotes[key].upvoteableType === 'product'){
-    //     if(state.session.products[state.session.upvotes[key].upvoteableId]){
-    //       productsUpvoted[state.session.upvotes[key].upvoteableId] = state.session.products[state.session.upvotes[key].upvoteableId]
-    //     }
-    //   }
-    // })
+      Object.keys(state.session.products).map((key)=>{
+        productsMade[key] = state.session.products[key]
+      })
 
-    Object.keys(state.session.upvotes).map((key)=>{
-      productsUpvoted[key] = state.session.upvotes[key]
-    })
+      Object.keys(state.session.upvotes).map((key)=>{
+        productsUpvoted[key] = state.session.upvotes[key]
+      })
 
-    Object.keys(state.session.comments).map((key)=>{
-      productsCommented[key] = state.session.comments[key]
-    })
+      Object.keys(state.session.comments).map((key)=>{
+        productsCommented[key] = state.session.comments[key]
+      })
+    }
+
   })
 
   useEffect(()=>{
@@ -156,7 +153,7 @@ const Profile = () => {
               </NavLink>
 
               {
-              made &&
+              made ?
               <NavLink className='navlink__profile__nav__made'
                        activeClassName="navlink__profile__nav__made active"
                        exact={true}
@@ -164,7 +161,19 @@ const Profile = () => {
               >
                 {Object.keys(productsMade).length} MADE
               </NavLink>
+               : (
+                 Object.keys(productsMade).length ?
+                <NavLink className='navlink__profile__nav__made'
+                 activeClassName="navlink__profile__nav__made active"
+                 exact={true}
+                 to= {`/@${user.username}/made`}
+                >
+                  {Object.keys(productsMade).length} MADE
+                </NavLink>
+                : false
+               )
               }
+
               <NavLink className='navlink__profile__nav__following'
                        activeClassName = 'navlink__profile__nav__following active'
                        exact={true}

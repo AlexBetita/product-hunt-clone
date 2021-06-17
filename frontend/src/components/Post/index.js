@@ -54,7 +54,11 @@ const Post = () => {
     if(!newErrors.length){
       setErrors([]);
       await setLoading(true)
-      await dispatch(postProduct({title, tagline, description, thumbnail})).then(()=>history.push('/'))
+      await dispatch(postProduct({title, tagline, description, thumbnail})).then(()=>
+        setTimeout (()=> {
+          history.push('/')
+        },0)
+      )
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -98,7 +102,7 @@ const Post = () => {
               </label>
               <input
                     type="text"
-                    value={title}
+                    value={tagline}
                     onChange={(e) => setTagline(e.target.value)}
                     required
                     />
