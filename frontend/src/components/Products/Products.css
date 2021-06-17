@@ -127,6 +127,11 @@
   cursor: pointer;
 }
 
+.voted__true{
+  border: 1px solid #cc4d29;
+  color: #cc4d29;
+}
+
 .button__product__vote:hover{
   background-color: #F3F3F3;
 }
@@ -149,5 +154,3 @@
 .fas.fa-comment{
   font-size:small;
 }
-
-

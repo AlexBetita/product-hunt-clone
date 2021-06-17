@@ -16,3 +16,11 @@ body{
   height: 1.5px;
   background-color: #e4461b;
 }
+
+.error {
+  font-size: large;
+}
+
+ul li.error{
+  list-style-type: circle;
+}

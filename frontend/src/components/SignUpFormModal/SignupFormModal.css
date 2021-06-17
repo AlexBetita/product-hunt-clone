@@ -50,7 +50,7 @@
 
   position: absolute;
   width: 560px;
-  height: 692px;
+  min-height: 692px;
   padding: 30px;
   background: #FFFFFF;
   border-radius: 3px;

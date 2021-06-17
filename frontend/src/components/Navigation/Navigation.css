@@ -104,6 +104,7 @@
   text-decoration: none;
   margin-left: auto;
   margin-right: auto;
+  cursor: pointer
 }
 
 .div__navigation__discussions{
@@ -137,9 +138,9 @@
 .label__navigation__dropdown{
   padding-left: 5px;
   padding-right: 5px;
-  font-size: 17px;
+  /* font-size: 17px;
   font-weight: bold;
-  position: relative;
+  position: relative; */
   bottom: 3px;
   color: #999A9C;
 }
@@ -177,8 +178,8 @@
   display: block;
   border-bottom-color: #e8e8e8;
   margin-left: -11px;
-  top: 2.3%;
-  right: 1.5%;
+  top: 2.8%;
+  right: 0.5%;
   z-index: 25;
   /* height: 247px; */
   margin-top: 25px;
@@ -204,6 +205,8 @@
   font-size: 11px;
   color: #6f6f6f;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
 }
 
 .hr__popover__class__separator{
@@ -211,6 +214,7 @@
   border: 0;
   height: 1px;
   margin: -5px 0;
+  width: 100%;
 }
 
 .button__navigation__popover__logout{
@@ -240,8 +244,12 @@
   text-transform: uppercase;
 }
 
+.img__email__popup{
+
+}
+
 .ul__navigation__styles .li__navigation__style:not(:first-child){
-  padding-top: 15px;
+  padding-top: 10px;
 }
 
 .div__popover__triangle__grey{
@@ -255,8 +263,8 @@
   content: " ";
   pointer-events: none;
   position: absolute;
-  top: -12px;
-  left: 101px;
+  top: -10px;
+  left: 63px;
 }
 
 .div__popover__triangle__white{
@@ -270,8 +278,8 @@
   content: " ";
   pointer-events: none;
   position: absolute;
-  top: -11px;
-  left: 102px;
+  top: -10px;
+  left: 65px;
 }
 
 .navlink__navigation__post__products{
@@ -291,4 +299,3 @@
 .div__navigation__popover > .ul__navigation__styles > li a:hover{
   text-decoration: underline;
 }
-

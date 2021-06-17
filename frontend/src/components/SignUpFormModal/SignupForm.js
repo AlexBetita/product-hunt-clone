@@ -115,11 +115,6 @@ function SignupForm() {
 
   return (
     <div className='div__signup__modal__container'>
-      <ul>
-          {errors.map((error, idx) =>
-          <li key={idx}>{error}</li>)
-          }
-      </ul>
       <div className='div__styles__signup__modal'>
         <div className='div__styles__login__image__modal'>
           <img className='image__signup__modal'
@@ -133,7 +128,11 @@ function SignupForm() {
           Join our community of friendly folks discovering and sharing the latest products in the world.
         </p>
         <div className='div__form__signup__modal__styles'>
-
+            <ul>
+              {errors.map((error, idx) =>
+              <li key={idx} className="error">{error}</li>)
+              }
+          </ul>
           <form onSubmit={handleSubmit}>
               <label className='label__fullname__signup__modal'>
                 Full Name

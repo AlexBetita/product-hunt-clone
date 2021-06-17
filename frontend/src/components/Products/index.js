@@ -1,15 +1,47 @@
 import { NavLink } from 'react-router-dom';
+import { useState, useRef, useEffect} from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { voteProduct } from '../../store/products';
 
 import './Products.css';
 
 const Products = ({products}) => {
 
-  let upvotes = 0
-  if(products.upvotes){
-    upvotes = products.upvotes
-  } else if (products.Upvotes) {
-    upvotes = Object.keys(products.Upvotes).length
+  const upvoteElementRef = useRef()
+  const dispatch = useDispatch()
+  const [getUpvotes, setUpvotes] = useState(products.upvotes ? products.upvotes : (
+              products.Upvotes ? Object.keys(products.Upvotes).length : 0)
+              )
+
+  const upvoted = useSelector((state)=>{
+    for (const [key, value] of Object.entries(state.session.upvotes)){
+      if(products.id === value.id){
+        return true
+      }
+    }
+  })
+
+  useEffect(() => {
+    if(upvoted){
+      upvoteElementRef.current.classList.add('voted__true')
+    }
+  }, [])
+
+  const vote = async () =>{
+
+    if (upvoteElementRef.current.classList.contains('voted__true')){
+      upvoteElementRef.current.classList.remove('voted__true')
+      await dispatch(voteProduct(products.id))
+      setUpvotes(getUpvotes - 1)
+    } else {
+      upvoteElementRef.current.classList.add('voted__true')
+      await dispatch(voteProduct(products.id))
+      setUpvotes(getUpvotes + 1)
+    }
   }
+
+
 
   return (
 
@@ -80,17 +112,16 @@ const Products = ({products}) => {
         </NavLink>
 
         <div className='div__product__vote'>
-          <button className='button__product__vote'>
+          <button className='button__product__vote' ref={upvoteElementRef} onClick={vote}>
             {/* <img className='img__upvote__icon'
 
               src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
             </img> */}
             <div className='img__upvote__icon'>
               ▲
-              {/* 🔺 */}
             </div>
             <span className='span__product__upvotes'>
-                {upvotes}
+                {getUpvotes}
             </span>
           </button>
         </div>
