@@ -145,7 +145,7 @@ module.exports = (sequelize, DataTypes) => {
     const { id, username, email, headline, website, profileImage, fullName} = this;
      // context will be the User instance
     let {createdAt} = this;
-    createdAt = moment(createdAt).format('MMMM Do');
+    createdAt = moment(createdAt).format('MMMM Do YYYY');
     return { id, username, email, headline, website, profileImage, fullName, createdAt };
   };
 

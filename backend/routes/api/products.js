@@ -37,7 +37,8 @@ const productObjCleanUp = (result, multi = false) => {
   if (result && !multi){
     for(const key in result.dataValues){
       if(key === 'createdAt' || key === 'updatedAt'){
-        productObj[key] = moment(result.dataValues[key]).startOf('second').fromNow();
+        // productObj[key] = moment(result.dataValues[key]).startOf('second').fromNow();
+        productObj[key] = moment(result.dataValues[key]).format('MMMM Do YYYY');
       } else if(key === 'Upvotes') {
         productObj['upvotes'] = result.dataValues[key].length
       } else if(key === 'Comments'){
@@ -46,7 +47,8 @@ const productObjCleanUp = (result, multi = false) => {
           productObj['Comments'][i+1] = {}
           for(const key2 in comment.dataValues){
             if(key2 === 'createdAt' || key2 === 'updatedAt'){
-              productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+              // productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+              productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).format('MMMM Do YYYY');
             } else if (key2 === 'Upvotes'){
               productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
             } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]
@@ -65,7 +67,8 @@ const productObjCleanUp = (result, multi = false) => {
     result.forEach((product, i)=>{
       for(const key in result[i].dataValues){
         if(key === 'createdAt' || key === 'updatedAt'){
-          productObj[key] = moment(result[i].dataValues[key]).startOf('second').fromNow();
+          // productObj[key] = moment(result[i].dataValues[key]).startOf('second').fromNow();
+          productObj[key] = moment(result[i].dataValues[key]).format('MMMM Do YYYY');
         } else if(key === 'Upvotes') {
           productObj['upvotes'] = result[i].dataValues[key].length
         } else if(key === 'Comments'){
@@ -74,7 +77,8 @@ const productObjCleanUp = (result, multi = false) => {
             productObj['Comments'][i+1] = {}
             for(const key2 in comment.dataValues){
               if(key2 === 'createdAt' || key2 === 'updatedAt'){
-                productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+                // productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).startOf('second').fromNow();
+                productObj['Comments'][i+1][key2] = moment(comment.dataValues[key2]).format('MMMM Do YYYY');
               } else if (key2 === 'Upvotes'){
                 productObj['Comments'][i+1]['upvotes'] = comment.dataValues[key2].length
               } else productObj['Comments'][i+1][key2] = comment.dataValues[key2]

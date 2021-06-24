@@ -1,8 +1,9 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import _ from 'lodash'
 
-import Products from '../Products';
+// import Products from '../Products';
+import ProductDate from '../ProductDate';
 import { getProducts } from '../../store/products';
 
 import './Home.css';
@@ -18,6 +19,18 @@ const Home = () => {
   let pageCounter = 1
   const throttler = _.throttle(scroll, 500)
 
+  let sortedProducts = {}
+  Object.keys(products).map((key) =>{
+    let str = products[key].createdAt
+    str = str.substring(0, str.length - 4);
+    if(!sortedProducts[str]){
+      sortedProducts[str] = []
+      return sortedProducts[str].push(products[key])
+    } else {
+      return sortedProducts[str].push(products[key])
+    }
+  })
+
   useEffect(()=>{
     if(window.addEventListener){
       window.addEventListener('scroll', throttler, true);
@@ -27,6 +40,7 @@ const Home = () => {
       window.removeEventListener('scroll', throttler, true);
       window.removeEventListener('scroll', scrollToTopChecker);
     }
+
   }, [throttler])
 
   const setNextPage = async () => {
@@ -54,6 +68,7 @@ const Home = () => {
     }
   }
 
+
   function scrollToTop(){
     window.scrollTo(0, 0);
   }
@@ -64,16 +79,20 @@ const Home = () => {
 
   return (
     <>
-    <div className='div__home__styles'>
-      <div className='div__home__date'>
-        Today
-      </div>
 
-      {Object.keys(products).map((key) =>{
+    <div className='div__home__styles'>
+
+      {/* {Object.keys(products).map((key) =>{
         return <Products key={key} products = {products[key]}/>
+      })} */}
+
+      {Object.keys(sortedProducts).map((key)=>{
+        return <ProductDate key={key} date={key} products={sortedProducts[key]}/>
       })}
 
+
     </div>
+
       <button className='button__to__top hidden'
       ref={buttonScrollToTop}
       onClick={scrollToTop}

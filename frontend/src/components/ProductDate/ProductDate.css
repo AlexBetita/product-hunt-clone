@@ -1,0 +1,23 @@
+.div__home__date{
+    font-weight: 600;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+    font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+    padding: 10px;
+}
+
+.span__show__more{
+    line-height: 16px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    padding: 15px;
+    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 11px;
+    background-color: #fff;
+}
+
+.span__show__more:hover{
+    text-decoration: underline;
+}
