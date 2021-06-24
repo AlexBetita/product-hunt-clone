@@ -1,9 +1,9 @@
 import { csrfFetch } from './csrf';
 
 const LOAD_DISCUSSIONS = "discussions/LOAD_PRODUCTS";
-const REMOVE_DISCUSSION = "discussions/REMOVE_PRODUCT";
+// const REMOVE_DISCUSSION = "discussions/REMOVE_PRODUCT";
 const ADD_DISCUSSION = "discussions/ADD_PRODUCT";
-const ADD_ONE_DISCUSSION = "discussions/ADD_ONE_PRODUCT";
+// const ADD_ONE_DISCUSSION = "discussions/ADD_ONE_PRODUCT";
 const INITIAL_STATE = "discussions/INITIAL_STATE";
 
 const load = (discussions) => ({
@@ -16,10 +16,10 @@ const add = (discussion) => ({
   discussion
 });
 
-const remove = (discussionId) => ({
-  type: REMOVE_DISCUSSION,
-  discussionId
-});
+// const remove = (discussionId) => ({
+//   type: REMOVE_DISCUSSION,
+//   discussionId
+// });
 
 export const resetState = () => ({
   type: INITIAL_STATE,

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
 import Products from '../Products'
@@ -9,6 +9,11 @@ const Profile = () => {
   const { username } = useParams();
   let user;
   let productsMade = {}
+  React.memo(()=>{
+    if(Object.keys(productsMade).length !== 0){
+      setMade(true)
+    }
+  })
   let productsUpvoted = {}
   let productsCommented = {}
 
@@ -25,25 +30,25 @@ const Profile = () => {
     if(state.session.user){
 
       Object.keys(state.session.products).map((key)=>{
-        productsMade[key] = state.session.products[key]
+        return productsMade[key] = state.session.products[key]
       })
 
       Object.keys(state.session.upvotes).map((key)=>{
-        productsUpvoted[key] = state.session.upvotes[key]
+        return productsUpvoted[key] = state.session.upvotes[key]
       })
 
       Object.keys(state.session.comments).map((key)=>{
-        productsCommented[key] = state.session.comments[key]
+        return productsCommented[key] = state.session.comments[key]
       })
     }
 
   })
 
-  useEffect(()=>{
-    if(Object.keys(productsMade).length !== 0){
-      setMade(true)
-    }
-  }, [])
+  // useEffect(()=>{
+  //   if(Object.keys(productsMade).length !== 0){
+  //     setMade(true)
+  //   }
+  // }, [productsMade])
 
   if (!user){
     return (
@@ -65,7 +70,9 @@ const Profile = () => {
             <div className='div__profile__image'>
             <div className='div__profile__image__styles'>
               <img className ='image__profile__image'
-              src={`${user.profileImage}`}>
+              src={`${user.profileImage}`}
+              alt='profile icon'
+              >
               </img>
             </div>
           </div>
@@ -104,7 +111,9 @@ const Profile = () => {
           <div className='div__profile__image'>
             <div className='div__profile__image__styles'>
               <img className ='image__profile__image'
-              src={`${user.profileImage}`}>
+              src={`${user.profileImage}`}
+              alt='profile icon'
+              >
               </img>
             </div>
           </div>

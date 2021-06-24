@@ -37,7 +37,9 @@ function LoginForm() {
       <div className='div__styles__login__modal'>
         <div className='div__login__image__modal'>
           <img className='image__login__modal'
-            src='https://ph-static.imgix.net/category-tech/kitty.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=100&h=92&fit=max&dpr=1'>
+            src='https://ph-static.imgix.net/category-tech/kitty.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=100&h=92&fit=max&dpr=1'
+            alt='login'
+            >
           </img>
         </div>
         <h1 className='h1__login__modal__sign'>

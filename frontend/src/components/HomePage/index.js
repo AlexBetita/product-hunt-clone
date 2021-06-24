@@ -27,7 +27,7 @@ const Home = () => {
       window.removeEventListener('scroll', throttler, true);
       window.removeEventListener('scroll', scrollToTopChecker);
     }
-  }, [])
+  }, [throttler])
 
   const setNextPage = async () => {
     await dispatch(getProducts(pageCounter + 1))
@@ -68,6 +68,7 @@ const Home = () => {
       <div className='div__home__date'>
         Today
       </div>
+
       {Object.keys(products).map((key) =>{
         return <Products key={key} products = {products[key]}/>
       })}

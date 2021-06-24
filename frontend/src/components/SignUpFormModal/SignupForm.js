@@ -2,7 +2,10 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
+
 import * as sessionActions from "../../store/session";
+import kitty from '../../img/kitty.png'
+import loading_signup from '../../img/loading_signup.png'
 
 import './SignupFormModal.css';
 
@@ -25,7 +28,7 @@ function SignupForm() {
   const history = useHistory();
 
   function isURL(str) {
-    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
+    return /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/.test(str);
   }
 
   function isEmail(str){
@@ -118,7 +121,9 @@ function SignupForm() {
       <div className='div__styles__signup__modal'>
         <div className='div__styles__login__image__modal'>
           <img className='image__signup__modal'
-            src='https://ph-static.imgix.net/category-tech/kitty.png?auto=format&auto=compress&codec=mozjpeg&cs=strip&w=100&h=92&fit=max&dpr=1'>
+            src={kitty}
+            alt='kitty icon'
+            >
           </img>
         </div>
         <h1 className='h1__signup__modal__sign'>
@@ -211,7 +216,8 @@ function SignupForm() {
                 <button className='button__form__signup__modal--disabled' disabled type="submit">
                   <img
                       className='image__form__signup__loading__image'
-                      src='https://www.pikpng.com/pngl/m/468-4688179_png-file-svg-transparent-loading-icon-png-clipart.png'
+                      src={loading_signup}
+                      alt='loading icon'
                       >
                   </img>
                 </button>

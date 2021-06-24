@@ -52,7 +52,7 @@ const ProfileEdit = () => {
   }
 
   function isURL(str) {
-    return /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/.test(str);
+    return /^(?:\w+:)?\/\/([^\s.]+\.\S{2}|localhost[:?\d]*)\S*$/.test(str);
   }
 
   const handleSubmit = async (e) => {
@@ -231,7 +231,9 @@ const ProfileEdit = () => {
                   <div className='div__edit__profile__side__profile__image__styles__2'>
                     <div className='div__edit__profile__side__image__styles'>
                       <img className='image__edit__profile__side'
-                        src={user?.profileImage}>
+                        src={user?.profileImage}
+                        alt='profile icon'
+                        >
                       </img>
                     </div>
                   </div>

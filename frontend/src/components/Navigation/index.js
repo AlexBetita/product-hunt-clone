@@ -13,6 +13,7 @@ import SignupFormModal from '../SignUpFormModal';
 
 import { logout } from '../../store/session';
 import { getProducts } from '../../store/products';
+import product_hunt_icon from '../../img/product_hunt_icon.png'
 
 import './Navigation.css';
 
@@ -39,7 +40,7 @@ function Navigation({ isLoaded }){
       document.removeEventListener("mousedown", handleClick);
     };
 
-  }, [dispatch])
+  }, [dispatch, pageCounter])
 
   const openPopOver = () => {
     if(showPopOver) {
@@ -127,7 +128,9 @@ function Navigation({ isLoaded }){
 
         <NavLink exact to="/" onClick={activateProgress}>
           <img className='img__producthunt__icon'
-              src='https://cdn2.iconfinder.com/data/icons/social-icons-33/128/Product_Hunt-512.png'>
+              src={product_hunt_icon}
+              alt='product hunt icon'
+              >
             </img>
         </NavLink>
 
@@ -158,7 +161,7 @@ function Navigation({ isLoaded }){
               </label>
 
             <div className='div__navigation__deals'>
-              <img src={email} alt="email image" onClick={()=> openEmail()}></img>
+              <img src={email} alt="email icon" onClick={()=> openEmail()}></img>
               </div>
 
               <div className='div__navigation__jobs'>
@@ -167,7 +170,7 @@ function Navigation({ isLoaded }){
                     window.location.href = 'https://github.com/AlexBetita/'
                   }}
                   >
-                    <img src={github} alt="github image"></img>
+                    <img src={github} alt="github icon"></img>
                   </Link>
               </div>
               <div className='div__navigation__ship'>
@@ -176,7 +179,7 @@ function Navigation({ isLoaded }){
                     window.location.href = 'https://www.linkedin.com/in/alex-betita/'
                   }}
                   >
-                    <img src={linkedin} alt='linkedin image'></img>
+                    <img src={linkedin} alt='linkedin icon'></img>
                   </NavLink>
               </div>
           </div>
@@ -206,7 +209,7 @@ function Navigation({ isLoaded }){
                   onClick={()=>{
                     window.location.href = 'https://github.com/AlexBetita/'
                   }}>
-                  <img src={github} alt="github image"></img>
+                  <img src={github} alt="github icon"></img>
                 </NavLink>
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
@@ -214,11 +217,11 @@ function Navigation({ isLoaded }){
                 onClick={()=>{
                   window.location.href = 'https://www.linkedin.com/in/alex-betita/'
                 }}>
-                  <img src={linkedin} alt='linkedin image'></img>
+                  <img src={linkedin} alt='linkedin icon'></img>
                 </NavLink>
               </li>
               <li className='li__navigation__style' onClick={closePopOver}>
-                  <img src={email} alt="email image" className='img__email__popup' onClick={()=> openEmail()}></img>
+                  <img src={email} alt="email icon" className='img__email__popup' onClick={()=> openEmail()}></img>
               </li>
               {/* <li className='li__navigation__style' onClick={closePopOver}>
                 <NavLink className='navlink__popover__styles' to={`/oauth/applications`}>API Dashboard</NavLink>
@@ -228,7 +231,7 @@ function Navigation({ isLoaded }){
               </li>
 
               <li className='li__navigation__style' onClick={closePopOver}>
-                <a onClick={logoutPopover}>Logout</a>
+                <a className='a__navigation__logout' href='/' onClick={logoutPopover}>Logout</a>
               </li>
 
             </ul>
