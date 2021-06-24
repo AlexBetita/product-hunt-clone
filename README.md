@@ -1,48 +1,28 @@
-# product-hunt-clone
+## Welcome to ProductHuntClone
+## Live link: [ProductHuntClone](https://producthuntclone.herokuapp.com/)
 
-### MVP List
-Product Hunt Clone
+Producthuntclone is my best attempt at cloning [producthunt's](https://www.producthunt.com/) overall design and functionalites, it's a web application that allow uers to post products that they wanna pitch, made or hunt for. As an annonymous user you can only view all products posted, disucssions and comments. As a registered user you can posts new products, create discussions, create comments, upvote products or discussions, follow users, and search for users, products and discussions.
 
-Features to be implemented:
-### 1. New account creation, log in, log out, and demo login.
-* Sign up redirects user to the sign up page.
-* Log in redirects user back to the home page with authorized permissions.
-  * Logged-in users can create, edit, and delete products.
-  * Logged-in users can create, edit, and delete discussions.
-  * Logged-in users can create, edit, and delete comments.
-  * Logged-in users can follow and unfollow users or collections.
-  * Logged-in users can upvote or un upvote comments or products.
-* Log out redirects user to home page.
-* All users can read discussions.
-* All users can view products
+##### Table of Contents
+1. [Getting Started](#getting_started)
+2. [Technologies Used](#technologies)
+3. [Key Featues](#key_features)
+4. [Wiki](#wiki)
 
-### 2. Users have access to a profile page
-* If Logged-in a user can click on their profile icon which has a drop down that has access to my profile, clicking
-  on my profile renders the users profile page.
-* Logged-in users only have access to the profile page if not logged in then renders the sign up page.
-* Profile page has Logged-in users activity displaying products upvoted, followers, following
-* Profile page displays users full name, headline, website url, username, profile image,
-  users created products, created collections and followed collections.
-* Logged-in users can edit their profiles.
-  * Allows Logged-in users to edit their full name, headline, website url, and profile image.
+<a name="getting_started"/>
 
-### 3. Create/Post products
-* Only Logged-in users has access to a post button otherwise its disabled or hidden which grants them access to create a product and renders
-  the create product page.
-* Create/Post products renders the create product page.
-  * Create product
-  * Post product renders user to own products page.
-* Own product page allows Logged-in users to:
-  * Create product
-  * Delete product
-  * Edit product
-  * Post product
-* Posted products will have their own page.
-  * Any user can visit a product page
-  * Product page displays the products details, owner, discussions/comments, and upvotes
-  * If Logged-in users own product they have access to an edit button and view count.
-  
-  
+##### Getting Started
 
-### Database Schema
+1. Clone this repository
+2. Install dependencies `npm install`
+3. Create a `.env` file based on the `.env.example`
+4. Set up your PostgreSQL user and password.
+5. Make sure to create the db `npx dotenv sequelize-cli db:create`
+6. Migrate the models `npx dotenv sequelize-cli db:migrate`
+7. Populate the data with seeders found in "backend/db/seeders" `npx dotenv sequelize-cli db:seed:all`
+8. Now run the application `npm start`
+
+
+
+##### Database Schema
 ![image](https://user-images.githubusercontent.com/77173456/119290595-a4c07e80-bc01-11eb-99dd-2e98f2a01690.png)
