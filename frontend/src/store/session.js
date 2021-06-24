@@ -169,9 +169,9 @@ const removeUpvotes = (id, type, state) => {
   }
 }
 
-const removeDiscussion = (id, state) => {
-  delete state.discussions[id]
-}
+// const removeDiscussion = (id, state) => {
+//   delete state.discussions[id]
+// }
 
 const removeComments = (id, type, state) => {
   for (const key in state.comments){

@@ -153,7 +153,7 @@ const listProducts = (list, state) =>{
   if (state){
     let reverse = Object.keys(state).reverse()
     reverse.forEach(id =>{
-      if(id != 'viewedProducts'){
+      if(id !== 'viewedProducts'){
         prodList.push(parseInt(id))
       }
     })
@@ -223,7 +223,7 @@ const productReducer = (state = initialState, action) => {
         ...state
       }
       for (const props in state){
-        if (props != 'viewedProducts'){
+        if (props !== 'viewedProducts'){
           newState.viewedProducts[state[props]['id']] = state[props]
         }
       }

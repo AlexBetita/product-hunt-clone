@@ -25,7 +25,7 @@ const EditProductPage = () => {
       await dispatch(viewOneProduct(id))
     }
     viewProduct()
-  }, [])
+  }, [dispatch, id])
 
   const [title, setTitle] = useState(product?.title);
   const [tagline, setTagline] = useState(product?.tagline)
@@ -152,7 +152,7 @@ const EditProductPage = () => {
                 required
                 />
 
-          <img src={product?.thumbnail}>
+          <img src={product?.thumbnail} alt='product thumbnail'>
 
           </img>
 

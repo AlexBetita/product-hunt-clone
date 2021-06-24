@@ -24,8 +24,10 @@ const Products = ({products}) => {
     if(state.session.user){
       user = state.session.user
       for (const [key, value] of Object.entries(state.session.upvotes)){
-        if(products.id === value.id){
-          return true
+        if(key){
+          if(products.id === value.id){
+            return true
+          }
         }
       }
     }
@@ -35,7 +37,7 @@ const Products = ({products}) => {
     if(upvoted){
       upvoteElementRef.current.classList.add('voted__true')
     }
-  },[user])
+  },[user, upvoted])
 
   const vote = async () =>{
     if(user){
@@ -77,7 +79,9 @@ const Products = ({products}) => {
               to={`/posts/${products.id}`}
               >
             <div className='div__product__thumbnail'>
-              <img className='img__product__thumbnail' src={products.thumbnail}></img>
+              <img className='img__product__thumbnail' src={products.thumbnail}
+                alt='product thumbnail'
+              ></img>
             </div>
         </NavLink>
 
@@ -104,9 +108,6 @@ const Products = ({products}) => {
 
           <div className='div__product__content__meta'>
               <div className='div__comments'>
-                {/* <img className='img__comment__icon'
-                  src='https://image.freepik.com/free-vector/comment-icon_9385-2.jpg'>
-                </img> */}
                 <div className='img__comment__icon'>
                   <i className="fas fa-comment"></i>
                 </div>
@@ -140,10 +141,6 @@ const Products = ({products}) => {
         <div className='div__product__vote'>
           <button className='button__product__vote' ref={upvoteElementRef}
             disabled={disableVote} onClick={vote}>
-            {/* <img className='img__upvote__icon'
-
-              src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQljNtHHEqdLaanBiQXQlzS1kP6gzKqACEouw&usqp=CAU'>
-            </img> */}
             <div className='upvote__circle__progress hidden' ref={circleRef}>
 
             </div>

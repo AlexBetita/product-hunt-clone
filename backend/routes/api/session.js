@@ -22,28 +22,6 @@ const validateLogin = [
 const userObject = async (user) => {
     const userObj = {}
 
-    // let upvotes = await user.getUpvotes({
-    //   attributes: {
-    //       exclude: ['deletedAt']
-    //     }, include: [
-    //       {
-    //         model: Product,
-    //         where: {
-    //           id: await user.getUpvotes({
-    //             where: {
-    //               upvoteableType: 'product',
-    //               userId: user.id
-    //             }
-    //           }).map(upvote => {
-    //             return upvote.id
-    //           })
-    //         },
-    //         required: false
-    //       }
-    //     ],
-    //     required: true
-    //   })
-
     let upvotedProducts = await Product.findAll({
       include: [{
         model: Upvote,
@@ -85,22 +63,6 @@ const userObject = async (user) => {
 
     const upvotes = upvotedProducts.concat(upvotedDiscussions).concat(upvotedComments)
 
-    // let upvoteIds = []
-    // upvotes.forEach((upvotes)=>{
-    //   if(upvotes.upvoteableType === 'product'){
-    //     upvoteIds.push(upvotes.upvoteableId)
-    //   }
-    // });
-
-    // upvotes = await Product.findAll({
-    //   where:{
-    //     id: upvoteIds
-    //   },
-    //   include: [
-    //     Upvote,
-    //   ]
-    // })
-
     const products = await user.getProducts({
       attributes: {
         exclude: ['deletedAt']
@@ -120,7 +82,11 @@ const userObject = async (user) => {
         {
           model: Comment,
           where: {
-            userId: user.id
+            commentableId: await user.getComments({
+              where: {
+                commentableType: 'product'
+              }
+            }).map(comment => comment.commentableId)
           }
         },
         Upvote,

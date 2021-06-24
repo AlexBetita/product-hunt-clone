@@ -17,7 +17,7 @@ const ProductDetails = () =>{
     }
     viewProduct()
 
-  }, [])
+  }, [dispatch, id])
 
 
   let product = useSelector((state)=>{
@@ -66,6 +66,7 @@ const ProductDetails = () =>{
                   <div className='div__product__details__thumbnail__styles'>
                     <img className='div__product__details__thumbnail'
                       src={product.thumbnail}
+                      alt='product thumbnail'
                     >
                     </img>
                   </div>
@@ -89,12 +90,14 @@ const ProductDetails = () =>{
                           <img
                             className='img__product__details__profileimage'
                             src={product.User.profileImage}
+                            alt='profile icon'
                           >
                           </img>
                           :
                           <img
                             className='img__product__details__profileimage'
                             src={user.profileImage}
+                            alt='profile icon'
                           >
                           </img>
                         }
@@ -148,6 +151,7 @@ const ProductDetails = () =>{
                                   <img
                                       className='img__product__details__profileimage'
                                       src={product.Comments[key].User.profileImage}
+                                      alt='profile icon'
                                     >
                                 </img>
                                   @{product.Comments[key].User.username}

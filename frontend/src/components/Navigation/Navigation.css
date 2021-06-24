@@ -295,6 +295,12 @@
   color: rgb(153, 154, 156);
 }
 
+.a__navigation__logout{
+  cursor: pointer;
+  color: inherit;
+  text-decoration: none;
+}
+
 
 .div__navigation__popover > .ul__navigation__styles > li a:hover{
   text-decoration: underline;
