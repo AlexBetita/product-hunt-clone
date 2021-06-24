@@ -22,7 +22,19 @@ Producthuntclone is my best attempt at cloning [producthunt's](https://www.produ
 7. Populate the data with seeders found in "backend/db/seeders" `npx dotenv sequelize-cli db:seed:all`
 8. Now run the application `npm start`
 
+<a name="technologies"/>
 
+#### Technologies Used
+
+<!-- For more icons please follow  https://github.com/MikeCodesDotNET/ColoredBadges -->
+<img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="javaScript" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/html5/html5-original.svg" alt="html" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/css3/css3-original.svg" alt="css" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/express/express-original.svg" alt="express" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/git/git-original.svg" alt="git" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/react/react-original.svg" alt="react" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" alt="redux" width="50" height="50">
+<img src="https://github.com/devicons/devicon/blob/master/icons/npm/npm-original-wordmark.svg" alt="redux" width="50" height="50">
 
 ##### Database Schema
 ![image](https://user-images.githubusercontent.com/77173456/119290595-a4c07e80-bc01-11eb-99dd-2e98f2a01690.png)
