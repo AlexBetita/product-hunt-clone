@@ -8,9 +8,58 @@
     padding-right: 15px;
     box-sizing: border-box;
     margin-left: auto;
-    margin-right: auto;
-    min-width: 320px;
+    min-width: 769px;
     align-content: center;
     /* flex-wrap: wrap; */
     flex-direction: column;
+}
+
+.div__create__discussion{
+    border-bottom: 1px solid #e8e8e8;
+    display: flex;
+    background: #fff;
+    width: 330px;
+    margin-top: 30px;
+    margin-left: 10px;
+    padding: 20px;
+    flex-direction: column;
+    align-items: stretch;
+    height: 193.9px;
+    margin-right: 55px;
+}
+
+.div__discussion__cointainer{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    margin-top: 42px;
+
+}
+
+.navlink__discussions{
+    margin-bottom: 20px;
+    background: #cc4d29;
+    border-color: #cc4d29;
+    color: #fff;
+    fill: #fff;
+    width: 93%;
+    height: 34px;
+    padding: 0 13px;
+    border-radius: 4px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.span__discussions{
+    position: relative;
+    top: 8px;
+    font-size: 11px;
+    align-items: center;
+    display: inline-flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: inherit;
+    flex: 1;
+    text-transform: uppercase;
+    font-weight: 600;
 }
