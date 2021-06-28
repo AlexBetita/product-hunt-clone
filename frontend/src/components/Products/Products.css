@@ -41,7 +41,7 @@
 
 .div__comments{
   display: flex;
-  height: 15px;
+  /* height: 15px; */
   min-width: 35px;
   background: #fff;
   color: #000;

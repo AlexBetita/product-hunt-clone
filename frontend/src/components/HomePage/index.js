@@ -49,16 +49,16 @@ const Home = () => {
   }
 
   function scroll(ev){
-    const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
-    if((st+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
+    const pixelFromTopToBottom = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    if((pixelFromTopToBottom+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
       setNextPage()
     }
   }
 
   function scrollToTopChecker(ev){
-    const st = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    const pixelFromTopToBottom = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
     try{
-      if(!st){
+      if(!pixelFromTopToBottom){
         buttonScrollToTop.current.classList.add('hidden')
       } else {
         buttonScrollToTop.current.classList.remove('hidden')

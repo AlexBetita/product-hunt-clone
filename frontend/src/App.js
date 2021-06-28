@@ -13,6 +13,7 @@ import ProductDetails from './components/ProductDetails';
 import Post from './components/Post';
 import EditProductPage from './components/EditProductPage';
 import DiscussionsPage from './components/DiscussionsPage';
+import CreateDiscussionsPage from './components/CreateDiscussionsPage';
 
 function App() {
   const dispatch = useDispatch();
@@ -50,8 +51,11 @@ function App() {
           <Route path='/product/:id/edit'>
             <EditProductPage />
           </Route>
-          <Route path='/discussions'>
+          <Route exact path='/discussions'>
             <DiscussionsPage />
+          </Route>
+          <Route exact path='/discussions/new'>
+            <CreateDiscussionsPage />
           </Route>
         </Switch>
       )}

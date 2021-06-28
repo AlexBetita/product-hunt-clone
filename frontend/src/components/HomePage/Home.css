@@ -44,7 +44,8 @@
   font-size: 50px;
   color: white;
   position: relative;
-  left: -1px;
+  left: -5px;
+  bottom: 5px;
 }
 
 .button__to__top.hidden{
