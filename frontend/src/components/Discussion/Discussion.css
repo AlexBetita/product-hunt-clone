@@ -17,3 +17,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.div__discussion:hover{
+  background-color: #F3F3F3;
+}

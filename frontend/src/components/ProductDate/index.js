@@ -25,7 +25,7 @@ const ProductDate = ({date, products}) => {
             {products.slice(11, -1).length !== 0 && !showMoreCondition &&
                 <span className='span__show__more' onClick={showMore}>
                     {`Show
-                        ${products.slice(11, -1).length}
+                        ${products.slice(11, -1).length + 1}
                     More`}
                 </span>
             }

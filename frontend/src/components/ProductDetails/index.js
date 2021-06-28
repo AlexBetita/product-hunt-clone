@@ -2,6 +2,7 @@ import { useSelector, useDispatch} from 'react-redux';
 import {useEffect} from 'react';
 import { NavLink, useParams } from 'react-router-dom';
 import { viewOneProduct } from '../../store/products';
+import Comments from '../Comments'
 
 import './ProductDetails.css';
 
@@ -141,23 +142,7 @@ const ProductDetails = () =>{
                           COMMENTS
                         {
                           Object.keys(product.Comments).map((key)=>{
-                            return (
-                              <li key={key}>
-                                  <h4>
-                                    {product.Comments[key].comment}
-                                  </h4>
-                                <div>
-                                  {`Commented by: `}
-                                  <img
-                                      className='img__product__details__profileimage'
-                                      src={product.Comments[key].User.profileImage}
-                                      alt='profile icon'
-                                    >
-                                </img>
-                                  @{product.Comments[key].User.username}
-                                </div>
-                              </li>
-                              )
+                            return <Comments key={key} product={product} index={key}/>
                           })
                         }
                       </ul>

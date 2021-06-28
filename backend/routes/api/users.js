@@ -267,11 +267,18 @@ router.put(
 // Get user
 router.get(
   '/:username',
-  asyncHandler(async (req, res)=>{
+  asyncHandler(async (req, res, next)=>{
     const {username} = req.params;
     const user = await User.getByUsername(username);
-
-    return res.json(await userObject(user));
+    if(user){
+      return res.json(await userObject(user));
+    } else {
+      const err = new Error('User does not exists');
+      err.status = 401;
+      err.title = 'User does not exists';
+      err.errors = ['User does not exists.'];
+      return next(err);
+    }
   })
 );
 

@@ -24,7 +24,7 @@ const DiscussionsPage = () =>{
 
   return (
     <>
-      <div>
+      <div className='div__discussion__page__styles'>
         <div>
           {Object.keys(discussions).map((key)=>{
             return <Discussion key={key} discussion={discussions[key]}/>

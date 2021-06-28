@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Route, useParams } from 'react-router-dom';
+
 import Products from '../Products'
+import {getUser} from '../../store/user';
 
 import './Profile.css'
 
 const Profile = () => {
+
+  const dispatch = useDispatch()
+
   const { username } = useParams();
   let user;
+  let newUser;
   let productsMade = {}
   React.memo(()=>{
     if(Object.keys(productsMade).length !== 0){
@@ -25,10 +31,31 @@ const Profile = () => {
     } else return false
   })
 
+  newUser = useSelector((state)=> {
+    if(state.users[username]){
+      return state.users[username] ? state.users[username] : false
+    } else return false
+  })
+
+
+  const newUserRef = useRef(newUser)
+
+  useEffect(()=>{
+    if(!newUserRef.current){
+        const queryUser = async () =>{
+          await dispatch(getUser({ username }))
+        }
+        queryUser()
+        newUserRef.current = newUser
+      }
+  }, [dispatch,  newUserRef, newUser, username])
+
   useSelector((state)=>{
     //Temporary fix
     if(state.session.user){
-
+      productsMade = {}
+      productsUpvoted = {}
+      productsCommented = {}
       Object.keys(state.session.products).map((key)=>{
         return productsMade[key] = state.session.products[key]
       })
@@ -44,11 +71,26 @@ const Profile = () => {
 
   })
 
-  // useEffect(()=>{
-  //   if(Object.keys(productsMade).length !== 0){
-  //     setMade(true)
-  //   }
-  // }, [productsMade])
+
+  if (!user){
+    user = newUser.user
+    if(user){
+      productsMade = {}
+      productsUpvoted = {}
+      productsCommented = {}
+      Object.keys(newUser.products).map((key)=>{
+        return productsMade[key] = newUser.products[key]
+      })
+
+      Object.keys(newUser.upvotes).map((key)=>{
+        return productsUpvoted[key] = newUser.upvotes[key]
+      })
+
+      Object.keys(newUser.comments).map((key)=>{
+        return productsCommented[key] = newUser.comments[key]
+      })
+    }
+  }
 
   if (!user){
     return (
