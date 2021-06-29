@@ -25,7 +25,7 @@ Producthuntclone is my best attempt at cloning [producthunt's](https://www.produ
 
 <a name="technologies"/>
 
-#### Technologies Used
+### Technologies Used
 
 <!-- For more icons please follow  https://github.com/MikeCodesDotNET/ColoredBadges -->
 <img src="https://github.com/devicons/devicon/blob/master/icons/javascript/javascript-original.svg" alt="javaScript" width="50" height="50">
@@ -40,9 +40,59 @@ Producthuntclone is my best attempt at cloning [producthunt's](https://www.produ
 
 <a name="code_snippets"/>
 
-#### Code Snippets
+### Code Snippets
 
-##### Implementation of the upvotes feature for products
+#### Implementation of infinite scroll for products with the use of an external library lodash.
+Why lodash? It provides a fully implemented throttler function, what is a throttler function? Basically it throttles multiple function calls and limits it to the most latest call, reason for it being needed in infinite scroll is when you scroll an event fires and for this particular use case as soon as you reach bottom of the page without a throttler multiple scroll events fire even when you have logic that supports current scroll coordinate == bottom document height.
+
+
+```javascript
+  const products = useSelector((state)=>{
+    return state.products.list.map((productId) => state.products[productId])
+  })
+
+  let pageCounter = 1
+  const throttler = _.throttle(scroll, 500)
+
+  let sortedProducts = {}
+  
+  Object.keys(products).map((key) =>{
+    let str = products[key].createdAt
+    str = str.substring(0, str.length - 4);
+    if(!sortedProducts[str]){
+      sortedProducts[str] = []
+      return sortedProducts[str].push(products[key])
+    } else {
+      return sortedProducts[str].push(products[key])
+    }
+  })
+
+  useEffect(()=>{
+    if(window.addEventListener){
+      window.addEventListener('scroll', throttler, true);
+      window.addEventListener('scroll', scrollToTopChecker);
+    }
+    return function cleanup(){
+      window.removeEventListener('scroll', throttler, true);
+      window.removeEventListener('scroll', scrollToTopChecker);
+    }
+
+  }, [throttler])
+
+  const setNextPage = async () => {
+    await dispatch(getProducts(pageCounter + 1))
+    pageCounter += 1
+  }
+
+  function scroll(){
+    const pixelFromTopToBottom = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    if((pixelFromTopToBottom+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
+      setNextPage()
+    }
+  }
+```
+
+#### Implementation of the upvotes feature for products
 
 This block of code checks the current users upvotes and applies a class `voted__true` to the corresponding element.
 If there is no current user logged on then no change happens on the element and the first line of code makes it so that non logged in users,
@@ -106,5 +156,6 @@ const vote = async () =>{
 ```
 
 
-##### Database Schema
+
+### Database Schema
 ![image](https://user-images.githubusercontent.com/77173456/119290595-a4c07e80-bc01-11eb-99dd-2e98f2a01690.png)
