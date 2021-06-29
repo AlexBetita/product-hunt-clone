@@ -43,6 +43,9 @@
 .div__create__discussions__side__content{
     background-color: #fff;
     padding: 20px;
+    width: 290px;
+    position: relative;
+    bottom: -25px;
 }
 
 .div__create__discussions__link{
@@ -145,3 +148,25 @@
     outline: none;
     padding: 10px;
   }
+
+.button__create__discussions__post{
+    margin-bottom: 10px;
+    width: 100px;
+    background: #cc4d29;
+    border-color: #cc4d29;
+    color: #fff;
+    fill: #fff;
+    text-align: center;
+    height: 34px;
+    padding: 0 13px;
+    border-radius: 4px;
+    border: transparent;
+    float: right;
+}
+
+.button__create__discussions__post:hover{
+    background: #df512a;
+    border-color: #df512a;
+}
+
+
