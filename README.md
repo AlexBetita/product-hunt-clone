@@ -46,9 +46,12 @@ Producthuntclone is my best attempt at cloning [producthunt's](https://www.produ
 * Users can edit, view profile and other users profile.
 * Users can post and view discussions.
 * Users can upvote products.
+
 --not yet implemented--
-comments, searchbar(current implementation is anyone can look up a user and visit their profile through url `https://producthuntclone.herokuapp.com/@[USER_NAME]`),
-edit and delete discussions.
+
+* comments, 
+* searchbar(current implementation is anyone can look up a user and visit their profile through url `https://producthuntclone.herokuapp.com/@[USER_NAME]`) or click a users icon
+* edit and delete discussions
 
 <a name="code_snippets"/>
 
