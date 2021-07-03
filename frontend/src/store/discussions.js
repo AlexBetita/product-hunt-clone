@@ -2,7 +2,7 @@ import { csrfFetch } from './csrf';
 
 const LOAD_DISCUSSIONS = "discussions/LOAD_PRODUCTS";
 // const REMOVE_DISCUSSION = "discussions/REMOVE_PRODUCT";
-const ADD_DISCUSSION = "discussions/ADD_PRODUCT";
+export const ADD_DISCUSSION = "discussions/ADD_PRODUCT";
 // const ADD_ONE_DISCUSSION = "discussions/ADD_ONE_PRODUCT";
 const INITIAL_STATE = "discussions/INITIAL_STATE";
 
@@ -113,17 +113,17 @@ const discussionReducer = (state = initialState, action) => {
       }
     }
     case ADD_DISCUSSION: {
-      if(!state[action.discussion.id]){
+      if(!state[action.discussion.discussion.id]){
         const newState = {
           ...state,
-          [action.discussion.id]: action.discussion
+          [action.discussion.discussion.id]: action.discussion.discussion
         };
-        newState.list.unshift(action.discussion.id)
+        newState.list.unshift(action.discussion.discussion.id)
         return newState
       }
       return {
         ...state,
-        [action.discussion.id]: action.discussion
+        [action.discussion.discussion.id]: action.discussion.discussion
       };
     }
     case INITIAL_STATE:

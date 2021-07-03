@@ -1,5 +1,6 @@
 import { csrfFetch } from './csrf';
 import {REMOVE_PRODUCT, ADD_PRODUCT, VOTE_PRODUCT} from './products'
+import { ADD_DISCUSSION } from './discussions';
 
 const SET_USER = 'session/SET_USER';
 export const REMOVE_USER = 'session/REMOVE_USER';
@@ -281,6 +282,18 @@ const sessionReducer = (state = initialState, action) => {
       }
       return newState
     }
+    case ADD_DISCUSSION:
+      newState = {
+        user: {...state.user},
+        upvotes:{...state.upvotes},
+        products: {...state.products},
+        comments: {...state.comments},
+        discussions: {...state.discussions}
+      }
+
+      newState.discussions[action.discussion.discussion.id] = action.discussion.discussion
+
+      return newState
     default:
       return state;
   }
