@@ -45,11 +45,7 @@
     padding: 20px;
     width: 290px;
     position: relative;
-<<<<<<< HEAD
-    bottom: -30px;
-=======
     bottom: -25px;
->>>>>>> discussions
 }
 
 .div__create__discussions__link{
@@ -172,5 +168,3 @@
     background: #df512a;
     border-color: #df512a;
 }
-
-
