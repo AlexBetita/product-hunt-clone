@@ -110,13 +110,17 @@ const ProductDetails = () =>{
                       {product.User ? product.User.fullName : user.fullName}
                       {product.User
                         ?
+                        <NavLink to={`/@${product.User.username}`}>
                           <div className='div__product__details__username'>
                             @{product.User.username}
                           </div>
+                        </NavLink>
                         :
+                        <NavLink to={`/@${user.username}`}>
                           <div className='div__product__details__username'>
                             @{user.username}
                           </div>
+                        </NavLink>
                       }
                       </div>
                   </div>
