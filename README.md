@@ -37,6 +37,21 @@ Producthuntclone is my best attempt at cloning [producthunt's](https://www.produ
 <img src="https://github.com/devicons/devicon/blob/master/icons/redux/redux-original.svg" alt="redux" width="50" height="50">
 <img src="https://github.com/devicons/devicon/blob/master/icons/npm/npm-original-wordmark.svg" alt="redux" width="50" height="50">
 
+<a name="key_features"/>
+
+### Key Features
+
+* Non users can view profiles, products, discussions.
+* Users can view, edit, create, delete products.
+* Users can edit, view profile and other users profile.
+* Users can post and view discussions.
+* Users can upvote products.
+
+--not yet implemented--
+
+* comments, 
+* searchbar(current implementation is anyone can look up a user and visit their profile through url `https://producthuntclone.herokuapp.com/@[USER_NAME]`) or click a users icon
+* edit and delete discussions
 
 <a name="code_snippets"/>
 
