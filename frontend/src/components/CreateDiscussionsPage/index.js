@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postDiscussion } from '../../store/discussions';
@@ -7,7 +7,7 @@ import './CreateDiscussionsPage.css'
 
 
 const CreateDiscussionsPage = () => {
-
+    const history = useHistory();
     const dispatch = useDispatch()
 
     const [discussion, setDiscussion] = useState('');
@@ -40,6 +40,7 @@ const CreateDiscussionsPage = () => {
                         setErrors(newErrors);
                     }
                 })
+            history.push('/discussions')
         }
 
         setErrors(newErrors)

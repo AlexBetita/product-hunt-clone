@@ -15,6 +15,7 @@ const Products = ({products}) => {
   const circleRef = useRef()
 
   const dispatch = useDispatch()
+
   const [getUpvotes, setUpvotes] = useState(products.upvotes ? products.upvotes : (
               products.Upvotes ? Object.keys(products.Upvotes).length : 0)
               )

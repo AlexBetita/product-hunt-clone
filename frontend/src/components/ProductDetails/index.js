@@ -88,19 +88,23 @@ const ProductDetails = () =>{
 
                         {product.User
                           ?
-                          <img
-                            className='img__product__details__profileimage'
-                            src={product.User.profileImage}
-                            alt='profile icon'
-                          >
-                          </img>
+                          <NavLink to={`/@${product.User.username}`}>
+                            <img
+                              className='img__product__details__profileimage'
+                              src={product.User.profileImage}
+                              alt='profile icon'
+                            >
+                            </img>
+                          </NavLink>
                           :
-                          <img
-                            className='img__product__details__profileimage'
-                            src={user.profileImage}
-                            alt='profile icon'
-                          >
-                          </img>
+                          <NavLink to={`/@${user.username}`}>
+                            <img
+                              className='img__product__details__profileimage'
+                              src={user.profileImage}
+                              alt='profile icon'
+                            >
+                            </img>
+                          </NavLink>
                         }
                       <div>
                       {product.User ? product.User.fullName : user.fullName}

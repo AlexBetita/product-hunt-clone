@@ -20,6 +20,7 @@ const Home = () => {
   const throttler = _.throttle(scroll, 500)
 
   let sortedProducts = {}
+  
   Object.keys(products).map((key) =>{
     let str = products[key].createdAt
     str = str.substring(0, str.length - 4);
@@ -48,14 +49,14 @@ const Home = () => {
     pageCounter += 1
   }
 
-  function scroll(ev){
+  function scroll(){
     const pixelFromTopToBottom = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
     if((pixelFromTopToBottom+document.documentElement.clientHeight) >= document.documentElement.scrollHeight ){
       setNextPage()
     }
   }
 
-  function scrollToTopChecker(ev){
+  function scrollToTopChecker(){
     const pixelFromTopToBottom = Math.max(document.documentElement.scrollTop,document.body.scrollTop);
     try{
       if(!pixelFromTopToBottom){
